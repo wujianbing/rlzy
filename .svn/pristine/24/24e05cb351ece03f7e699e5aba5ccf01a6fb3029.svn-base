@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.portal.mapper.RlzyCompanyMapper">
+    
+	<sql id="rlzyCompanyColumns">
+		a.id AS "id",
+		a.companyname AS "companyname",
+		a.nick_name AS "nickName",
+		a.password AS "password",
+		a.logo AS "logo",
+		a.companyscale AS "companyscale",
+		a.companynature AS "companynature",
+		a.registeredcapital AS "registeredcapital",
+		a.localplace AS "localplace",
+		a.companywebsite AS "companywebsite",
+		a.industry AS "industry",
+		a.companyprofile AS "companyprofile",
+		a.businesslicense AS "businesslicense",
+		a.contacts AS "contacts",
+		a.phone AS "phone",
+		a.telephone AS "telephone",
+		a.email AS "email",
+		a.qq AS "qq",
+		a.webchat AS "webchat",
+		a.address AS "address",
+		a.companytype AS "companytype",
+		a.servicerange AS "servicerange",
+		a.casepic AS "casepic",
+		a.paystatus AS "paystatus",
+		a.reviewstate AS "reviewstate",
+		a.trystate AS "trystate",
+		a.cpflag AS "cpflag",
+		a.del_flag AS "delFlag",
+		a.spe1 AS "spe1",
+		a.spe2 AS "spe2",
+		a.spe3 AS "spe3",
+		a.remarks AS "remarks",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
+		a.creditcode AS "creditcode"
+	</sql>
+	
+	<sql id="rlzyCompanyJoins">
+		
+	</sql>
+	
+    
+	<select id="get" resultType="RlzyCompany" >
+		SELECT 
+			<include refid="rlzyCompanyColumns"/>
+		FROM rlzy_company a
+		<include refid="rlzyCompanyJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RlzyCompany" >
+		SELECT 
+			<include refid="rlzyCompanyColumns"/>
+		FROM rlzy_company a
+		<include refid="rlzyCompanyJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="companyname != null and companyname != ''">
+				AND a.companyname = #{companyname}
+			</if>
+			<if test="companyscale != null and companyscale != ''">
+				AND a.companyscale = #{companyscale}
+			</if>
+			<if test="companynature != null and companynature != ''">
+				AND a.companynature = #{companynature}
+			</if>
+			<if test="contacts != null and contacts != ''">
+				AND a.contacts = #{contacts}
+			</if>
+			<if test="telephone != null and telephone != ''">
+				AND a.telephone = #{telephone}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RlzyCompany" >
+		SELECT 
+			<include refid="rlzyCompanyColumns"/>
+		FROM rlzy_company a
+		<include refid="rlzyCompanyJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rlzy_company(
+			id,
+			companyname,
+			nick_name,
+			password,
+			logo,
+			companyscale,
+			companynature,
+			registeredcapital,
+			localplace,
+			companywebsite,
+			industry,
+			companyprofile,
+			businesslicense,
+			contacts,
+			phone,
+			telephone,
+			email,
+			qq,
+			webchat,
+			address,
+			companytype,
+			servicerange,
+			casepic,
+			paystatus,
+			reviewstate,
+			trystate,
+			cpflag,
+			del_flag,
+			spe1,
+			spe2,
+			spe3,
+			remarks,
+			create_date,
+			update_date,
+			creditcode
+		) VALUES (
+			#{id},
+			#{companyname},
+			#{nickName},
+			#{password},
+			#{logo},
+			#{companyscale},
+			#{companynature},
+			#{registeredcapital},
+			#{localplace},
+			#{companywebsite},
+			#{industry},
+			#{companyprofile},
+			#{businesslicense},
+			#{contacts},
+			#{phone},
+			#{telephone},
+			#{email},
+			#{qq},
+			#{webchat},
+			#{address},
+			#{companytype},
+			#{servicerange},
+			#{casepic},
+			#{paystatus},
+			#{reviewstate},
+			#{trystate},
+			#{cpflag},
+			#{delFlag},
+			#{spe1},
+			#{spe2},
+			#{spe3},
+			#{remarks},
+			#{createDate},
+			#{updateDate},
+			#{creditcode}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rlzy_company SET 	
+			companyname = #{companyname},
+			nick_name=#{nickName},
+			logo = #{logo},
+			companyscale = #{companyscale},
+			companynature = #{companynature},
+			registeredcapital = #{registeredcapital},
+			localplace = #{localplace},
+			companywebsite = #{companywebsite},
+			industry = #{industry},
+			companyprofile = #{companyprofile},
+			businesslicense = #{businesslicense},
+			contacts = #{contacts},
+			phone = #{phone},
+			telephone = #{telephone},
+			email = #{email},
+			qq = #{qq},
+			webchat = #{webchat},
+			address = #{address},
+			companytype = #{companytype},
+			servicerange = #{servicerange},
+			casepic = #{casepic},
+			paystatus = #{paystatus},
+			reviewstate = #{reviewstate},
+			trystate = #{trystate},
+			cpflag = #{cpflag},
+			spe1 = #{spe1},
+			spe2 = #{spe2},
+			spe3 = #{spe3},
+			remarks = #{remarks},
+			update_date = #{updateDate},
+			creditcode = #{creditcode}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM rlzy_company
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE rlzy_company SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="RlzyCompany" statementType="STATEMENT">
+		select * FROM rlzy_company  where ${propertyName} = '${value}'
+	</select>
+	
+	<!--loginPasswordCompare  -->
+	<select id="loginPasswordCompare" resultType="RlzyCompany" >
+		SELECT 
+			<include refid="rlzyCompanyColumns"/>
+		FROM rlzy_company a
+		<include refid="rlzyCompanyJoins"/>
+		WHERE
+			a.password = #{password}
+			<if test="companyname != '' and companyname != null">
+			  AND a.companyname = #{companyname}
+			</if>
+			<if test="phone != '' and phone != null">
+			  AND a.phone = #{phone}
+			</if>
+	</select>
+</mapper>

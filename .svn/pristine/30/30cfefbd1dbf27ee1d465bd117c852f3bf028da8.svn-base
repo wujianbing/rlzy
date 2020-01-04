@@ -1,0 +1,190 @@
+/**
+ * Copyright &copy; 2015-2020 <a href="http://www.jeeplus.org/">JeePlus</a> All rights reserved.
+ */
+package com.jeeplus.modules.portal.entity;
+
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import com.jeeplus.core.persistence.DataEntity;
+import com.jeeplus.common.utils.excel.annotation.ExcelField;
+
+/**
+ * 个人简历表Entity
+ * @author 喻昆昆
+ * @version 2019-11-15
+ */
+public class RlzyResume extends DataEntity<RlzyResume> {
+	
+	private static final long serialVersionUID = 1L;
+	private String userid;		// 个人id
+	private String name;		// 名称
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date startdate;		// 开始时间
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date enddate;		// 结束时间
+	private String major;		// 专业(行业）
+	private String describes;		// 描述
+	private String education;		// 学历
+	private String course;		// 培训课程
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date gaindate;		// 获得时间
+	private String experiencetype;	// 类型(教育，工作经验等）
+	private String spe1;		// 预留1
+	private String spe2;		// 预留2
+	private String spe3;		// 预留3
+	private String ispublic;  //简历公开状态
+	private RlzyUser rlzyUser;
+	
+	public RlzyResume() {
+		super();
+	}
+
+	public RlzyResume(String id){
+		super(id);
+	}
+
+	public RlzyResume(RlzyUser rlzyUser){
+		this.rlzyUser = rlzyUser;
+	}
+	
+	public RlzyUser getRlzyUser() {
+		return rlzyUser;
+	}
+
+	public void setRlzyUser(RlzyUser rlzyUser) {
+		this.rlzyUser = rlzyUser;
+	}
+
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+	
+	@ExcelField(title="名称", align=2, sort=2)
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@ExcelField(title="开始时间", align=2, sort=3)
+	public Date getStartdate() {
+		return startdate;
+	}
+
+	public void setStartdate(Date startdate) {
+		this.startdate = startdate;
+	}
+	
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@ExcelField(title="结束时间", align=2, sort=4)
+	public Date getEnddate() {
+		return enddate;
+	}
+
+	public void setEnddate(Date enddate) {
+		this.enddate = enddate;
+	}
+	
+	@ExcelField(title="专业(行业）", align=2, sort=5)
+	public String getMajor() {
+		return major;
+	}
+
+	public void setMajor(String major) {
+		this.major = major;
+	}
+	
+	@ExcelField(title="描述", align=2, sort=6)
+	public String getDescribes() {
+		return describes;
+	}
+
+	public void setDescribes(String describes) {
+		this.describes = describes;
+	}
+	
+	@ExcelField(title="学历", align=2, sort=7)
+	public String getEducation() {
+		return education;
+	}
+
+
+	public void setEducation(String education) {
+		this.education = education;
+	}
+	
+	@ExcelField(title="培训课程", align=2, sort=8)
+	public String getCourse() {
+		return course;
+	}
+
+	public void setCourse(String course) {
+		this.course = course;
+	}
+	
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@ExcelField(title="获得时间", align=2, sort=9)
+	public Date getGaindate() {
+		return gaindate;
+	}
+
+	public void setGaindate(Date gaindate) {
+		this.gaindate = gaindate;
+	}
+	
+	public String getExperiencetype() {
+		return experiencetype;
+	}
+
+	public void setExperiencetype(String experiencetype) {
+		this.experiencetype = experiencetype;
+	}
+
+	@ExcelField(title="预留1", align=2, sort=13)
+	public String getSpe1() {
+		return spe1;
+	}
+
+	public void setSpe1(String spe1) {
+		this.spe1 = spe1;
+	}
+	
+	@ExcelField(title="预留2", align=2, sort=14)
+	public String getSpe2() {
+		return spe2;
+	}
+
+	public void setSpe2(String spe2) {
+		this.spe2 = spe2;
+	}
+	
+	@ExcelField(title="预留3", align=2, sort=15)
+	public String getSpe3() {
+		return spe3;
+	}
+
+	public void setSpe3(String spe3) {
+		this.spe3 = spe3;
+	}
+
+	public String getIspublic() {
+		return ispublic;
+	}
+
+	public void setIspublic(String ispublic) {
+		this.ispublic = ispublic;
+	}
+	
+	
+}

@@ -1,0 +1,38 @@
+package com.jeeplus.modules.portal.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.github.pagehelper.PageHelper;
+import com.jeeplus.core.service.CrudService;
+import com.jeeplus.modules.portal.entity.RlzyPosition;
+import com.jeeplus.modules.portal.mapper.RlzyPositionMapper;
+
+/**
+ * 职位信息表service
+ * @author 赵斌
+ * @version 2019-11-19
+ * 
+ * */
+
+@Service
+@Transactional(readOnly = true)
+public class RlzyPositionService extends CrudService<RlzyPositionMapper, RlzyPosition>{
+	
+	@Autowired
+	RlzyPositionMapper rlzyPositionMapper;
+	
+	public List<RlzyPosition> findNewList() {
+		return rlzyPositionMapper.findNewList();
+	}
+	
+	public List<RlzyPosition> findPageList(int page,int pageSize,RlzyPosition rlzyPosition){
+		PageHelper.startPage(page, pageSize);
+		return rlzyPositionMapper.findList(rlzyPosition);
+	}
+	
+	
+}

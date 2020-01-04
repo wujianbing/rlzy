@@ -1,0 +1,109 @@
+package com.jeeplus.modules.api;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.jeeplus.core.web.BaseController;
+import com.jeeplus.modules.home.utils.CommUtils;
+import com.jeeplus.modules.portal.entity.RlzyCompany;
+import com.jeeplus.modules.portal.entity.RlzyUser;
+import com.jeeplus.modules.portal.service.RlzyCompanyService;
+import com.jeeplus.modules.portal.service.RlzyUserService;
+
+
+@Controller
+@RequestMapping("/api")
+public class ApiLoginController extends BaseController{
+	  
+	@Autowired
+	private RlzyUserService rlzyUserService;
+	@Autowired
+	private RlzyCompanyService rlzyCompanyService;
+	 /**
+	   * 获取用户唯一标识 OpenID 和 会话密钥 session_key
+	   * @return
+	 */
+	 @ResponseBody
+	 @RequestMapping("/code2Session")
+	 public ReturnJson code2Session(String code) {
+		 ReturnJson returnJson =new ReturnJson();
+		 String open= Utils.getOpenId(code);
+		 if(StringUtils.isNotBlank(open)) {
+			 Map<String,Object> map = new HashMap<String, Object>();
+			 map.put("open", open);
+			 returnJson.setResult(map);
+			 returnJson.setCode("200");
+			 returnJson.setStatus(true);
+		 }else {
+			 returnJson.setMessage("授权失败!");
+			 returnJson.setStatus(false);
+		 }
+		 return returnJson;
+	 }
+	  
+	  /**
+	   * 登录
+	   * @return
+	   */
+	  @ResponseBody
+	  @RequestMapping("/login")
+	  public ReturnJson login(String user,String password) {
+		  ReturnJson returnJson =new ReturnJson();
+		  RlzyUser rlzyUser = new RlzyUser();
+			rlzyUser.setPassword(password);
+			if(CommUtils.isInteger(user)){
+				rlzyUser.setPhone(user);
+			}else{
+				rlzyUser.setName(user);
+			}
+			RlzyUser userinfo = rlzyUserService.loginPasswordCompare(rlzyUser);
+			if(userinfo ==null || userinfo.getId()==null || userinfo.getId()==""){
+				RlzyCompany rlzyCompany = new RlzyCompany();
+				rlzyCompany.setPassword(password);
+				if(CommUtils.isInteger(user)){
+					rlzyCompany.setTelephone(user);
+				}else{
+					rlzyCompany.setCompanyname(user);
+				}
+				RlzyCompany compayInfo = rlzyCompanyService.loginPasswordCompare(rlzyCompany);
+				if(compayInfo ==null || compayInfo.getId()==null || compayInfo.getId()==""){
+					returnJson.setMessage("用户不存在!");
+			        returnJson.setStatus(false);;
+				}else{
+					if("1".equals(compayInfo.getPaystatus())) {
+						returnJson.setMessage("用户未支付!");
+				        returnJson.setStatus(false);;
+					}else {
+				        Map<String,Object> map=new HashMap<>();
+				        map.put("user",compayInfo);
+				        returnJson.setResult(map);
+				        returnJson.setStatus(true);;
+					}
+				}
+			}else{
+		        Map<String,Object> map=new HashMap<>();
+		        map.put("user",userinfo);
+		        returnJson.setResult(map);
+			}
+		  return returnJson;
+	  }
+	  
+	
+	  
+	  /**
+	   * 登录退出
+	   * @return
+	   */
+	  @RequestMapping("/quit")
+	  public ReturnJson quit() {
+		  
+		  return null;
+	  }
+	  
+}

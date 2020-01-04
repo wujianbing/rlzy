@@ -1,0 +1,59 @@
+function Login(){
+	
+}
+Login.prototype = {
+	init: function(){
+		login.bind();
+		unti.contH('#sign_v');
+	},
+
+	bind: function(){
+		$('.sign-top>div').click(function(){
+			let i = $(this).index();
+			//console.log(i);
+			$('.layui-form').eq(i).show();
+			$('.layui-form').eq(i).siblings().hide();
+			$(this).addClass('sign-activ');
+			$(this).siblings().removeClass('sign-activ');
+		})
+		
+		$('#phone').blur(function(){
+			//手机失去焦点判断
+			unti.checkPhone('#phone');
+		});
+		$('#yzm_bnt').click(function(){
+			//验证码倒计时
+			if(unti.checkPhone('#phone')){
+				unti.countDown('#yzm_bnt');
+			}
+		})
+		
+		//登录
+		layui.use('form', function() {
+			var form = layui.form;
+			//短信登录
+			form.on('submit(formPhone)', function(data) {
+				console.log(data.field);
+				if(data.field.phone == '13007907892'){
+					localStorage.setItem('user',JSON.stringify(data.field));
+					layer.msg('登陆成功即将跳转首页');
+					setTimeout(function(){
+						 window.location.href = "index.html";
+					},2000)
+				}else{
+					layer.msg('登陆失败');
+				}
+				return false;
+			});
+			
+			//账密登录
+			form.on('submit(formAcc)', function(data) {
+				layer.msg(JSON.stringify(data.field));
+				return false;
+			});
+		});
+	}
+}
+
+let login = new Login();
+login.init();

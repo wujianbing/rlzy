@@ -1,0 +1,207 @@
+/**
+ * Copyright &copy; 2015-2020 <a href="http://www.jeeplus.org/">JeePlus</a> All rights reserved.
+ */
+package com.jeeplus.modules.portal.entity;
+
+
+import com.jeeplus.common.utils.excel.annotation.ExcelField;
+import com.jeeplus.core.persistence.DataEntity;
+
+/**
+ * 企业个人信息关联Entity
+ * @author 喻昆昆
+ * @version 2019-11-15
+ */
+public class RlzyRelation extends DataEntity<RlzyRelation> {
+	
+	private static final long serialVersionUID = 1L;
+	private String userid;		// 用户Id
+	private String companyid;		// 企业id
+	private String positionid;		// 职位Id
+	private String username;		// 求职者名称
+	private String companyname;		// 企业名称
+	private String positionname;		// 职位名称
+	private String age;		// 年龄
+	private String sex;		// 性别
+	private String currentstate;		// 工作状态
+	private String workingage;		// 工作年限
+	private String workingplace;		// 工作地点
+	private String deliverystate;		// 投递状态（1为主动投递/邀请面试）
+	private String userdealstate;		// 用户处理状态  1为接受  2为拒绝
+	private String companydealstate;		// 企业处理状态 
+	private String collectionstate;		// 收藏状态  1 为收藏  2为取消收藏
+	private String salary;		// 薪资
+	private String invite;		// 邀请状态   1邀请  2取消
+	private String spe3;		// 预留3
+	
+	public RlzyRelation() {
+		super();
+	}
+
+	public RlzyRelation(String id){
+		super(id);
+	}
+
+	@ExcelField(title="用户Id", align=2, sort=1)
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+	
+	@ExcelField(title="企业id", align=2, sort=2)
+	public String getCompanyid() {
+		return companyid;
+	}
+
+	public void setCompanyid(String companyid) {
+		this.companyid = companyid;
+	}
+	
+	@ExcelField(title="职位Id", align=2, sort=3)
+	public String getPositionid() {
+		return positionid;
+	}
+
+	public void setPositionid(String positionid) {
+		this.positionid = positionid;
+	}
+	
+	@ExcelField(title="求职者名称", align=2, sort=4)
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	@ExcelField(title="企业名称", align=2, sort=5)
+	public String getCompanyname() {
+		return companyname;
+	}
+
+	public void setCompanyname(String companyname) {
+		this.companyname = companyname;
+	}
+	
+	@ExcelField(title="职位名称", align=2, sort=6)
+	public String getPositionname() {
+		return positionname;
+	}
+
+	public void setPositionname(String positionname) {
+		this.positionname = positionname;
+	}
+	
+	@ExcelField(title="年龄", align=2, sort=7)
+	public String getAge() {
+		return age;
+	}
+
+	public void setAge(String age) {
+		this.age = age;
+	}
+	
+	@ExcelField(title="性别", align=2, sort=8)
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+	
+	@ExcelField(title="工作状态", align=2, sort=9)
+	public String getCurrentstate() {
+		return currentstate;
+	}
+
+	public void setCurrentstate(String currentstate) {
+		this.currentstate = currentstate;
+	}
+	
+	@ExcelField(title="工作年限", align=2, sort=10)
+	public String getWorkingage() {
+		return workingage;
+	}
+
+	public void setWorkingage(String workingage) {
+		this.workingage = workingage;
+	}
+	
+	@ExcelField(title="工作地点", align=2, sort=11)
+	public String getWorkingplace() {
+		return workingplace;
+	}
+
+	public void setWorkingplace(String workingplace) {
+		this.workingplace = workingplace;
+	}
+	
+	@ExcelField(title="投递状态（主动投递/邀请面试）", align=2, sort=12)
+	public String getDeliverystate() {
+		return deliverystate;
+	}
+
+	public void setDeliverystate(String deliverystate) {
+		this.deliverystate = deliverystate;
+	}
+	
+	@ExcelField(title="用户处理状态", align=2, sort=13)
+	public String getUserdealstate() {
+		return userdealstate;
+	}
+
+	public void setUserdealstate(String userdealstate) {
+		this.userdealstate = userdealstate;
+	}
+	
+	@ExcelField(title="企业处理状态", align=2, sort=14)
+	public String getCompanydealstate() {
+		return companydealstate;
+	}
+
+	public void setCompanydealstate(String companydealstate) {
+		this.companydealstate = companydealstate;
+	}
+	
+	@ExcelField(title="收藏状态", align=2, sort=15)
+	public String getCollectionstate() {
+		return collectionstate;
+	}
+
+	public void setCollectionstate(String collectionstate) {
+		this.collectionstate = collectionstate;
+	}
+	
+	@ExcelField(title="薪资", align=2, sort=18)
+	public String getSalary() {
+		return salary;
+	}
+
+	public void setSalary(String salary) {
+		this.salary = salary;
+	}
+	
+	@ExcelField(title="预留2", align=2, sort=19)
+	public String getInvite() {
+		return invite;
+	}
+
+	public void setInvite(String invite) {
+		this.invite = invite;
+	}
+	
+	@ExcelField(title="预留3", align=2, sort=20)
+	public String getSpe3() {
+		return spe3;
+	}
+
+	public void setSpe3(String spe3) {
+		this.spe3 = spe3;
+	}
+	
+}

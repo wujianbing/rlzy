@@ -1,0 +1,118 @@
+function MyFind() {
+
+}
+MyFind.prototype = {
+	init: function() {
+		myFind.bind();
+	},
+	bind: function() {
+		//表格点击
+		layui.use('table');
+	},
+	tab1Accept: function(res) {
+		console.log(res);
+		// layer.alert('编辑行：<br>'+ JSON.stringify(res));
+		//询问框
+		layer.confirm('是否确定接受？', {
+			btn: ['确定', '取消'] //按钮
+		}, function() {
+			layer.msg('接受成功', {
+				icon: 1
+			});
+		});
+	},
+	tab1Decline: function(res) {
+		layer.confirm('是否确定拒绝？', {
+			btn: ['确定', '取消'] //按钮
+		}, function() {
+			layer.msg('拒绝成功', {
+				icon: 1
+			});
+		});
+	},
+	tab2Decline: function(res) {
+		layer.confirm('是否取消收藏？', {
+			btn: ['确定', '取消'] //按钮
+		}, function() {
+			layer.msg('取消成功', {
+				icon: 1
+			});
+		});
+	},
+
+	//求职管理/面试邀请/行点击
+	details: function(res) {
+		console.log(res);
+		layer.open({
+			type: 2, //此处以iframe举例
+			title: '当你选择该窗体时，即会在最顶端',
+			area: ['500px', '600px'],
+			shade: 0,
+			offset: [ //为了演示，随机坐标
+				Math.random() * ($(window).height() - 300), Math.random() * ($(window).width() - 390)
+			],
+			maxmin: true,
+			content: 'pages/details.html',
+			btn: ['继续弹出', '全部关闭'], //只是为了演示
+			yes: function() {
+				$(that).click(); //此处只是为了演示，实际使用可以剔除
+			},
+			btn2: function() {
+				layer.closeAll();
+			},
+			zIndex: layer.zIndex, //重点1
+			success: function(layero) {
+				layer.setTop(layero); //重点2
+			}
+		});
+	}
+}
+let myFind = new MyFind();
+myFind.init();
+
+
+
+//iframe自适应
+function reinitIframe() {
+	var iframe = document.getElementById("iframe");
+	try {
+		var bHeight = iframe.contentWindow.document.body.scrollHeight;
+		var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+		var height = Math.max(bHeight, dHeight);
+		$('#iframe').css({
+			'height': height
+		});
+		console.log(height);
+	} catch (ex) {}
+}
+// iframe切换
+$(function() {
+	$('#navbar li').on('click', function() {
+		//console.log($(this).attr('data-id'));
+		let id = $(this).attr('data-id');
+		let dom = $('#iframe');
+		if (id == 1) {
+			dom.attr('src', 'pages/myResume.html');
+			dom.css({
+				'height': '1186px'
+			});
+		} else if (id == 2) {
+			dom.attr('src', 'pages/myJobwant.html');
+			dom.css({
+				'height': '600px'
+			});
+		} else if (id == 3) {
+			dom.attr('src', 'pages/myCollect.html');
+			dom.css({
+				'height': '600px'
+			});
+		} else if (id == 4) {
+			dom.attr('src', 'accountInformation.html');
+			dom.css({
+				'height': '600px'
+			});
+		}
+		$(this).addClass('navbar-active');
+		$(this).siblings().removeClass('navbar-active');
+	})
+})

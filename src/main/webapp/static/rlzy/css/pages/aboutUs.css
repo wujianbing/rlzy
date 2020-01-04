@@ -1,0 +1,40 @@
+.we-v{
+	padding: 60px 100px 0px 100px;
+}
+.we-ul{
+	color: #666666;
+	border: 1px solid #dddddd;
+	border-radius: 8px;
+    padding: 28px 50px;
+	font-size: 16px;
+	background: #fff;
+	    position: relative;
+}
+.we-ul>li:first-child{
+	font-size: 24px;
+	font-weight: 600;
+	color: #1787fb;
+}
+.we-ul>li{
+	margin-bottom: 30px;
+}
+.we-ul>li:not(:first-child){
+	margin-bottom: 30px;
+}
+
+
+.park-ul .tit{
+	font-size: 20px;
+}
+.park-ul .tit:not(:first-child){
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+.park-btn-v{
+	text-align: center;
+	margin-top: 15px;
+}
+.park-ul>p{
+	font-family:sans-serif !important;
+	line-height: 30px !important;
+}

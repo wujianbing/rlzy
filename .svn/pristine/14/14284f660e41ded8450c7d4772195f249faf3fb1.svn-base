@@ -1,0 +1,161 @@
+package com.jeeplus.modules.api;
+
+import java.io.File;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.jeeplus.common.config.Global;
+import com.jeeplus.common.utils.StringUtils;
+import com.jeeplus.modules.home.utils.SmsCodeUtil;
+import com.jeeplus.modules.home.web.exception.SmsException;
+@Controller
+@RequestMapping("/api")
+public class CommonController {
+	
+	 /**
+	   * 获取用户唯一标识 OpenID 和 会话密钥 session_key
+	   * @return
+	 */
+	 @ResponseBody
+	 @RequestMapping("/code2Session")
+	 public ReturnJson code2Session(Map<String,String> opencode) {
+		 String code =opencode.get("code");
+		 ReturnJson returnJson =new ReturnJson();
+		 String open= Utils.getOpenId(code);
+		 if(StringUtils.isNotBlank(open)) {
+			 Map<String,Object> map = new HashMap<String, Object>();
+			 map.put("open", open);
+			 returnJson.setResult(map);
+			 returnJson.setCode("200");
+			 returnJson.setStatus(true);
+		 }else {
+			 returnJson.setMessage("授权失败!");
+			 returnJson.setStatus(false);
+		 }
+		 return returnJson;
+	 }
+	
+	/**
+	 * 图片上传
+	 * 
+	 * */
+	@ResponseBody
+	@RequestMapping("/upload")
+	public ReturnJson upload(MultipartFile file,String flag) {
+		/* String phone = (String)session.getAttribute("tel") */;
+		ReturnJson returnJson = new ReturnJson();
+	    String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+	    String name = file.getOriginalFilename().substring(0,file.getOriginalFilename().lastIndexOf("."));
+	    // 当前app根目录
+	    String rootPath = Global.getAttachmentDir();
+	    //路径为 ../ files/
+	    // 需要上传的相对地址（application.properties中获取）
+	    String uploadPath="";
+	    if("1".equals(flag)) {
+	    	uploadPath = "personal";
+	    }else {
+	    	uploadPath = "company";
+	    }
+	    // 文件夹是否存在，不存在就创建
+	    String path = name + suffix;
+	    Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH )+1;
+	    String fileUrl = Global.getAttachmentUrl()+uploadPath+"/"+year+"/"+month+"/"+path;
+	    //String url = Global.getAttachmentUrl()+phone+relativePath+ path;
+	    File dir = new File(rootPath+File.separator+uploadPath+"/"+year+"/"+month+"/"+path);
+	    if (!dir.exists())
+			dir.mkdirs();
+	    try {
+	        file.transferTo(dir);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    Map<String,Object> map = new HashMap<String, Object>();
+	    map.put("fileUrl", fileUrl);
+	    returnJson.setResult(map);
+	    return returnJson;
+	}
+	
+	/**
+	 * 发送验证码
+	 * @param phone
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="sendSms")
+	public ReturnJson sendSms(@RequestBody String jsondata, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+		JSONObject obje= JSON.parseObject(jsondata);
+		String phone = obje.getString("phone");
+		ReturnJson returnJson = new ReturnJson();
+		//缓存存储手机号
+		session.setAttribute("tel", phone);
+		// 4位验证码
+		String smsCode = SmsCodeUtil.createRandomVcode();
+		// SmsCodeUtil
+		try {
+			// 发送验证码
+			SmsCodeUtil.sendCode(smsCode, phone, session);
+			returnJson.setStatus(true);
+			returnJson.setMessage("success");
+		} catch (SmsException e) {
+			// TODO Auto-generated catch block
+			e.getMessage();
+			returnJson.setStatus(false);
+			returnJson.setMessage("error");
+		}
+		return returnJson;
+	}
+
+	/**
+	 * 效验验证码
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="checkSms")
+	public ReturnJson checkSms(@RequestBody String jsondata ,HttpSession session, HttpServletRequest request,HttpServletResponse response) {
+		System.out.println(session);
+		JSONObject obje= JSON.parseObject(jsondata);
+		String smsCode = obje.getString("code");
+		String phone = obje.getString("phone");
+		ReturnJson returnJson = new ReturnJson();
+		Map<String,Object> map = new HashMap<String, Object>();
+/*		String phone = (String) session.getAttribute("tel");
+*/		String[] flag = new String[2];
+		try {
+			SmsCodeUtil.validateCode(phone, smsCode, session);
+		} catch (SmsException e) {
+			flag[0] = "0";
+			flag[1] = e.getMessage();
+			map.put("flag", flag);
+			returnJson.setStatus(false);
+			returnJson.setResult(map);
+			returnJson.setMessage("验证码错误，请重新输入!");
+			return returnJson;
+		}
+		flag[0] = "1";
+		SmsCodeUtil.consumeCode(session);
+		map.put("flag", flag);
+		returnJson.setStatus(true);
+		returnJson.setResult(map);
+		returnJson.setMessage("success");
+		return returnJson;
+	}
+}

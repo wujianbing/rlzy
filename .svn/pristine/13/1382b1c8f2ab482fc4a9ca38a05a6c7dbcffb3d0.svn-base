@@ -1,0 +1,142 @@
+html, body{
+    background: #ffffff;	
+}
+.searchBar{
+	display: none;
+}
+.block{
+	display: block;
+}
+.bar{
+	display: none;
+}
+.sign-cont{
+	height: 100%;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	width: 1200px;
+	margin: 0 auto;
+	padding-right: 200px;
+}
+.sign{
+	width: 330px;
+	background: #fff;
+	padding: 10px;
+	font-size: 16px;
+	color: #1e1e1e;
+	padding: 30px 40px;
+    border-radius: 6px;
+	border: 1px solid #e5e5e5;
+}
+.sign-top{
+	display: flex;
+	text-align: center;
+}
+.sign-top>div{
+	flex: 1;
+	color: #999;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 18px;
+	height: 42px;
+	line-height: 42px;
+	user-select: none;
+}
+.sign-top .sign-activ{
+	color: #333;
+	position: relative;
+	transform: scale(1.1);
+	transition: all .2s;
+}
+.sign-activ span{
+	border-bottom: 2px solid #198afa;
+	padding: 5px 0;
+}
+
+.sign-bot{
+	margin-top: 30px;
+}
+.sign .layui-form-label{
+	width: 50px;
+	padding: 9px 15px 9px 0;
+	color: #535353;
+	    font-size: 14px;
+}
+.sign .layui-input-block{
+	margin-left: 0;
+}
+.sign .layui-input{
+	font-size: 14px;
+}
+.sign .layui-form-item{
+    margin-bottom: 24px;
+}
+.login-btn{
+	display: block;
+	width: 100%;
+    font-size: 15px;
+    padding: 8px 0;
+	height: initial;
+	line-height: initial;
+	    border-radius: 4px;
+		    margin: 28px 0;
+}
+.to-acc-v{
+	display: flex;
+	color: #9fadc6;
+	    font-size: 12px;
+}
+.to-acc-v>div{
+	flex: 1;
+}
+.to-acc-v>div:nth-child(2){
+	text-align: right;
+}
+.to-acc-v>div a{
+	    color: #198afa;
+	    font-size: 12px;
+	    cursor: pointer;
+}
+.sign-img{
+	padding-right: 40px;
+}
+.yzm-v{
+	position: relative;
+}
+.yzm-txt{
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #198afa;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 11px 15px;
+	user-select:none;
+	background: transparent;
+	border: none;
+}
+.yzm-txt:after{
+	background-color: #e8eaec;
+    bottom: 0;
+    content: "";
+    height: 20px;
+    left: 0;
+    margin: auto 0;
+    position: absolute;
+    top: 0;
+    width: 1px;	
+}
+.yzm-inp{
+	padding-right: 100px;
+}
+
+.test-span{
+	font-size: 12px;
+	color: red;
+	position: absolute;
+}
+
+.notclick{
+	cursor:not-allowed;
+}

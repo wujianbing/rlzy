@@ -1,0 +1,12 @@
+document.writeln("<!--外部连接跳转-->");
+document.writeln("			<div class=\'webLinkWork\'>");
+document.writeln("				<span><a>关于我们</a></span>&emsp;|&emsp;");
+document.writeln("				<span><a href=\'#\'>联系我们</a></span>&emsp;|&emsp;");
+document.writeln("				<span><a>客服中心</a></span>&emsp;|&emsp;");
+document.writeln("				<span><a>招聘入口</a></span>");
+document.writeln("			</div>");
+document.writeln("			<!--版权号-->");
+document.writeln("			<div class=\'banquan\'>");
+document.writeln("				<span>Copyright</span>&emsp;&copy;<span> 2019 吴忠人力资源服务产业园,</span>&emsp;<span> All Rights Reserved</span>&emsp;　宁ICP备000000号");
+document.writeln("			</div>");
+document.writeln("		</div>");

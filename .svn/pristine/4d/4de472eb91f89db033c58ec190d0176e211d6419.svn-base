@@ -1,0 +1,543 @@
+package com.jeeplus.modules.home.web;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.google.gson.Gson;
+import com.jeeplus.common.config.Global;
+import com.jeeplus.common.utils.CookieUtils;
+import com.jeeplus.common.utils.MyBeanUtils;
+import com.jeeplus.modules.portal.entity.RlzyPosition;
+import com.jeeplus.modules.portal.entity.RlzyRelation;
+import com.jeeplus.modules.portal.entity.RlzyResume;
+import com.jeeplus.modules.portal.entity.RlzyUser;
+import com.jeeplus.modules.portal.service.NewsService;
+import com.jeeplus.modules.portal.service.RlzyRelationService;
+import com.jeeplus.modules.portal.service.RlzyResumeService;
+import com.jeeplus.modules.portal.service.RlzyUserService;
+import com.jeeplus.modules.sys.utils.DictUtils;
+
+/**
+ * person个人控制层
+ * 
+ * @author 胡林斐
+ * @Date 2019-11-13 17:45:13
+ */
+@Controller
+@RequestMapping("/user")
+public class PersonController {
+
+	@Autowired
+	RlzyUserService rlzyUserService;
+	
+	@Autowired
+	NewsService newsService;
+	
+	@Autowired
+	RlzyResumeService rlzyResumeService;
+	
+	@Autowired
+	RlzyRelationService rlzyRelationService;
+	
+	
+	/**
+	 * 个人注册
+	 * @param model
+	 * @param rlzyUser
+	 * @param flag
+	 * @return
+	 */
+	@RequestMapping("/register")
+	public String personregister(Model model,RlzyUser rlzyUser) {
+		return "modules/home/personalRegisters";
+	}
+	
+	
+	/**
+	 * 保存用户注册信息
+	 * @param phone
+	 * @param model
+	 * @param session
+	 * @param rlzyUser
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="saveUser")
+	public String saveUser(RlzyUser rlzyUser) {
+		rlzyUser.setIspublic("2");
+        Date birth =rlzyUser.getBirthday();
+        Calendar now = Calendar.getInstance();
+        Calendar born = Calendar.getInstance();
+         
+        now.setTime(new Date());
+        born.setTime(birth);
+         
+        if(born.after(now)){
+             throw new IllegalArgumentException("Can't be born in the future"); 
+        }
+         
+        int age = now.get(Calendar.YEAR)-born.get(Calendar.YEAR);
+        if(now.get(Calendar.DAY_OF_YEAR) < born.get(Calendar.DAY_OF_YEAR)) {
+             age -= 1;
+        }
+        rlzyUser.setAge(String.valueOf(age));
+        rlzyUser.setCpflag("1");
+		rlzyUserService.save(rlzyUser);
+		return "1";
+	}
+	
+	/**
+	 * 首次进入
+	 * @param model
+	 * @param rlzyUser
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/personal")
+	public String personal(Model model,RlzyUser rlzyUser,HttpSession session,HttpServletRequest request) {
+		//String phone = (String)session.getAttribute("phone");
+		String user=CookieUtils.getCookie(request, "user");
+		if(!user.equals("")) {
+			JSONObject jsonObject = JSON.parseObject(user);
+			System.out.println(jsonObject.get("id"));
+			String id = (String) jsonObject.get("id");
+			model.addAttribute("rlzyUser",rlzyUserService.get(id));
+			return "modules/home/personalCenter";
+		}else {
+			return "modules/home/login";
+		}
+	}
+	
+	/**
+	 * 查询用户简历信息
+	 * @param model
+	 * @param rlzyUser
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/myResume")
+	public String myResume(String id,Model model,RlzyResume rlzyResume) {
+		RlzyUser rlzyUser = rlzyUserService.get(id);
+		model.addAttribute("rlzyUser",rlzyUser);
+		model.addAttribute("rlzyResumeList",rlzyUser.getRlzyResumeList());
+		return "modules/home/pages/myResume";
+	}
+	
+	/**
+	 * 主表插入(修改)简历信息
+	 * @param user
+	 * @throws Exception 
+	 */
+	@ResponseBody
+	@RequestMapping("/saveUserInfo")
+    public String saveUserInfo(RlzyUser rlzyUser) throws Exception {
+		if(!rlzyUser.getIsNewRecord()) {
+			RlzyUser t = rlzyUserService.get(rlzyUser.getId());
+			MyBeanUtils.copyBeanNotNull2Bean(rlzyUser, t);
+			rlzyUserService.save(t);
+		}
+		return "1";
+	}
+	
+	/**
+	 * 简历信息新增和保存
+	 * @param rlzyResume
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/saveResume")
+    public String saveResume(RlzyResume rlzyResume){
+		rlzyResumeService.save(rlzyResume);
+		Gson gson = new Gson();
+	    String rlzyResumeJson = gson.toJson(rlzyResume);
+		System.out.println(rlzyResumeJson.toString());
+		return "success";
+    }
+	
+	/**
+	 * 简历信息删除
+	 * @param rlzyResume
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/delResume")
+    public String deleteResume(String id){
+		rlzyResumeService.delete(rlzyResumeService.get(id));
+		return "success";
+    }
+	
+	/**
+	 * 求职管理
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="careerManage")
+	public String careerManage(String userId,Model model,HttpSession session) {
+			model.addAttribute("userId", userId);
+		return "/modules/home/pages/careerManage";
+	}
+	
+	/**
+	 * 求职管理-面试邀请
+	 * @param relationId
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="interview")
+	public String interview(String userId) {
+		RlzyRelation rlzyRelation = new RlzyRelation();
+		rlzyRelation.setUserid(userId);
+		rlzyRelation.setInvite("1");;
+		rlzyRelation.setCompanydealstate("1");
+		List<RlzyRelation> relationList = rlzyRelationService.deliverList(rlzyRelation);
+		StringBuffer jsonStr = new StringBuffer();
+		jsonStr.append("{\"code\":\"0\",");
+		jsonStr.append("\"msg\":\"0\",");
+		jsonStr.append("\"count\":\""+relationList.size()+"\",");
+		jsonStr.append("\"data\":[");
+		if(relationList.size() > 0) {
+			for(int i=0;i<relationList.size();i++) {
+				if(relationList.size()-i==1) {
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String dates = formatter.format(relationList.get(i).getUpdateDate());
+					jsonStr.append("{\"id\":\""+i+"\",");
+					jsonStr.append("\"relationId\":\""+relationList.get(i).getId()+"\",");
+					jsonStr.append("\"desiredposition\":\""+relationList.get(i).getDesiredposition()+"\",");
+					jsonStr.append("\"companyname\":\""+relationList.get(i).getCompanyname()+"\",");
+					jsonStr.append("\"workingplace\":\""+relationList.get(i).getWorkingplace()+"\",");
+					jsonStr.append("\"desiredsalary\":\""+DictUtils.getDictLabel(relationList.get(i).getDesiredsalary(), "salary","")+"\",");
+					jsonStr.append("\"accept\":\""+DictUtils.getDictLabel(relationList.get(i).getAccept(), "accept","")+"\",");
+					jsonStr.append("\"updateDate\":\""+dates+"\"");
+					jsonStr.append("}");
+				}else {
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String date = formatter.format(relationList.get(i).getUpdateDate());
+					jsonStr.append("{\"id\":\""+i+"\",");
+					jsonStr.append("\"relationId\":\""+relationList.get(i).getId()+"\",");
+					jsonStr.append("\"desiredposition\":\""+relationList.get(i).getDesiredposition()+"\",");
+					jsonStr.append("\"companyname\":\""+relationList.get(i).getCompanyname()+"\",");
+					jsonStr.append("\"workingplace\":\""+relationList.get(i).getWorkingplace()+"\",");
+					jsonStr.append("\"desiredsalary\":\""+DictUtils.getDictLabel(relationList.get(i).getDesiredsalary(), "salary","")+"\",");
+					jsonStr.append("\"accept\":\""+DictUtils.getDictLabel(relationList.get(i).getAccept(), "accept","")+"\",");
+					jsonStr.append("\"updateDate\":\""+date+"\"");
+					jsonStr.append("},");
+				}
+			}
+		}
+		jsonStr.append("]}");
+		return jsonStr.toString();
+	}
+	
+	/**
+	 * 求职管理-申请记录
+	 * @param relationId
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="applyFor")
+	public String applyFor(String userId) {
+		RlzyRelation rlzyRelation = new RlzyRelation();
+		rlzyRelation.setUserid(userId);
+		rlzyRelation.setDeliverystate("1");
+		List<RlzyRelation> relationLists = rlzyRelationService.applyList(rlzyRelation);
+		StringBuffer jsonStr = new StringBuffer();
+		jsonStr.append("{\"code\":\"0\",");
+		jsonStr.append("\"msg\":\"0\",");
+		jsonStr.append("\"count\":\""+relationLists.size()+"\",");
+		jsonStr.append("\"data\":[");
+		if(relationLists.size() > 0) {
+			for(int i=0;i<relationLists.size();i++) {
+				if(relationLists.size()-i==1) {
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String dates = formatter.format(relationLists.get(i).getUpdateDate());
+					jsonStr.append("{\"id\":\""+i+"\",");
+					jsonStr.append("\"relationId\":\""+relationLists.get(i).getId()+"\",");
+					jsonStr.append("\"positionname\":\""+relationLists.get(i).getPositionname()+"\",");
+					jsonStr.append("\"companyname\":\""+relationLists.get(i).getCompanyname()+"\",");
+					jsonStr.append("\"workingplace\":\""+relationLists.get(i).getWorkingplace()+"\",");
+					jsonStr.append("\"salary\":\""+DictUtils.getDictLabel(relationLists.get(i).getSalary(), "salary","")+"\",");
+					jsonStr.append("\"updateDate\":\""+dates+"\",");
+					jsonStr.append("\"invite\":\""+DictUtils.getDictLabel(relationLists.get(i).getInvite(), "invite","")+"\"");
+					jsonStr.append("}");
+				}else {
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String date = formatter.format(relationLists.get(i).getUpdateDate());
+					jsonStr.append("{\"id\":\""+i+"\",");
+					jsonStr.append("\"relationId\":\""+relationLists.get(i).getId()+"\",");
+					jsonStr.append("\"positionname\":\""+relationLists.get(i).getPositionname()+"\",");
+					jsonStr.append("\"companyname\":\""+relationLists.get(i).getCompanyname()+"\",");
+					jsonStr.append("\"workingplace\":\""+relationLists.get(i).getWorkingplace()+"\",");
+					jsonStr.append("\"salary\":\""+DictUtils.getDictLabel(relationLists.get(i).getSalary(), "salary","")+"\",");
+					jsonStr.append("\"updateDate\":\""+date+"\",");
+					jsonStr.append("\"invite\":\""+DictUtils.getDictLabel(relationLists.get(i).getInvite(), "invite","")+"\"");
+					jsonStr.append("},");
+				}
+			}
+		}
+		jsonStr.append("]}");
+		return jsonStr.toString();
+	}
+	
+	/**
+	 * 求职管理-接受按钮
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="accept")
+	public String accept(String id) {
+		RlzyRelation rlzyRelation = rlzyRelationService.get(id);
+		rlzyRelation.setUserdealstate("1");
+		rlzyRelation.setAccept("2");
+		rlzyRelationService.save(rlzyRelation);
+		return "1";
+	}
+	
+	/**
+	 * 求职管理-拒绝按钮
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="refuse")
+	public String refuse(String id) {
+		RlzyRelation rlzyRelation = rlzyRelationService.get(id);
+		rlzyRelation.setAccept("3");
+		rlzyRelation.setCompanydealstate("3");
+		rlzyRelationService.save(rlzyRelation);
+		return "1";
+	}
+	
+	/**
+	 * 职位收藏夹
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="jobCollect")
+	public String jobCollect(String userId,Model model,HttpServletRequest request) {
+		model.addAttribute("userId", userId);
+		return "/modules/home/pages/jobCollect";
+	}
+	
+	/**
+	 * 职位收藏夹-数据接口
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="collectData")
+	public String collectData(String userId,Model model,HttpServletRequest request) {
+		RlzyRelation rlzyRelation = new RlzyRelation();
+		rlzyRelation.setUserid(userId);
+		rlzyRelation.setCollectionstate("1");
+		List<RlzyRelation> relationList = rlzyRelationService.collectList(rlzyRelation);
+		StringBuffer jsonStr = new StringBuffer();
+		jsonStr.append("{\"code\":\"0\",");
+		jsonStr.append("\"msg\":\"0\",");
+		jsonStr.append("\"count\":\""+relationList.size()+"\",");
+		jsonStr.append("\"data\":[");
+		if(relationList.size() > 0) {
+			for(int i=0;i<relationList.size();i++) {
+				if(relationList.size()-i==1) {
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String dates = formatter.format(relationList.get(i).getUpdateDate());
+					jsonStr.append("{\"id\":\""+i+"\",");
+					jsonStr.append("\"relationId\":\""+relationList.get(i).getId()+"\",");
+					jsonStr.append("\"positionname\":\""+relationList.get(i).getPositionname()+"\",");
+					jsonStr.append("\"companyname\":\""+relationList.get(i).getCompanyname()+"\",");
+					jsonStr.append("\"workingplace\":\""+relationList.get(i).getWorkingplace()+"\",");
+					jsonStr.append("\"salary\":\""+DictUtils.getDictLabel(relationList.get(i).getSalary(), "salary","")+"\",");
+					jsonStr.append("\"updateDate\":\""+dates+"\"");
+					jsonStr.append("}");
+				}else {
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String date = formatter.format(relationList.get(i).getUpdateDate());
+					jsonStr.append("{\"id\":\""+i+"\",");
+					jsonStr.append("\"relationId\":\""+relationList.get(i).getId()+"\",");
+					jsonStr.append("\"positionname\":\""+relationList.get(i).getPositionname()+"\",");
+					jsonStr.append("\"companyname\":\""+relationList.get(i).getCompanyname()+"\",");
+					jsonStr.append("\"workingplace\":\""+relationList.get(i).getWorkingplace()+"\",");
+					jsonStr.append("\"salary\":\""+DictUtils.getDictLabel(relationList.get(i).getSalary(), "salary","")+"\",");
+					jsonStr.append("\"updateDate\":\""+date+"\"");
+					jsonStr.append("},");
+				}
+			}
+		}
+		jsonStr.append("]}");
+		return jsonStr.toString();
+	}
+	
+	/**
+	 * 职位收藏夹-收藏
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="collect")
+	public String collect(String id) {
+		RlzyRelation rlzyRelation = rlzyRelationService.get(id);
+		rlzyRelation.setUserdealstate("1");
+		rlzyRelationService.save(rlzyRelation);
+		return "1";
+	}
+	
+	/**
+	 * 职位收藏夹-申请
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="applyJob")
+	public String applyJob(String id) {
+		RlzyRelation rlzyRelation = rlzyRelationService.get(id);
+		rlzyRelation.setDeliverystate("1");
+		rlzyRelationService.save(rlzyRelation);
+		return "1";
+	}
+	
+	/**
+	 * 职位收藏夹-取消
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="cancel")
+	public String cancel(String id) {
+		RlzyRelation rlzyRelation = rlzyRelationService.get(id);
+		rlzyRelation.setCollectionstate("2");
+		rlzyRelationService.save(rlzyRelation);
+		return "1";
+	}
+	
+	/**
+	 * 用户账户管理
+	 * @param userId
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="personalAccount")
+	public String personalAccount(String userId,Model model) {
+		RlzyUser rlzyUser = rlzyUserService.get(userId);
+		model.addAttribute("rlzyUser", rlzyUser);
+		return "/modules/home/pages/personalAccount";
+	}
+	
+	/**
+	 * 用户账户管理-手机号更改
+	 * @param id
+	 * @param phone
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="accountPhone")
+	public String accountPhone(String id,String phone) {
+		RlzyUser rlzyUser = rlzyUserService.get(id);
+		rlzyUser.setPhone(phone);
+		rlzyUserService.save(rlzyUser);
+		return "1";
+	}
+	
+	/**
+	 * 用户账户管理-密码修改
+	 * @param id
+	 * @param pw
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="accountPassword")
+	public String accountPassword(String id,String pw) {
+		RlzyUser rlzyUser = rlzyUserService.get(id);
+		rlzyUser.setPassword(pw);
+		rlzyUserService.save(rlzyUser);
+		return "1";
+	}
+	
+	
+	/**
+	 * 多文件上传
+	 * @param file
+	 * @param session
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="moneyUpload")
+	public Map moneyUpload(MultipartFile file,HttpSession session) {
+	    String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+	    String name = file.getOriginalFilename().substring(0,file.getOriginalFilename().lastIndexOf("."));
+	    // 当前app根目录
+	    String rootPath = Global.getAttachmentDir();
+	    // 需要上传的相对地址（application.properties中获取）
+	    String relativePath = "personal";
+	    // 文件夹是否存在，不存在就创建
+	    Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH )+1;
+	    String path =  name + suffix;
+	    String url = Global.getAttachmentUrl()+relativePath+"/"+year+"/"+month+"/"+path;
+	    File dir = new File(rootPath+File.separator+relativePath+"/"+year+"/"+month+"/"+path);
+	    Map<String,Object> result = new HashMap<String, Object>();
+	    if (!dir.exists())
+			dir.mkdirs();
+	    try {
+	        file.transferTo(dir);
+	    } catch (Exception e) {
+	    	result.put("code", -1);
+            result.put("msg", "上传失败");
+            result.put("filePath", "");
+	        return result;
+	    }
+	    result.put("code", 0);
+        result.put("msg", "上传成功");
+        result.put("filePath", url);
+	    return result;
+		}
+	
+	/**
+	 * 多文件上传-保存
+	 * @param pw
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="saveUpload")
+	public String saveUpload(String id,String data) {
+		RlzyUser rlzyUser = rlzyUserService.get(id);
+		rlzyUser.setResumedoc(data);
+		rlzyUserService.save(rlzyUser);
+		return "1";
+	}
+	
+	/**
+	 * 用户协议
+	 * @return
+	 */
+	@RequestMapping(value="agreement")
+	public String agreement() {
+		return "/modules/home/agreement";
+	}
+}

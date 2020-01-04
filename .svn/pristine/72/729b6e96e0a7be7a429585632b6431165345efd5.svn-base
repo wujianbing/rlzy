@@ -1,0 +1,144 @@
+package com.jeeplus.modules.home.web;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.jeeplus.core.persistence.Page;
+import com.jeeplus.modules.portal.entity.RlzyCompany;
+import com.jeeplus.modules.portal.entity.RlzyPosition;
+import com.jeeplus.modules.portal.entity.RlzyRelation;
+import com.jeeplus.modules.portal.entity.RlzyUser;
+import com.jeeplus.modules.portal.service.RlzyCompanyService;
+import com.jeeplus.modules.portal.service.RlzyPositionService;
+import com.jeeplus.modules.portal.service.RlzyRelationService;
+import com.jeeplus.modules.portal.service.RlzyUserService;
+
+/**
+ * Position投递简历控制层
+ * 
+ * @author 胡林斐
+ * @Date 2019-11-21 14:46:34    
+ */
+@Controller
+@RequestMapping("/position")
+public class PositionController {
+	
+	@Autowired
+	RlzyUserService rlzyUserService;
+	
+	@Autowired
+	RlzyCompanyService rlzyCompanyService;
+	
+	@Autowired
+	RlzyPositionService rlzyPositionService;
+	
+	@Autowired
+	RlzyRelationService rlzyRelationService;
+
+	/**
+	 * 职位展示页面
+	 * @param model
+	 * @param rlzyPosition
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/positionList")
+	public String PositionList(Model model,RlzyUser rlzyUser,RlzyPosition rlzyPosition,HttpServletRequest request,HttpServletResponse response) {
+		//String phone = (String)session.getAttribute("phone");
+		String phone = "13615693261";
+		rlzyUser.setPhone(phone);
+		List<RlzyUser> rlzyUserList = rlzyUserService.findList(rlzyUser);
+		if(rlzyUserList.size() > 0) {
+			model.addAttribute("userid",rlzyUserList.get(0).getId());
+		}
+		Page<RlzyPosition> page = new Page<>();
+		page.setPageNo(1);
+		page.setPageSize(10);
+		Page<RlzyPosition> rlzyPositionList = rlzyPositionService.findPages(page, rlzyPosition);
+		model.addAttribute("rlzyPositionList", rlzyPositionList.getList());
+		model.addAttribute("count",rlzyPositionList.getCount());
+		return "modules/home/findInfo";
+	}
+	
+	/**
+	 * 根据页码显示职位
+	 * @param id
+	 * @param page
+	 * @param pageSize
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("pageList")
+	public List<RlzyPosition> pageList(String id,String page,String pageSize){
+		RlzyPosition rlzyPosition = new RlzyPosition();
+		Page<RlzyPosition> pages = new Page<>();
+		pages.setPageNo(Integer.parseInt(page));
+		pages.setPageSize(Integer.parseInt(pageSize));
+		Page<RlzyPosition> positionList = rlzyPositionService.findPages(pages, rlzyPosition);
+		return positionList.getList();
+	}
+	
+	/**
+	 * 职位详情页面
+	 * @param model
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("positionDetails")
+	public String PositionDetails(Model model,String id,String userid) {
+		RlzyPosition rlzyPositions = rlzyPositionService.get(id);
+		RlzyCompany rlzyCompanys = rlzyCompanyService.get(rlzyPositionService.get(id).getCompanyid());
+		List<RlzyPosition> welfaretypeList = rlzyPositionService.findList(rlzyPositions);
+		model.addAttribute("userid",userid);
+		model.addAttribute("rlzyPosition", rlzyPositions);
+		model.addAttribute("rlzyCompany", rlzyCompanys);
+		model.addAttribute("welfaretypeList", welfaretypeList);
+		return "modules/home/findHuman";
+	}
+	
+	/**
+	 * 申请职位
+	 * @param userid
+	 * @param positionid
+	 */
+	@ResponseBody
+	@RequestMapping("/applyPosition")
+	public String applyPosition(String userid,String companyid,String positionid) {
+		RlzyRelation rlzyRelation = new RlzyRelation();
+		rlzyRelation.setUsername(rlzyUserService.get(userid).getName());
+		rlzyRelation.setPositionname(rlzyPositionService.get(positionid).getPositionname());
+		rlzyRelation.setAge(rlzyUserService.get(userid).getAge());
+		rlzyRelation.setSex(rlzyUserService.get(userid).getSex());
+		rlzyRelation.setWorkingage(rlzyUserService.get(userid).getWorkingage());
+		rlzyRelation.setCurrentstate(rlzyUserService.get(userid).getCurrentstate());
+		rlzyRelationService.save(rlzyRelation);
+		return "1";
+	}
+	
+	/**
+	 * 收藏职位
+	 * @param userid
+	 * @param companyid
+	 * @param positionid
+	 */
+	@RequestMapping("/keepPosition")
+	public String keepPosition(String userid,String companyid,String positionid) {
+		RlzyRelation rlzyRelation = new RlzyRelation();
+		rlzyRelation.setPositionname(rlzyPositionService.get(positionid).getPositionname());
+		rlzyRelation.setCompanyname(rlzyCompanyService.get(companyid).getCompanyname());
+		rlzyRelation.setWorkingplace(rlzyPositionService.get(positionid).getWorkingplace());
+		rlzyRelation.setSalary(rlzyPositionService.get(positionid).getSalaryrange());
+		rlzyRelationService.save(rlzyRelation);
+		return "1";
+	}
+	
+}

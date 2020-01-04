@@ -1,0 +1,351 @@
+html,
+body {
+	width: 100%;
+	font-size: 62.5%;
+	background: #f5f6f6;
+}
+
+
+
+* {
+	padding: 0;
+	margin: 0;
+}
+.infopname1.lastname.ful {
+    min-height: 3rem;
+}
+.banner {
+	width: 100%;
+	height: 18rem;
+	padding:1rem 0;
+	background: #fff;
+	background: url(../img/bannerFind.png) no-repeat;
+	background-size: cover;
+}
+.bannerdel {
+    width: 1200px;
+    height: 16rem;
+    padding: 2rem 0;
+    margin: 0 auto;
+}
+.renshi{
+	font-weight: bolder;
+}
+.time{
+	font-size: 16px;
+}
+.findman {
+    font-size: 18px;
+    height: 4rem;
+    line-height: 4rem;
+    padding-right: 13px;
+    color: #fff;
+}
+.yuqbottom {
+
+    background: none;
+
+    display: block;
+}
+.yuqbottom: after{
+	content:"."; 
+	display:block;
+	 clear:both;
+	  height:0; 
+	  overflow:hidden;
+	   visibility:hidden; 
+	   } 
+.sq{
+	padding: 0px 20px;
+	font-size: 14px;
+	background: #4b96cf;
+	height: 3rem;
+    line-height: 3rem;
+	color: #fff;
+	border-radius: 5px;
+}
+.infoname {
+    width: 92%;
+    /* padding: 0 10%; */
+    margin: 0 auto;
+    border-bottom: 1px dashed #ccc;
+}
+ol li {
+    list-style: decimal;
+}
+.infopname1{
+	width: 100%;
+	display: flex;
+	height: 3rem;
+	line-height: 3rem;
+	font-size: 14px;
+	color: #666666;
+}
+
+.infopname1 .sitename{
+	
+	display: inline-block;
+	flex: 1;
+}
+
+.rightman{
+	float: right;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+
+.infoname  h5 {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+	font-weight: bold;
+	padding: 30px 0 10px;
+	color:#4b96cf;
+}
+
+.yuqbottom:after{
+    content: "";
+    height: 0;
+    clear: both;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+}
+.yuleft{
+	width: 75%;
+	/*height: 60rem;*/
+	float: left;
+	background: #fff;
+}
+.yuright{
+	width:22%;
+	
+	float: right;
+	
+}
+
+.leftname{
+	    white-space: nowrap;
+	    font-size: 14px;
+	   color: #666666;
+}
+
+.tp {
+    padding-left: 16px;
+}
+ol{
+	padding-left: 30px;
+}
+
+.infoname ol li{
+	color: #666;
+	font-size: 14px;
+}
+
+.infoname ol li:last-child{
+	margin-bottom: 20px;
+}
+.btn {
+    padding: 8px 20px;
+    color: #fff;
+    background: #4b96cf;
+    font-size: 15px;
+    cursor: pointer;
+}
+.infolast{
+	border-bottom: 0;
+	
+}
+.lastjk {
+    width: 92%;
+    /* padding: 0 10% 6%; */
+    margin-top: 4rem;
+    margin: 0 auto;
+    margin-bottom: 3rem;
+    margin-top: 4rem;
+}
+.righttop{
+width: 90%;
+background: #fff;
+padding: 5% 10%;
+margin: 0 auto;
+}
+
+.righttop .imgimg{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+height: 10rem;
+
+}
+.righttop .imgimg img{
+width: 100%;
+height: 100%;
+
+}
+.rightbottom{
+width: 90%;
+background: #fff;
+padding: 5% 10%;
+margin: 2rem auto;
+}
+.textword textarea{
+	width: 100%;
+	border-radius: 10px;
+	border:1px solid #eceded;
+	text-indent: 2em;
+	padding: 5px;
+}
+
+.infosend{
+	width:100%;
+    height: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.yx {
+    display: inline-block;
+    padding: 8px 20px;
+    margin-left: 40px;
+    cursor: pointer;
+    font-size: 14px;
+    background: #efe7e1;
+}
+
+.wordmy{
+	text-indent: 2em;
+	font-size: 14px;
+	    color: #666;
+}
+
+.layui-timeline-title1{
+	display: inline-block;
+	width: 260px;
+    margin-right: 30px;
+}
+.tety{
+	display: inline-block;
+	border-right: 1px solid #ddd;
+    min-width: 80px;
+    max-width: 140px;
+    text-align: center;
+    padding: 0 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+	font-size: 16px;
+    color: #333;
+    line-height: 34px;
+    margin-right: 40px;
+    cursor: pointer;
+    
+}
+.rev-teach2{
+	 text-align: center;
+    padding: 0 5px;
+		font-size: 16px;
+    color: #333;
+    line-height: 34px;
+}
+.qyfl li{
+	display: inline-block;
+    border: 1px solid #ccc;;
+    padding: 0px 6px;
+    border-radius: 4px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 26px;
+    line-height: 26px;
+    font-size: 14px;
+    color: #666;
+}
+
+.qyfl li:first-child{
+
+
+    margin-left: 10px;
+ 
+}
+
+.zhi{
+	color: #000;
+}
+
+.sitename{
+	font-size: 14px;
+}
+
+.infopname1{
+	font-size: 14px;
+}
+
+.infopname{
+	font-size: 14px;
+}
+.ful{
+	display: flex;
+	line-height: 3rem;
+}
+.layui-timeline-content.layui-text.timeline-flex {
+
+    display: flex;
+    align-items: center;
+}
+.layui-timeline-item {
+    position: relative;
+    padding-bottom:10px;
+}
+.layui-timeline-axis {
+
+    left: 275px;
+    top: 5px;
+    color: #2196f3;
+}
+.layui-timeline-item:before {
+    content: '';
+    position: absolute;
+    left: 285px;
+    top: 14px;
+    z-index: 0;
+    width: 1px;
+    height: 78%;
+}
+li.layui-timeline-item:last-child{
+	margin-bottom: 20px;
+}
+.timeline-flex .tety:last-child{
+	border-right: 0;
+}
+.h5img{
+	display: flex;
+	height: 10rem;
+	align-items: center;
+}
+.imgimg1{
+	width:100px;
+    height:60px;
+   line-height: 60px;
+   text-align: center;
+}
+.imgimg1 img{
+	width: 58px;
+    height: 58px;
+}
+.imgimg2 {
+    width: 259px;
+    font-size: 15px;
+    color: #333;
+}
+.imgimg3 input {
+    width: 75px;
+    height: 29px;
+    border-radius: 6px;
+    color: #fff;
+    background: #4b96cf;
+    outline: none;
+    border: 1px solid #4b96cf;
+    text-align: center;
+}

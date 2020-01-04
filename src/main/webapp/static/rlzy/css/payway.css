@@ -1,0 +1,130 @@
+html,body{
+	background:#eff0f1;
+	
+}
+
+.toptops {
+  /*  width: 100%;*/
+    padding: 0 40px;
+    text-align: right;
+    height: 30px;
+    background: #81868b;
+    color: #fff;
+    line-height: 30px;
+    font-size: 12px;
+}
+.tc{
+	margin-left:40px;
+	color: #fff;
+	font-weight: bold;
+	font-size: 12px;
+}
+.zhifu {
+	padding: 10px 0;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    margin-bottom:60px;
+}
+.zhifu .lrf{
+    width: 84px;
+    height: 84px;
+    margin-left: 86px;
+}
+.zhifu .lrf img{
+    width: 84px;
+    height: 84px;
+}
+.left1p {
+	padding-left: 80px;
+    width: 200px;
+    text-align: right;
+    display: flex;
+    border-right: 1px solid #ccc;
+    /* padding-left: 30px; */
+    /* text-align: right; */
+    justify-content: flex-end;
+    padding-right: 15px;
+}
+.rightp{
+   	
+    width: 200px;
+        padding-left: 15px;
+        color: #666;
+        font-size: 20px;
+        font-weight: bold;
+     padding-top:56px;
+}
+
+i.iconfont.icon-zhifubao.zfb {
+    font-size: 39px;
+    color: #1588bb;
+}
+p.name1 {
+    font-size: 22px;
+    font-weight: bolder;
+    color: #393433;
+}
+p.name2 {
+    font-size: 12px;
+    color: #000;
+    text-align: center;
+    font-weight: bold;
+}
+.tisway {
+	padding-left: 40px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+	margin: 0 auto;
+    font-size: 16px;
+    margin-bottom: 40px;
+}
+.paycode{
+	width:90%;
+	text-align: left;
+	margin: 0 auto;
+	height: 500px;
+
+}
+.paynamew{
+	width:1000px;
+	margin: 0 auto;
+     padding:50px 0;
+	/*border-bottom: 2px solid #c2c3c3;
+	border-top: 2px solid #c2c3c3;*/
+	background: #fff;
+}
+.pay1 {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.pay2 {
+    text-align: center;
+    font-size: 28px;
+    color: #ff6501;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.pay3 {
+    text-align: center;
+    width: 350px;
+    height: 350px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    border: 2px dotted #ccc;
+    line-height: 350px;
+}
+
+.pay3 img {
+    width: 300px;
+    height:300px;
+    margin-top: -338px;
+    margin-left: 25px;
+}
+.time{
+	color: red;
+}

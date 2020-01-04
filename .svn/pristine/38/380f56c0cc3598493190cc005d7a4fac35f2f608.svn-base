@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.portal.mapper.VideoMapper">
+    
+	<sql id="videoColumns">
+		a.id AS "id",
+		a.title AS "title",
+		a.brief AS "brief",
+		a.content AS "content",
+		a.is_top AS "isTop",
+		a.audit AS "audit",
+		a.amount AS "amount",
+		a.video_model_id AS "videoModel.id",
+		b.name AS "videoModel.name",
+		a.pic AS "pic",
+		a.path AS "path",
+		a.duration AS "duration",
+		a.create_date AS "createDate",
+		a.create_by AS "createBy.id",
+		a.update_date AS "updateDate",
+		a.update_by AS "updateBy.id",
+		a.remarks AS "remarks",
+		a.source AS "source",
+		a.spe2 AS "spe2",
+		(SELECT u.name FROM sys_user u WHERE u.id = a.create_by) AS "createBy.name",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="videoJoins">
+			LEFT JOIN p_video_model b ON b.id = a.video_model_id
+	</sql>
+	
+    <resultMap type="Video" id="VideoResult" autoMapping="true">
+    	<result column="content" property="content"   typeHandler="com.jeeplus.core.mapper.ConvertBlobTypeHandler"/>
+    </resultMap>
+    
+	<select id="get" resultMap="VideoResult" >
+		SELECT 
+			<include refid="videoColumns"/>
+		FROM p_video a
+		<include refid="videoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultMap="VideoResult" >
+		SELECT 
+			<include refid="videoColumns"/>
+		FROM p_video a
+		<include refid="videoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="title != null and title != ''">
+				AND a.title LIKE 
+					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{title},'%')</if>
+			</if>
+			<if test="isTop != null and isTop != ''">
+				AND a.is_top = #{isTop}
+			</if>
+                    <if test="videoModel != null  and videoModel.id != null and videoModel.id != ''">
+                        AND (b.id = #{videoModel.id} OR b.parent_ids LIKE
+                        <if test="dbName == 'oracle'">'%,'||#{videoModel.id}||',%')</if>
+                        <if test="dbName == 'mysql'">CONCAT('%,', #{videoModel.id}, ',%'))</if>
+                        <if test="dbName == 'mssql'">'%'+#{videoModel.id}+'%')</if>
+                    </if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultMap="VideoResult" >
+		SELECT 
+			<include refid="videoColumns"/>
+		FROM p_video a
+		<include refid="videoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO p_video(
+			id,
+			title,
+			brief,
+			content,
+			is_top,
+			audit,
+			amount,
+			video_model_id,
+			pic,
+			path,
+			duration,
+			create_date,
+			create_by,
+			update_date,
+			update_by,
+			remarks,
+			source,
+			spe2,
+			del_flag
+		) VALUES (
+			#{id},
+			#{title},
+			#{brief},
+			#{content},
+			#{isTop},
+			#{audit},
+			0,
+			#{videoModel.id},
+			#{pic},
+			#{path},
+			#{duration},
+			#{createDate},
+			#{createBy.id},
+			#{updateDate},
+			#{updateBy.id},
+			#{remarks},
+			#{source},
+			#{spe2},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE p_video SET 	
+			title = #{title},
+			brief = #{brief},
+			content = #{content},
+			is_top = #{isTop},
+			audit = #{audit},
+			amount = #{amount},
+			video_model_id = #{videoModel.id},
+			pic = #{pic},
+			path = #{path},
+			duration = #{duration},
+			update_date = #{updateDate},
+			update_by = #{updateBy.id},
+			remarks = #{remarks},
+			source = #{source},
+			spe2 = #{spe2}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM p_video
+		<choose>
+			<when test="id !=null and id != ''">
+				WHERE id = #{id}
+			</when>
+			<otherwise>
+				WHERE video_model_id = #{videoModel.id}
+			</otherwise>
+		</choose>
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE p_video SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		<choose>
+			<when test="id !=null and id != ''">
+				WHERE id = #{id}
+			</when>
+			<otherwise>
+				WHERE video_model_id = #{videoModel.id}
+			</otherwise>
+		</choose>
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="Video" statementType="STATEMENT">
+		select * FROM p_video  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

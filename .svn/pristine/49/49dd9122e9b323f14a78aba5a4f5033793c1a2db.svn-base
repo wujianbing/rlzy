@@ -1,0 +1,152 @@
+package com.jeeplus.modules.home.utils;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.aliyuncs.CommonRequest;
+import com.aliyuncs.CommonResponse;
+import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.IAcsClient;
+import com.aliyuncs.exceptions.ClientException;
+import com.aliyuncs.exceptions.ServerException;
+import com.aliyuncs.http.MethodType;
+import com.aliyuncs.profile.DefaultProfile;
+import com.jeeplus.modules.home.web.exception.SmsException;
+
+public class SmsCodeUtil {
+	private static final String SMS_START_TIME = "sms_start_time"; // 短信发送时间
+	private static final String MOBILE_SMS_MOBILE = "mobile_sms_mobile"; // 手机号
+	private static final String MOBILE_SMS_CODE = "mobile_sms_code"; // 验证码
+	private static final Integer CODE_VALID_TIME = 1; // 验证码有效时间,单位:分钟
+
+	/**
+	 * 发送验证码
+	 * 
+	 * @param smsCode
+	 *            验证码
+	 * @param phone
+	 *            电话号码
+	 * @param session
+	 * @throws SmsException
+	 */
+	public static void sendCode(String smsCode, String phone, HttpSession session) throws SmsException {
+		// 获取当前时间
+		long startTime = System.currentTimeMillis();
+		long startTimefromSessioin = (long) (session.getAttribute(SMS_START_TIME) == null ? 0L
+				: session.getAttribute(SMS_START_TIME));
+		// 验证码获取一次最少60秒 为了防止网络延迟 设置成55
+		if (((startTime - startTimefromSessioin) / 1000) <= (long) 55) {
+			// 发送验证码太频繁
+			throw new SmsException("发送验证码太频繁");
+		}
+		// 发送短信
+		String jsonStr = "{\"code\":\"" + smsCode + "\"}";
+		// 调用第三方接口发送短信 TODO 调用阿里云短信接口发送短信
+		// 短信提示 修改短信key 签名SignName 短信模板TemplateCode
+
+		
+		 System.out.println("发送短信"); DefaultProfile profile =
+		 DefaultProfile.getProfile("default", "LTAI4Fj8TX2qUs6DaX4bCGdY",
+		 "rHQLhrY8pZTvwVmeDt7501d7JSsLMw"); IAcsClient client = new
+		 DefaultAcsClient(profile); CommonRequest requests = new CommonRequest();
+		 requests.setMethod(MethodType.POST);
+		 requests.setDomain("dysmsapi.aliyuncs.com");
+		 requests.setVersion("2017-05-25"); requests.setAction("SendSms");
+		 requests.putQueryParameter("RegionId", "default");
+		 requests.putQueryParameter("PhoneNumbers", phone);
+		 requests.putQueryParameter("SignName", "吴忠市人力资源服务平台");
+		 requests.putQueryParameter("TemplateCode", "SMS_177495237");
+		 requests.putQueryParameter("TemplateParam", jsonStr); try { CommonResponse
+		 responses = client.getCommonResponse(requests); System.out.println("发送短信了吗？"
+		 + responses.getData()); } catch (ServerException e) { e.printStackTrace(); }
+		 catch (ClientException e) { e.printStackTrace(); }
+		// Boolean sendSuccess = axisSendMsg(message, phone);
+		Boolean sendSuccess = true;
+		if (sendSuccess) {
+			// 短信发送成功,设置属性到session
+			saveCode(session, phone, smsCode);
+		} else {
+			// 短信发送失败,请稍后再试 BizException
+			throw new SmsException("短信发送失败,请稍后再试");
+		}
+
+	}
+
+	// 校验验证码
+	public static boolean validateCode(String mobile, String code, HttpSession session) throws SmsException {
+		// 判断该手机号是否发送过验证码
+		String mobileFromSession = (String) session.getAttribute(MOBILE_SMS_MOBILE);
+		if (StringUtils.isBlank(mobileFromSession)) {
+			// 未发送过验证码
+			throw new SmsException("未发送过验证码");
+		}
+
+		// 判断手机号是否是发送验证码的手机号
+		if (!mobile.equals(mobileFromSession))
+			throw new SmsException("发送验证码的手机号不匹配");
+
+		// 获取短信发送时间
+		long startTimeFromSession = (long) session.getAttribute(SMS_START_TIME);
+		// 判断当前验证码是否失效
+		if (((System.currentTimeMillis() - startTimeFromSession) / 1000) > ((long) CODE_VALID_TIME * 60)) {
+			throw new SmsException("验证码失效");
+		}
+
+		// 判断验证码是否输入正确
+		if (!code.equals((String) session.getAttribute(MOBILE_SMS_CODE))) {
+			throw new SmsException("验证码错误");
+		}
+
+		// 校验通过
+		return true;
+	}
+
+	/**
+	 * 短信发送成功后,保存验证码
+	 */
+	public static void saveCode(HttpSession session, String phone, String smsCode) {
+		session.setAttribute(SMS_START_TIME, System.currentTimeMillis());
+		session.setAttribute(MOBILE_SMS_MOBILE, phone);
+		session.setAttribute(MOBILE_SMS_CODE, smsCode);
+	}
+
+	/**
+	 * 使用验证码后,销毁验证码
+	 */
+	public static void consumeCode(HttpSession session) {
+		session.removeAttribute(MOBILE_SMS_MOBILE);
+		session.removeAttribute(SMS_START_TIME);
+		session.removeAttribute(MOBILE_SMS_CODE);
+	}
+
+	/**
+	 * 生成4位数字验证码
+	 */
+	public static String createRandomVcode() {
+		String vcode = "";
+		for (int i = 0; i < 4; i++) {
+			vcode = vcode + (int) (Math.random() * 9);
+		}
+		return vcode;
+	}
+
+	/**
+	 * 校验手机号是否合法
+	 */
+	public static Boolean isMobile(String number) {
+		boolean flag = false;
+		try {
+			Pattern p = Pattern.compile("^(13[0-9]|15[012356789]|17[0-9]|18[0-9]|14[57])[0-9]{8}$");
+			Matcher m = p.matcher(number);
+			flag = m.matches();
+		} catch (Exception e) {
+			flag = false;
+		}
+		return flag;
+	}
+
+}

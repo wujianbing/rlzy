@@ -1,0 +1,107 @@
+$('.sqzw').on("click", function() {
+		$(this).css("color", "#f7d213")
+	});
+//选项卡样式切换
+	$('.all').on("click", function() {
+		 $(this).addClass('btnactive').siblings().removeClass('btnactive');
+		 	$('.alljob').css("display", "block");
+		 	$('.fastjob').css("display", "none")
+	});
+	$('.fast').on("click", function() {
+		 $(this).addClass('btnactive').siblings().removeClass('btnactive');
+		 	$('.alljob').css("display", "none");
+		 	$('.fastjob').css("display", "block")
+	});
+	//收藏按钮
+	$(function() {
+		var i = 0;
+		$(".sqzw").click(function() {
+			i++;
+			if(i % 2 != 0) {
+				var positionId = $("#positionId").val();
+				var companyId = $("#companyId").val();
+				$.get(url+"/position/keepPosition?companyid="+companyId+"&positionid="+positionId,function(data){
+					if(data == "1"){
+						$(".sqzw").css("color", "#f7d213")
+					}
+				});  
+			} else {
+				$(".sqzw").css("color", "#4b96cf")
+
+			}
+		});
+	})
+//点击下拉选择框的时候，对应下面的标签框内容出现，当成功选择后，标签内容改变
+	$('.gz li').on("click", function() {
+		var s=$(this).text();
+		$(".appendt1").css("display", "block");
+		$('#yxgz1').html(s);
+	});
+
+	$('.gz1 li').on("click", function() {
+		var s=$(this).text();
+		$(".appendt2").css("display", "block");
+		$('#yxgz2').html(s);
+	});
+
+	$('.gz2 li').on("click", function() {
+		var s=$(this).text();
+		$(".appendt3").css("display", "block");
+		$('#yxgz3').html(s);
+	});
+
+	$('.gz3 li').on("click", function() {
+		var s=$(this).text();
+		$(".appendt4").css("display", "block");
+		$('#yxgz4').html(s);
+	});
+
+	$('.gz4 li').on("click", function() {
+		var s=$(this).text();
+		$(".appendt5").css("display", "block");
+		$('#yxgz5').html(s);
+	});
+	$('.gz5 li').on("click", function() {
+		var s=$(this).text();
+		$(".appendt6").css("display", "block");
+		$('#yxgz6').html(s);
+	});
+
+ //点击关闭当前标签条件
+$('.layui-icon-close').on("click", function() {
+		$(this).parent().css("display", "none");
+	});
+	
+	 //点击投递简按钮所要处理的事件
+		$(function() {
+		var i = 0;
+		$(".tdjl").click(function() {
+			i++;
+			if(i % 2 != 0) {
+				var positionId = $("#positionId").val();
+				var userId = $("#userId").val();
+				$.get(url+"/position/applyPosition?userid="+userId+"&positionid="+positionId,function(data){
+					if(data == "1"){
+						$(".tdjl").text('已投递');
+						$(".tdjl").css("backgroundColor","#c4cdd4");
+						$(".tdjl").css("border","0");
+					}
+				});
+			} else {
+				$(".tdjl").text('投递简历');
+				$(".tdjl").css("backgroundColor","#4b96cf");
+				$(".tdjl").css("border","1px");
+			}
+		});
+	})
+	
+	//分页事件
+	layui.use('laypage', function(){
+  var laypage = layui.laypage;
+  
+  //执行一个laypage实例
+  laypage.render({
+    elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+    ,count: 50 //数据总数，从服务端得到
+  });
+});

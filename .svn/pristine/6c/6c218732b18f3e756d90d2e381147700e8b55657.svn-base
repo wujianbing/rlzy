@@ -1,0 +1,27 @@
+.center{
+ width: 100%;
+}
+.center:after{
+    content: "";
+    height: 0;
+    clear: both;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+}
+.yuleft{
+	width: 23%;
+	height:60rem;
+	background: #fff;
+	float: left;
+}
+
+.yuright{
+	width: 75%;
+	height: 60rem;
+	background: #fff;
+	float:right;
+}
+.yuqbottom {
+    background: #f5f6f6;
+}

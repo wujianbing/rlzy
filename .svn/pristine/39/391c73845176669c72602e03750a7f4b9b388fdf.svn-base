@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.portal.mapper.RlzyRelationMapper">
+    
+	<sql id="rlzyRelationColumns">
+		a.id AS "id",
+		a.userid AS "userid",
+		a.companyid AS "companyid",
+		a.positionid AS "positionid",
+		a.username AS "username",
+		a.companyname AS "companyname",
+		a.positionname AS "positionname",
+		a.age AS "age",
+		a.sex AS "sex",
+		a.currentstate AS "currentstate",
+		a.workingage AS "workingage",
+		a.workingplace AS "workingplace",
+		a.deliverystate AS "deliverystate",
+		a.userdealstate AS "userdealstate",
+		a.companydealstate AS "companydealstate",
+		a.collectionstate AS "collectionstate",
+		a.del_flag AS "delFlag",
+		a.remarks AS "remarks",
+		a.salary AS "salary",
+		a.invite AS "invite",
+		a.spe3 AS "spe3",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate"
+	</sql>
+	
+	<sql id="rlzyRelationJoins">
+		
+	</sql>
+	
+    
+	<select id="get" resultType="RlzyRelation" >
+		SELECT 
+			<include refid="rlzyRelationColumns"/>
+		FROM rlzy_relation a
+		<include refid="rlzyRelationJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RlzyRelation" >
+		SELECT 
+			<include refid="rlzyRelationColumns"/>
+		FROM rlzy_relation a
+		<include refid="rlzyRelationJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="companyname != null and companyname != ''">
+				AND a.companyname = #{companyname}
+			</if>
+			<if test="positionname != null and positionname != ''">
+				AND a.positionname = #{positionname}
+			</if>
+			<if test="userid != null and userid != ''">
+				AND a.userid = #{userid}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RlzyRelation" >
+		SELECT 
+			<include refid="rlzyRelationColumns"/>
+		FROM rlzy_relation a
+		<include refid="rlzyRelationJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!--面试邀请查询-->
+	<select id="deliverList" resultType="RlzyRelation">
+		SELECT 
+			a.id as id,
+			a.positionname as positionname,
+			a.companyname as companyname,
+			a.workingplace as workingplace,
+			a.salary as salary,
+			a.update_date as updateDate
+		FROM rlzy_relation a
+			<include refid="rlzyRelationJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			and a.deliverystate = #{deliverystate}
+			AND a.userid = #{userid}
+		</where>
+			ORDER BY a.update_date DESC 
+	</select>
+	
+	<!--收藏查询-->
+	<select id="collectList" resultType="RlzyRelation">
+		SELECT 
+			<include refid="rlzyRelationColumns"/>
+		FROM rlzy_relation a
+			<include refid="rlzyRelationJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			AND a.collectionstate = #{collectionstate}
+			AND a.userid = #{userid}
+		</where>
+			ORDER BY a.update_date DESC 
+	</select>
+	
+	<!--企业查询申请的简历-->
+	<select id="companyList" resultType="RlzyRelation">
+		SELECT 
+			<include refid="rlzyRelationColumns"/>
+		FROM rlzy_relation a
+			<include refid="rlzyRelationJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			AND a.deliverystate = #{deliverystate}
+			AND a.companyid = #{companyid}
+		</where>
+			ORDER BY a.update_date DESC 
+	</select>
+	
+	<!--企业查询收藏的候选人-->
+	<select id="companyCollectList" resultType="RlzyRelation">
+		SELECT 
+			<include refid="rlzyRelationColumns"/>
+		FROM rlzy_relation a
+			<include refid="rlzyRelationJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			AND a.collectionstate = #{collectionstate}
+			AND a.companyid = #{companyid}
+		</where>
+			ORDER BY a.update_date DESC 
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rlzy_relation(
+			id,
+			userid,
+			companyid,
+			positionid,
+			username,
+			companyname,
+			positionname,
+			age,
+			sex,
+			currentstate,
+			workingage,
+			workingplace,
+			deliverystate,
+			userdealstate,
+			companydealstate,
+			collectionstate,
+			del_flag,
+			remarks,
+			salary,
+			invite,
+			spe3,
+			create_date,
+			update_date
+		) VALUES (
+			#{id},
+			#{userid},
+			#{companyid},
+			#{positionid},
+			#{username},
+			#{companyname},
+			#{positionname},
+			#{age},
+			#{sex},
+			#{currentstate},
+			#{workingage},
+			#{workingplace},
+			#{deliverystate},
+			#{userdealstate},
+			#{companydealstate},
+			#{collectionstate},
+			#{delFlag},
+			#{remarks},
+			#{salary},
+			#{invite},
+			#{spe3},
+			#{createDate},
+			#{updateDate}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rlzy_relation SET 	
+			userid = #{userid},
+			companyid = #{companyid},
+			positionid = #{positionid},
+			username = #{username},
+			companyname = #{companyname},
+			positionname = #{positionname},
+			age = #{age},
+			sex = #{sex},
+			currentstate = #{currentstate},
+			workingage = #{workingage},
+			workingplace = #{workingplace},
+			deliverystate = #{deliverystate},
+			userdealstate = #{userdealstate},
+			companydealstate = #{companydealstate},
+			collectionstate = #{collectionstate},
+			remarks = #{remarks},
+			salary = #{salary},
+			invite = #{invite},
+			spe3 = #{spe3},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM rlzy_relation
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE rlzy_relation SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="RlzyRelation" statementType="STATEMENT">
+		select * FROM rlzy_relation  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

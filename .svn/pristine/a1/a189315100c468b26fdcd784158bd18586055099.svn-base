@@ -1,0 +1,188 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/webpage/include/taglib.jsp"%>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>新闻动态</title>
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="${ctxStatic }/rlzy/css/common/layui-v2.5.5/layui/css/layui.css">
+		<link rel="stylesheet" href="${ctxStatic }/rlzy/css/common/layui-v2.5.5/layui/css/layui.css">
+		<link rel="stylesheet" href="${ctxStatic }/rlzy/css/Registeredcomment.css" />
+		<link rel="stylesheet" href="${ctxStatic }/rlzy/css/pages/news.css" />
+	</head>
+	<body>
+		<div class="cont news-v">
+			<div class="left">
+				<div class="left-v">
+					<div class="news-tit">新闻动态</div>
+					<ul class="newstit-ul">
+						<li class="active">新闻动态</li>
+						<li>园区动态</li>
+					</ul>	
+				</div>
+			</div>
+			<div class="right">
+				<div class="news-cont">
+					<div class="news-cont-top">新闻动态><span id="news_span">新闻动态</span></div>
+					<div class="new-cont">
+						<div class="news-cont-bot">
+							<ul class="news-ul" id="ul1">
+								<c:forEach items="${newsList}" var="news">
+								<li class="news-li">
+									<div class="newsli-cont" style="display:none;">${news.content }</div>
+									<div class="newsli-top">
+										<div>●</div>
+										<div title="市人力资源社会保障局“三个到位”将学习教育">${news.title } </div>
+										<div><fmt:formatDate value="${news.createDate }" pattern="yyyy-MM-dd" /></div>
+									</div>
+									<div class="newsli-deta">
+										${news.brief }
+									</div>
+								</li>
+								</c:forEach>
+							</ul>
+							<!-- 分页 -->
+							<div class="paging-v">
+								<div id="paging" class="paging"></div>
+							</div>
+						</div>
+						
+						<div class="news-cont-bot" style="display: none;">
+							<ul class="news-ul" id="ul2">
+							<c:forEach items="${busNewsList}" var="news">
+								<li class="news-li">
+									<div class="newsli-cont" style="display:none;">${news.content }</div>
+									<div class="newsli-top">
+										<div>●</div>
+										<div title="市人力资源社会保障局“三个到位”将学习教育">${news.title } </div>
+										<div><fmt:formatDate value="${news.createDate }" pattern="yyyy-MM-dd" /></div>
+									</div>
+									<div class="newsli-deta">
+										${news.brief }
+									</div>
+								</li>
+								</c:forEach>
+							</ul>
+							<!-- 分页 -->
+							<div class="paging-v">
+								<div id="paging2" class="paging"></div>
+							</div>
+						</div>
+						
+					</div>
+				
+					<div class="newsdeta-cont" style="display: none;">
+						<div class="n-tit">
+							<h3 id="title"></h3>
+							<div class="data-v">
+								<div id="dates"></div>
+								<div>文章来源：编辑部</div>
+							</div>
+						</div>
+						<div class="n-cont" id="count"></div>
+					</div>
+				
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
+		
+	<script src="${ctxStatic }/rlzy/js/jquery.min.js"></script>
+	<script src="${ctxStatic }/rlzy/js/pages/nav.js"></script>	
+	<script src="${ctxStatic }/rlzy/css/common/layui-v2.5.5/layui/layui.js"></script>
+	<script src="${ctxStatic }/rlzy/js/pages/news.js"></script>
+	
+	
+	<script>
+		layui.use(['laypage', 'layer'], function(){
+		  var laypage = layui.laypage
+		  ,layer = layui.layer;
+		  
+		  //分页功能
+		  laypage.render({
+		    elem: 'paging'
+		    ,count: ${count}
+		    ,layout: ['count', 'prev', 'page', 'next', 'limit']
+		    ,jump: function(obj,first){
+		      console.log(obj)
+		      var page = "1";
+		      if(obj.curr != undefined){
+		      	page = obj.curr;
+		      }
+		      if(first){
+		      	return false;
+		      }
+		      var id = "${newsList[0].newsModel.id}";
+		      $.ajax({
+		      	url:"/rlzy/home/pageList?id="+id+"&page="+page+"&pageSize="+obj.limit,
+		      	type:"get",
+		      	success:function(data){
+		 			let arr = new Array();
+		 			for(var i=0;i<data.length;i++){
+		 				var time = new Date(data[i].createDate).format("yyyy-MM-dd")
+		 				arr.push('<li class="news-li">');
+		 				arr.push('<div class="newsli-cont" style="display:none;">'+data[i].content+'</div>');
+		 				arr.push('<div class="newsli-top">');
+		 				arr.push('<div>●</div>');
+		 				arr.push('<div title="市人力资源社会保障局“三个到位”将学习教育">'+data[i].title+'</div>');
+		 				arr.push('<div>'+time+'</div>');
+		 				arr.push('</div>');
+		 				arr.push('<div class="newsli-deta">'+data[i].brief+'</div></li>');
+		 			} 
+		 			let html = arr.join('');
+		 			$("#ul1>li").remove();
+		 			$("#ul1").html(html);    	
+		      	}
+		      });
+		    }
+		  });
+		  
+		  laypage.render({
+		    elem: 'paging2'
+		    ,count: ${counts}
+		    ,layout: ['count', 'prev', 'page', 'next', 'limit']
+		    ,jump: function(obj,first){
+		      console.log(obj)
+		      var page = "1";
+		      if(obj.curr != undefined){
+		      	page = obj.curr;
+		      }
+		      if(first){
+		      	return false;
+		      }
+		      var id = "${busNewsList[0].newsModel.id}";
+		    $.ajax({
+		      	url:"/rlzy/home/pageList?id="+id+"&page="+page+"&pageSize="+obj.limit,
+		      	type:"get",
+		      	success:function(data){
+		 			let arr = new Array();
+		 			for(var i=0;i<data.length;i++){
+		 				var time = new Date(data[i].createDate).format("yyyy-MM-dd")
+		 				arr.push('<li class="news-li">');
+		 				arr.push('<div class="newsli-cont" style="display:none;">'+data[i].content+'</div>');
+		 				arr.push('<div class="newsli-top">');
+		 				arr.push('<div>●</div>');
+		 				arr.push('<div title="市人力资源社会保障局“三个到位”将学习教育">'+data[i].title+'</div>');
+		 				arr.push('<div>'+time+'</div>');
+		 				arr.push('</div>');
+		 				arr.push('<div class="newsli-deta">'+data[i].brief+'</div></li>');
+		 			} 
+		 			let html = arr.join('');
+		 			
+		 			$("#ul2").html(html);    	
+		      	}
+		      });
+		    
+		    
+		    }
+		  });
+		});
+	</script>
+	</body>
+</html>

@@ -1,0 +1,185 @@
+var url = "/rlzy";
+function Nav() {
+	this.navArr = [ {
+		title : "网站首页",
+		url : url + "/home/index"
+	}, {
+		title : "园区概况",
+		url : url + "/home/parkSurvey"
+	}, {
+		title : "园区服务",
+		url : url + "/home/parkServer"
+	}, {
+		title : "新闻动态",
+		url : url + "/home/newsList"
+	}, {
+		title : "技能提升",
+		url : url + "/home/videostudy"
+	}, {
+		title : "企业入驻",
+		url : url + "/home/companyGarrison"
+	}, {
+		title : "联系我们",
+		url : url + "/home/aboutUs"
+	} ], this.tailArr = [ {
+		title : "关于我们",
+		url : url + "/home/parkSurvey"
+	}, {
+		title : "联系我们",
+		url : url + "/home/aboutUs"
+	}, {
+		title : "客服中心",
+		url : url + "#"
+	}, {
+		title : "招聘入口",
+		url : url + "/position/positionList"
+	} ]
+}
+
+function getCookie(cookie_name) {
+	var allcookies = document.cookie;
+	// 索引长度，开始索引的位置
+	var cookie_pos = allcookies.indexOf(cookie_name);
+
+	// 如果找到了索引，就代表cookie存在,否则不存在
+	if (cookie_pos != -1) {
+		// 把cookie_pos放在值的开始，只要给值加1即可
+		// 计算取cookie值得开始索引，加的1为“=”
+		cookie_pos = cookie_pos + cookie_name.length + 1;
+		// 计算取cookie值得结束索引
+		var cookie_end = allcookies.indexOf(";", cookie_pos);
+
+		if (cookie_end == -1) {
+			cookie_end = allcookies.length;
+		}
+		// 得到想要的cookie的值
+		var value = decodeURIComponent(allcookies.substring(cookie_pos,
+				cookie_end));
+	}
+	return value;
+}
+
+Nav.prototype = {
+	init : function() {
+		let user = null;
+		if (getCookie("user") != undefined && getCookie("user") != null && getCookie("user") != "") {
+			user = JSON.parse(getCookie("user"));
+			localStorage.setItem('user',getCookie("user"));
+			// console.log(user.name);
+		}
+		let self = this;
+		let nav = '';
+		nav += "<div id='nav' class='nav'>";
+		nav += "<div class='titleTop'>";
+		nav += "<div class='rowTop'>";
+		nav += "<span><img class='logo' src='/rlzy/static/rlzy/img/logo.png'></span>";
+		nav += "<div class='title'>";
+		nav += "<h3>吴忠人力资源服务产业园</h3>";
+		nav += "<h6>Wu Zhong Human Resources Services Industrial Park</h6>";
+		nav += "</div>";
+		nav += "<div class='searchBar'>";
+		nav += "<div class='searchBar-left'>";
+		nav += "<div class='input-group input-key-v'>";
+		nav += "<input type='text' placeholder='在此输入关键字..' class='layui-input input-key'>";
+		nav += "<i class='layui-icon layui-icon-search search-se'></i>";
+		nav += "</div>";
+		nav += "</div>";
+
+		nav += "<div class='searchBar-right'>";
+		if (user == null || user == undefined || user == "") {
+			nav += "<a href='" + url
+					+ "/login/tologin' class='land login'>登陆</a>|<a href='"
+					+ url + "/home/register' class='land registered'>注册</a>";
+		} else {
+			if (user.type == 1) {
+				nav += "<a href='"
+						+ url
+						+ "/user/personal' class='land login'>"
+						+ user.name
+						+ "</a><a onclick='nav.quit()' class='land registered'>退出</a>";
+			} else {
+				nav += "<a href='"
+						+ url
+						+ "/company/companydetail' class='land login'>"
+						+ user.name
+						+ "</a><a onclick='nav.quit()' class='land registered'>退出</a>";
+			}
+		}
+		nav += "</div>";
+		nav += "</div>";
+		nav += "</div>";
+		nav += "</div>";
+		nav += "<div class='bar'>";
+		nav += "<div class='row rowBar'>";
+		nav += "<ul class='nav nav-tabs'>";
+
+		for (let i = 0; i < self.navArr.length; i++) {
+			nav += "<li class='presentation'>";
+			if (self.lastUrl().split('.')[0] === self.navArr[i].url.split('/')[self.navArr[i].url
+					.split('/').length - 1]) {
+				nav += "<a class='activeed active' href=" + self.navArr[i].url
+						+ ">" + self.navArr[i].title + "</a>";
+			} else {
+				nav += "<a class='active' href=" + self.navArr[i].url + ">"
+						+ self.navArr[i].title + "</a>";
+			}
+		}
+		nav += "</ul>";
+		nav += "</div>";
+		nav += "</div>";
+		nav += "</div>";
+		$("body").prepend(nav);
+		let tail = '';
+		tail += '<div id="tail" class="tail">';
+		tail += '<div class="webLinkWork">';
+		for (let j = 0; j < self.tailArr.length; j++) {
+			if (j == self.tailArr.length - 1) {
+				tail += '<span><a href=' + self.tailArr[j].url + '>'
+						+ self.tailArr[j].title + '</a></span>';
+			} else {
+				tail += '<span><a href=' + self.tailArr[j].url + '>'
+						+ self.tailArr[j].title + '</a></span>|';
+			}
+		}
+		tail += '</div>';
+		tail += '<div class="banquan">';
+		tail += '<span>Copyright</span>&emsp;&copy;<span> 2019 吴忠人力资源服务产业园,</span>&emsp;';
+		tail += '<span> All Rights Reserved</span>&emsp;　宁ICP备19001766号';
+		tail += '</div>';
+		tail += '</div>';
+		$('body').append(tail);
+	},
+	// 匹配url nav高亮
+	lastUrl : function() {
+		let url = window.location.href;
+		let index = url.lastIndexOf("\/");
+		str = url.substring(index + 1, url.length);
+		return str;
+	},
+	// 退出
+	quit : function() {
+		localStorage.removeItem('user');
+		layer.open({
+			  type: 1
+			  ,offset: 'auto' //具体配置参考：offset参数项
+			  ,content: '<div style="padding: 20px 80px;">账号已退出</div>'
+			  ,btn: '关闭'
+			  ,btnAlign: 'c' //按钮居中
+			  ,shade: 0 //不显示遮罩
+			  ,yes: function(){
+			    layer.closeAll();
+			  }
+		});
+		setTimeout(function() {
+			window.location.href = url + "/login/quit";
+		}, 1000)
+	},
+	contH : function(id, paH) {
+		let domH = $(document).height();
+		let navH = $('#nav').outerHeight(true) + $('#tail').outerHeight(true);
+		// console.log(domH,navH);
+		$(id).css('height', domH - navH - paH + 'px');
+	}
+}
+var nav = new Nav();
+nav.init();

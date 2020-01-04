@@ -1,0 +1,41 @@
+	
+.left-v1,.center-v1,.right-v1{
+	height: 40%;
+}
+.left-v2,.center-v2,.right-v2{
+	height: 54%;
+	margin-top: 20px;
+}
+.layui-table, .layui-table-view{
+	margin: 0;
+}
+.layui-table,.layui-table-view .layui-table td, .layui-table-view .layui-table th,.layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even){
+	background: transparent;
+	color: #2ce2ff;
+}
+.layui-table td, .layui-table th, .layui-table-col-set, .layui-table-fixed-r, .layui-table-grid-down, .layui-table-header, .layui-table-page, .layui-table-tips-main, .layui-table-tool, .layui-table-total, .layui-table-view, .layui-table[lay-skin=line], .layui-table[lay-skin=row]{
+	border-color: #2f98c1;
+}
+.layui-table thead th div span{
+	font-weight: 600;
+}
+	
+	
+::-webkit-scrollbar{
+	width: 5px;
+	height: 5px;
+}
+::-webkit-scrollbar-track{
+	border-radius: 0px;
+	background: none;
+}
+::-webkit-scrollbar-thumb{
+	border-radius: 5px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.2);
+	background-color: rgba(255,255,255,.75)
+}
+::-webkit-scrollbar-thumb:hover{
+	border-radius: 5px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.2);
+	background-color: rgba(85, 85, 85, 0.1);
+}

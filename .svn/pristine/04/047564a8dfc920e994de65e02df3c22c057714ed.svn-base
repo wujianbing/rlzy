@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.portal.mapper.KanBanMapper">
+	
+	<select id="findCompanyCount" resultType="int">
+		select count(1) from rlzy_company
+	</select>
+	
+	<select id="findUserCount" resultType="int">
+		select count(1) from rlzy_user
+	</select>
+	
+	<select id="findPositionCount" resultType="int">
+		select count(1) from rlzy_position
+	</select>
+	
+	<select id="findCollectCount" resultType="int">
+		select count(1) from rlzy_relation where companydealstate='1'
+	</select>
+	
+	<select id="findIndustryCount" resultType="int">
+		SELECT COUNT(1) FROM rlzy_company WHERE industry='1'
+	</select>
+	
+	<select id="findIndustryCount1" resultType="int">
+		SELECT COUNT(1) FROM rlzy_company WHERE industry='12'
+	</select>
+	
+	<select id="findIndustryCount2" resultType="int">
+		SELECT COUNT(1) FROM rlzy_company WHERE industry='15'
+	</select>
+	
+	<select id="findIndustryCount3" resultType="int">
+		SELECT COUNT(1) FROM rlzy_company WHERE industry='44'
+	</select>
+	
+	<select id="findOtherIndustryCount" resultType="int">
+	SELECT COUNT(1) FROM rlzy_company WHERE industry !='1' and industry !='12' AND industry !='15' and industry !='44'
+	</select>
+	
+	<select id="findCompanyScaleCount" resultType="int">
+		SELECT COUNT(1) FROM rlzy_company WHERE companyscale='1'
+	</select>
+	
+	<select id="findCompanyScaleCount1" resultType="int">
+		SELECT COUNT(1) FROM rlzy_company WHERE companyscale='2'
+	</select>
+	
+	<select id="findCompanyScaleCount2" resultType="int">
+		SELECT COUNT(1) FROM rlzy_company WHERE companyscale='3'
+	</select>
+	
+	<select id="findCompanyScaleCount3" resultType="int">
+		SELECT COUNT(1) FROM rlzy_company WHERE companyscale='4'
+	</select>
+	
+	<select id="findCompanyScaleCount4" resultType="int">
+		SELECT COUNT(1) FROM rlzy_company WHERE companyscale='5'
+	</select>
+	
+	<select id="findDesiredPosition" resultType="rlzyUser">
+		SELECT desiredposition,COUNT(*) as count FROM rlzy_user GROUP BY desiredposition ORDER BY count(desiredposition) asc
+	</select>
+	
+	<select id="findIndustry" resultType="rlzyCompany">
+		SELECT industry,COUNT(*) as count FROM rlzy_company GROUP BY industry ORDER BY count(industry) asc
+	</select>
+	
+	<select id="findPositionList" resultType="rlzyposition">
+		SELECT
+				salaryrange,
+				count(*) as count
+			FROM
+				rlzy_position
+			GROUP BY
+				salaryrange
+			ORDER BY
+			count(salaryrange)
+			ASC
+	</select>
+	
+	<select id="findSalaryRange" resultType="int">
+		SELECT count(1) from rlzy_position where salaryrange='1'
+	</select>
+	
+	<select id="findSalaryRange1" resultType="int">
+		SELECT count(1) from rlzy_position where salaryrange='2'
+	</select>
+	
+	<select id="findSalaryRange2" resultType="int">
+		SELECT count(1) from rlzy_position where salaryrange='3'
+	</select>
+	
+	<select id="findSalaryRange3" resultType="int">
+		SELECT count(1) from rlzy_position where salaryrange='4'
+	</select>
+	
+	<select id="findSalaryRange4" resultType="int">
+		SELECT count(1) from rlzy_position where salaryrange='5'
+	</select>
+	
+	<select id="findSalaryRange5" resultType="int">
+		SELECT count(1) from rlzy_position where salaryrange='6'
+	</select>
+	
+	<select id="findPositionCollect" resultType="int">
+		select count(1) from rlzy_relation where collectionstate='1'
+	</select>
+	
+	<select id="findDeliveryCollect" resultType="int">
+		select count(1) from rlzy_relation where deliverystate='1'
+	</select>
+	
+	<select id="findCompanyDeal" resultType="int">
+		select count(1) from rlzy_relation where companydealstate='1'
+	</select>
+	
+	<select id="findMale" resultType="int">
+		select count(1) from rlzy_user where sex='1'
+	</select>
+	
+	<select id="findFemale" resultType="int">
+		select count(1) from rlzy_user where sex='2'
+	</select>
+	
+	<select id="findSalary" resultType="int">
+		select count(1) from rlzy_user where salary='1'
+	</select>
+	
+	<select id="findSalary1" resultType="int">
+		select count(1) from rlzy_user where salary='2'
+	</select>
+	
+	<select id="findSalary2" resultType="int">
+		select count(1) from rlzy_user where salary='3'
+	</select>
+	
+	<select id="findSalary3" resultType="int">
+		select count(1) from rlzy_user where salary='4'
+	</select>
+	
+	<select id="findSalary4" resultType="int">
+		select count(1) from rlzy_user where salary='5'
+	</select>
+	
+	<select id="findSalary5" resultType="int">
+		select count(1) from rlzy_user where salary='6'
+	</select>
+	
+	<select id="findEducation" resultType="int">
+		select count(1) from rlzy_user where education='1'
+	</select>
+	
+	<select id="findEducation1" resultType="int">
+		select count(1) from rlzy_user where education='2'
+	</select>
+	
+	<select id="findEducation2" resultType="int">
+		select count(1) from rlzy_user where education='3'
+	</select>
+	
+	<select id="findEducation3" resultType="int">
+		select count(1) from rlzy_user where education='4'
+	</select>
+	
+	<select id="findEducation4" resultType="int">
+		select count(1) from rlzy_user where education='5'
+	</select>
+	
+	<select id="findEducation5" resultType="int">
+		select count(1) from rlzy_user where education='6'
+	</select>
+	
+	 <select id="userCountCurve" resultType="rlzyUser">
+			select a.date,ifnull(b.count,0) as count
+		from (
+		    SELECT curdate() as date
+		    union all
+		    SELECT date_sub(curdate(), interval 1 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 2 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 3 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 4 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 5 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 6 day) as date
+		  union all
+		    SELECT date_sub(curdate(), interval 7 day) as date
+		) a left join (
+		  select date(create_date) as datetime, count(*) as count
+		  from rlzy_user
+		  group by date(create_date)
+		) b on a.date = b.datetime
+		ORDER BY a.date;
+	</select>
+	
+	 <select id="deliveryCurve" resultType="rlzyRelation">
+			select a.date,ifnull(b.count,0) as count
+		from (
+		    SELECT curdate() as date
+		    union all
+		    SELECT date_sub(curdate(), interval 1 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 2 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 3 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 4 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 5 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 6 day) as date
+		  union all
+		    SELECT date_sub(curdate(), interval 7 day) as date
+		) a left join (
+		  select date(create_date) as datetime, count(deliverystate) as count
+		  from rlzy_relation
+		  where
+		  deliverystate='1'
+		  group by date(create_date)
+		) b on a.date = b.datetime
+		ORDER BY a.date;
+	</select>
+	
+	<select id="companyDealCurve" resultType="rlzyRelation">
+			select a.date,ifnull(b.count,0) as count
+		from (
+		    SELECT curdate() as date
+		    union all
+		    SELECT date_sub(curdate(), interval 1 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 2 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 3 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 4 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 5 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 6 day) as date
+		  union all
+		    SELECT date_sub(curdate(), interval 7 day) as date
+		) a left join (
+		  select date(create_date) as datetime, count(companydealstate) as count
+		  from rlzy_relation
+		WHERE
+			companydealstate='1'
+		  group by date(create_date)
+      
+		) b on a.date = b.datetime
+		ORDER BY a.date;
+	</select>
+	
+	
+	<select id="companyCurve" resultType="rlzyCompany">
+			select a.date,ifnull(b.count,0) as count
+		from (
+		    SELECT curdate() as date
+		    union all
+		    SELECT date_sub(curdate(), interval 1 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 2 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 3 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 4 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 5 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 6 day) as date
+		  union all
+		    SELECT date_sub(curdate(), interval 7 day) as date
+		) a left join (
+		  select date(create_date) as datetime, count(*) as count
+		  from rlzy_company
+		  group by date(create_date)
+		) b on a.date = b.datetime
+		ORDER BY a.date;
+	</select>
+	
+	<select id="positionCurve" resultType="rlzyPosition">
+			select a.date,ifnull(b.count,0) as count
+		from (
+		    SELECT curdate() as date
+		    union all
+		    SELECT date_sub(curdate(), interval 1 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 2 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 3 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 4 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 5 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 6 day) as date
+		  union all
+		    SELECT date_sub(curdate(), interval 7 day) as date
+		) a left join (
+		  select date(create_date) as datetime, count(*) as count
+		  from rlzy_position
+		  group by date(create_date)
+		) b on a.date = b.datetime
+		ORDER BY a.date;
+	</select>
+	
+		<select id="collectCurve" resultType="rlzyRelation">
+			select a.date,ifnull(b.count,0) as count
+		from (
+		    SELECT curdate() as date
+		    union all
+		    SELECT date_sub(curdate(), interval 1 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 2 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 3 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 4 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 5 day) as date
+		    union all
+		    SELECT date_sub(curdate(), interval 6 day) as date
+		  union all
+		    SELECT date_sub(curdate(), interval 7 day) as date
+		) a left join (
+		  select date(create_date) as datetime, count(*) as count
+		  from rlzy_relation
+		  where 
+		  companycollectstate='1'
+		  group by date(create_date)
+		) b on a.date = b.datetime
+		ORDER BY a.date;
+	</select>
+</mapper>

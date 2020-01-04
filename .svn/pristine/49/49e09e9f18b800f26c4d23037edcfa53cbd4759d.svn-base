@@ -1,0 +1,42 @@
+span{
+	color: #555;
+}
+
+.jobwant-v{
+	padding: 40px 25px 20px 25px;
+	background: #ffffff;
+    color: #555;	
+}
+.title{
+	display: flex;
+	align-items: center;
+}
+.title-txt{
+	flex: 1;
+	display: flex;
+}
+.titlr-bor{
+	flex: 3;
+	border-top: 1px dotted #333333;
+}
+.verti{
+	padding: 0 15px;
+	font-size: 18px;
+    position: relative;
+    top: 3px;	
+}
+.title-x{
+	font-size: 20px;
+	color: #6d6d6d;
+	white-space: nowrap;
+	font-weight: 600;
+	cursor: pointer;
+}
+.col-activ{
+	color: #20A1E0;
+}
+
+
+.table-v{
+	padding: 20px 0;
+}

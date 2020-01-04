@@ -1,0 +1,27 @@
+.we-v{
+	padding: 128px 100px 0px 100px;
+}
+.we-ul{
+	color: #666666;
+	border: 1px solid #dddddd;
+	border-radius: 8px;
+	padding: 50px;
+	font-size: 18px;
+	background: #fff;
+	    position: relative;
+}
+.we-ul>li:first-child{
+	font-size: 24px;
+	font-weight: 600;
+	color: #1787fb;
+}
+.we-ul>li{
+	margin-bottom: 50px;
+}
+.we-ul>li:not(:first-child){
+	margin-bottom: 30px;
+}
+.img-v{
+    position: fixed;
+    left: 0;
+}

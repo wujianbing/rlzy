@@ -1,0 +1,96 @@
+function MyFind(){
+	
+}
+MyFind.prototype = {
+	init: function(){
+		myFind.bind();
+	},
+	bind: function(){
+		let self = this;
+		//信息修改
+		$('.revise').bind("click",function(){
+			myFind.revise($(this).attr('data-id'));
+		});
+		//自我描述
+		$('#decs_btn').on('click',self.decs_fuc);
+		//教育经历
+		$('#teach_btn').on('click',self.teach_fuc);
+	},
+	revise: function(id){
+		if(id == 1){
+			dom = "#basic_info";
+		}else if(id == 2){
+			dom = "#job_want";
+		}else if(id == 3){
+			$('.wordmy').slideToggle(300);
+		}else if(id == 4){
+			$('.teach').slideToggle(300);
+		}
+		if(id == 1){
+			$(dom).find(".form-control").removeClass("gname");
+			$(dom).find(".form-control").attr('disabled',false);
+		}else if(id == 2){
+			$(dom).find(".form-control").removeClass("gname");
+			$(dom).find(".form-control").attr('disabled',false);
+		}
+	},
+	//自我描述
+	decs_fuc: function(){
+		let txtDom = $(this).parent().siblings().children();
+		console.log(txtDom.val());
+		if(txtDom.val() ==''){
+			layer.msg("不能为空");
+			return;
+		}
+		$(this).parent().parent().parent().slideToggle(300);
+		$("#decs_txt").html(txtDom.val());
+	},
+	//教育经历
+	teach_fuc: function(){
+		//表单
+		layui.use('form', function() {
+			var form = layui.form;
+			//监听提交
+			form.on('submit(formTeach)', function(data) {
+				//layer.msg(JSON.stringify(data.field));
+				console.log(data.field);
+				let res = data.field;
+				let studyTime1 = res.studyTime1.substring(0,7);
+				let studyTime2 = res.studyTime2.substring(0,7);
+				console.log(studyTime1);
+				console.log(studyTime2);
+				let html = '';
+				html += '<li class="layui-timeline-item">';
+				html += '<i class="layui-icon layui-timeline-axis"></i>';
+				html += '<div class="layui-timeline-content layui-text timeline-flex">';
+				html += '<h3 class="layui-timeline-title layui-timeline-title1"><span>'+studyTime1+'</span>至<span>'+studyTime2+'</span>【3年8个月】</h3>';
+				html += '<h3 class="layui-timeline-title layui-timeline-mar">'+res.education+'</h3>';
+				html += '<h3 class="layui-timeline-title layui-timeline-mar">'+res.school+'</h3>';
+				html += '<h3 class="layui-timeline-title layui-timeline-mar">'+res.major+'</h3>';
+				html += '<div class="layui-timeline-title timeline-right"><span onclick="myFind.teachRe(this)">修改</span>/<span onclick="myFind.teachDel(this)">删除</span></div>';
+				html += '</div></li>';
+				$('#timeline_teach').append(html);
+				return false;
+			});
+		});
+	},
+	teachRe: function(obj){
+		let res = $(obj).parent().parent().children();
+		console.log(res.eq(1)[0].innerText);
+		let time1 = res.eq(0)[0].innerText.substring(0,7)+"-01";
+		let time2 = res.eq(0)[0].innerText.substring(8,15)+"-01";
+		let education = res.eq(1)[0].innerText;
+		$('input[name="education"]').find("option[value='+education+']").attr('selected','selected'); 
+		$('input[name="school"]').val(res.eq(2)[0].innerText);
+		$('input[name="major"]').val(res.eq(3)[0].innerText);
+		$('input[name="studyTime1"]').val(time1);
+		$('input[name="studyTime2"]').val(time2);
+		$('.teach').slideDown(300);
+	},
+	teachDel: function(obj){
+		$(obj).parent().parent().parent().remove();
+	}
+}
+
+var myFind = new MyFind();
+myFind.init();

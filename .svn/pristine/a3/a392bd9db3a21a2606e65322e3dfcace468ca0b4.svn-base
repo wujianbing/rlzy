@@ -1,0 +1,501 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/webpage/include/taglib.jsp"%>
+
+<!DOCTYPE html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>吴忠人力资源首页</title>
+		<link rel="shortcut icon" href="${ctxStatic }/rlzy/favicon.ico"/>
+		<link rel="bookmark" href="${ctxStatic }/rlzy/favicon.ico"/>
+		<link rel="stylesheet" href="${ctxStatic }/rlzy/css/common/layui-v2.5.5/layui/css/layui.css" />
+		<link rel="stylesheet" href="${ctxStatic }/rlzy/css/jquery.my-modal.1.1.css" />
+		<link rel="stylesheet" href="${ctxStatic }/rlzy/css/Registeredcomment.css" />
+		<link rel="stylesheet" href="${ctxStatic }/rlzy/css/lookFor.css" />
+				<style type="text/css">
+			/* .select-container ul.haqnye{
+				  width: 863px;
+    			 padding: 10px;
+    			 border: 1px solid #ddd;
+    			 background:#fff;
+				}
+			.haqnye li {
+			    width: 138px;
+			    cursor: pointer;
+			    display: block;
+			    float: left;
+			    height: 20px;
+			    line-height: 20px;
+			    padding: 6px 15px;
+			    text-decoration: none;
+			    color: #333;
+			    _height: 18px;
+			    white-space: nowrap;
+			    _white-space: normal;
+			    _background: transparent;
+			    overflow: hidden;
+			    text-overflow: ellipsis;
+			    -o-text-overflow: ellipsis;
+			}
+			.sxr {
+			    display: flex;
+			    width: 90%;
+			    margin: 0 auto;
+			    align-items: center;
+			      overflow: visible;
+		    word-wrap: break-word;
+		    word-break: break-all;
+				}
+		.lsp {
+    margin-top: 2rem;
+}
+		.active{
+			color:rgb(247, 210, 19);
+		}
+		.btnlock {
+    width: 69%;
+    display: inline-block!important;
+    text-align: center;
+    margin: 1rem 0;
+    margin-left: 20%;
+    border: 1px solid #4b96cf;
+    background: #fff;
+    height: 3.3rem;
+    line-height: 3.3rem;
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+    cursor:pointer;
+}
+.ckjl{
+background: #4b96cf;
+} */
+		</style>
+	</head>
+
+	<body>
+		<!--首页内容-->
+		<div class="humanbox">
+			<!--banner图-->
+			<div class="banner"></div>
+			<div class="selet">
+			<div class="sxl">
+				<div class="select-container">筛选条件：</div>
+					<div class="select-container gz0">
+			        <span class="layui-icon layui-icon-down"></span>
+			        <input data-id="1" type="text" readonly="readonly"  value="职位薪资" onfocus="this.nextSibling.nextSibling.style.display='block';"
+			            onblur="var t=this;setTimeout(()=>{t.nextSibling.nextSibling.style.display='none';},150);" />
+			        <ul>
+			          	<c:forEach items="${salarys }" var="sal">
+			        	<li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+			                <a data-value="${sal.value}" href="javascript:;" >${sal.label}</a>
+			            </li>
+			        	</c:forEach>
+			        </ul>
+			    </div>
+						<div class="select-container gz1">
+			        <span class="layui-icon layui-icon-down"></span>
+			        <input  data-id="2" type="text" readonly="readonly" value="行业类别" onfocus="this.nextSibling.nextSibling.style.display='block';"
+			            onblur="var t=this;setTimeout(()=>{t.nextSibling.nextSibling.style.display='none';},150);" />
+			        <ul class="haqnye">
+			          	<c:forEach items="${industry }" var="ind">
+			        	<li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+			                <a data-value="${ind.value}" href="javascript:;" >${ind.label}</a>
+			            </li>
+			        	</c:forEach>
+			        </ul>
+			    </div>
+			    				<div class="select-container gz3">
+			        <span class="layui-icon layui-icon-down"></span>
+			        <input data-id="3" type="text" readonly="readonly" value="所学专业" onfocus="this.nextSibling.nextSibling.style.display='block';"
+			            onblur="var t=this;setTimeout(()=>{t.nextSibling.nextSibling.style.display='none';},150);" />
+			        <ul class="haqnye">
+			           	<c:forEach items="${major }" var="major">
+			        	<li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+			                <a data-value="${major.value}" href="javascript:;" >${major.label}</a>
+			            </li>
+			        	</c:forEach>
+			        </ul>
+			    </div>
+					<div class="select-container gz4">
+			        <span class="layui-icon layui-icon-down"></span>
+			        <input data-id="4" type="text" readonly="readonly" value="性别" onfocus="this.nextSibling.nextSibling.style.display='block';"
+			            onblur="var t=this;setTimeout(()=>{t.nextSibling.nextSibling.style.display='none';},150);" />
+			        <ul>
+			           	<c:forEach items="${sex }" var="sex">
+			        	<li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+			                <a data-value="${sex.value}" href="javascript:;" >${sex.label}</a>
+			            </li>
+			        	</c:forEach>
+			        </ul>
+			    </div>
+					<div class="select-container gz5">
+			        <span class="layui-icon layui-icon-down"></span>
+			        <input data-id="5" type="text" readonly="readonly" value="工作性质" onfocus="this.nextSibling.nextSibling.style.display='block';"
+			            onblur="var t=this;setTimeout(()=>{t.nextSibling.nextSibling.style.display='none';},150);" />
+			        <ul>
+			        	<c:forEach items="${worknature }" var="worknature">
+			        	<li  onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+			                <a data-value="${worknature.value}" href="javascript:;" >${worknature.label}</a>
+			            </li>
+			        	</c:forEach>
+			        </ul>
+			    </div>
+					<div class="select-container gz6">
+			        <span class="layui-icon layui-icon-down"></span>
+			        <input data-id="6" type="text" readonly="readonly" value="学历要求" onfocus="this.nextSibling.nextSibling.style.display='block';"
+			            onblur="var t=this;setTimeout(()=>{t.nextSibling.nextSibling.style.display='none';},150);" />
+			        <ul>
+			           	<c:forEach items="${education }" var="education">
+			        	<li  onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+			                <a  data-value="${education.value}" href="javascript:;" >${education.label}</a>
+			            </li>
+			        	</c:forEach>
+			        </ul>
+			    </div>
+					<div class="select-container gz7">
+			        <span class="layui-icon layui-icon-down"></span>
+			        <input data-id="7" type="text" readonly="readonly" value="工作年限" onfocus="this.nextSibling.nextSibling.style.display='block';"
+			            onblur="var t=this;setTimeout(()=>{t.nextSibling.nextSibling.style.display='none';},150);" />
+			        <ul>
+			            <c:forEach items="${workingage }" var="workingage">
+			        	<li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+			                <a data-value="${workingage.value}"  href="javascript:;" >${workingage.label}</a>
+			            </li>
+			        	</c:forEach>
+			        </ul>
+			    </div>
+					<div class="select-container gz8">
+			        <span class="layui-icon layui-icon-down"></span>
+			        <input data-id="8" type="text" readonly="readonly" value="更新时间" onfocus="this.nextSibling.nextSibling.style.display='block';"
+			            onblur="var t=this;setTimeout(()=>{t.nextSibling.nextSibling.style.display='none';},150);" />
+			        <ul>
+			            <c:forEach items="${updatetime }" var="updatetime">
+			        	<li  onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+			                <a data-value="${updatetime.value}" href="javascript:;" >${updatetime.label}</a>
+			            </li>
+			        	</c:forEach>
+			        </ul>
+			    </div>
+			</div>
+			<div class="sxr">
+					<span class="lefttj">已选条件：</span>
+					<div class="lsp">
+						<span data-id="1" class="appendtj  appendt1" style="display: none;">
+							<span class="tipts" id="yxgz1"></span>
+							<span class="layui-icon layui-icon-close"></span>
+						</span>
+						<span data-id="2" class="appendtj appendt2" style="display: none;">
+							<span class="tipts" id="yxgz2"></span>&emsp;&emsp;
+							<span class="layui-icon layui-icon-close"></span>
+						</span>
+							<span data-id="3" class="appendtj appendt4" style="display: none;"><span class="tipts" id="yxgz4"></span>&emsp;&emsp;<span
+							 class="layui-icon layui-icon-close"></span></span>
+						<span data-id="4" class="appendtj appendt5" style="display: none;"><span class="tipts" id="yxgz5"></span>&emsp;&emsp;<span
+							 class="layui-icon layui-icon-close"></span></span>
+							 <span data-id="5" class="appendtj appendt6" style="display: none;"><span class="tipts" id="yxgz6"></span>&emsp;&emsp;<span
+							 class="layui-icon layui-icon-close"></span></span>
+							 <span data-id="6" class="appendtj appendt7" style="display: none;"><span class="tipts" id="yxgz7"></span>&emsp;&emsp;<span
+							 class="layui-icon layui-icon-close"></span></span>
+							 <span data-id="7" class="appendtj appendt8" style="display: none;"><span class="tipts" id="yxgz8"></span>&emsp;&emsp;<span
+							 class="layui-icon layui-icon-close"></span></span>
+						<span data-id="8" class="appendtj appendt3" style="display: none;">
+							<span class="tipts" id="yxgz3"></span>&emsp;&emsp;
+							<span class="layui-icon layui-icon-close"></span>
+						</span>
+					
+						
+						
+						
+					</div>
+				</div>
+			</div>
+			<!--个人信息部分-->
+			<div class="yuqbottom2">
+				<!--左边简历部分-->
+				<div class="yuleft">
+					<!--基本信息-->
+					<form:form action="" modelAttribute="rlzyUser" method="post" >
+					<ul class="alljob" id="ul1">
+					<c:forEach items="${talentList }" var="rlzyUser">
+					<input value="${rlzyUser.id }" hidden="hidden" name="userId" id="userId">
+					<input value="${companyid}" hidden="hidden" name="companyId" id="companyId">
+					<input value="${rlzyUser.relationid}" hidden="hidden" name="relationid" id="relationid">
+					<input value="${rlzyUser.collectionstate}" hidden="hidden" name="collection" id="collection">
+						<li>
+							<div class="infoname">
+								<h5><span class="lefth5"><span class="nameb">${fns:getDictLabel(rlzyUser.desiredindustry,"desired_industry",defaultValue)}</span></span>
+							<span class="lefth5">
+							<span>${rlzyUser.name}</span>&emsp;&emsp;
+							</span>
+							<span class="lefth5">
+							<span>${rlzyUser.liveplace}</span>&emsp;&emsp;
+							<!--<span>4-6千/月</span>-->
+							</span>
+							<span class="lefth5 righth5">
+							发布时间：<span><fmt:formatDate value="${rlzyUser.createDate }" pattern="yyyy-MM-dd" /></span></span></h5>
+								<div class="bot">
+									<div class="imgntitle">
+										<img src="${ctxStatic }/rlzy/img/1.png" />
+									</div>
+									<div class="letbot">
+										<p class="infopname1">
+											<span class="sitename">${fns:getDictLabel(rlzyUser.desiredposition,"desired_position",defaultValue)}</span>
+											<span class="sitename">${fns:getDictLabel(rlzyUser.sex,"sex", defaultValue)}</span>
+											<span class="sitename">${rlzyUser.age}<span>岁</span></span>
+											<span class="sitename">${fns:getDictLabel(rlzyUser.education,"education", defaultValue)}</span>
+											<span class="sitename">${fns:getDictLabel(rlzyUser.workingage,"working_age",defaultValue)}</span>
+											
+										</p>
+										<p class="infopname1">
+											<span title='${fns:getDictLabel(rlzyUser.major,"major", defaultValue)}' class="sitename">${fns:getDictLabel(rlzyUser.major,"major", defaultValue)}</span>
+											<span class="sitename">${fns:getDictLabel(rlzyUser.currentstate,"current_state", defaultValue)}</span>
+											<span class="sitename">${fns:getDictLabel(rlzyUser.worknature,"work_nature",defaultValue)}</span>
+											<span class="sitename">${fns:getDictLabel(rlzyUser.salary,"salary",defaultValue)}</span>
+										</p>
+										<p class="infopname2">
+											<span class="sitename2">自我介绍：<span>${rlzyUser.selfdescription}</span></span>
+										</p>
+
+									</div>
+									<div class="rightbot">
+										<a href="#"><span class="btnlock tdjl ckjl" onclick="javascript:window.open('${rlzyPath }/talent/talentDetails?id=${rlzyUser.id }&companyid=${companyid}')">查看简历</span></a>
+										<c:if test="${rlzyUser.collectionstate == 1}">
+											<span class="btnlock sqzw sc active" id="sc" data-user="${rlzyUser.id }" data-id="${rlzyUser.relationid}" data-s="${rlzyUser.collectionstate}"><span class="layui-icon layui-icon-rate-solid"></span>收&ensp;藏</span>
+										</c:if>
+										<c:if test="${rlzyUser.collectionstate != 1}">
+											<span class="btnlock sqzw sc"  id="sc" data-user="${rlzyUser.id }"  data-id="${rlzyUser.relationid}" data-s="${rlzyUser.collectionstate}"><span class="layui-icon layui-icon-rate-solid"></span>收&ensp;藏</span>
+										</c:if>
+										
+									
+									</div>
+								</div>
+							</div>
+						</li>
+						  </c:forEach>
+					</ul>
+					</form:form>
+				</div>
+				
+				<div  class="paging-v">
+					<div id="paging" class="paging"></div>
+				</div>
+			</div>
+			
+			
+			<script src="${ctxStatic }/rlzy/js/jquery.min.js"></script>
+			<script type="text/javascript" src="${ctxStatic }/rlzy/js/pages/nav.js" ></script>
+			<script type="text/javascript" src="${ctxStatic }/rlzy/css/common/layui-v2.5.5/layui/layui.js"></script>
+			<script type="text/javascript" src="${ctxStatic }/rlzy/js/lookFor.js"></script>
+	
+	<script type="text/javascript">
+		var url = "${rlzyPath}/talent/talentListBySelect";
+		var url1 = "${rlzyPath}/talent/talentList";
+		var count = "${count}";
+		var collection = "${rlzyUser.collectionstate}";
+	
+	$(function() {
+		var companyId = $("#companyId").val();
+		 $(".sc").click(function() {
+		 	let that = $(this);
+		 	let collection = $(this).attr("data-s");
+		 	let userId = $(this).attr("data-user");
+		 	// 1收藏 2取消
+		 	console.log(userId);		
+			console.log('收藏');		
+				$.get("${rlzyPath}/talent/keepUser?userid=" + userId + "&companyid=" + companyId, function(data) {
+						that.css({"color": "#ff6d86","border": "1px solid #ff6d86"});
+						that.attr('data-s',1);
+						console.log(data);
+						if(data == 1){
+							alert("收藏成功！"); 
+						}else{
+							layui.use('layer', function(){
+								  var layer = layui.layer;
+								  //layer.msg('您已收藏！');
+								  layer.alert('您已收藏！', {
+								  skin: 'layui-layer-molv' //样式类名
+								  ,closeBtn: 0
+								}, function(){
+								  layer.alert('您真的已收藏！', {
+								    skin: 'layui-layer-lan'
+								    ,closeBtn: 0
+								    ,anim: 4 //动画类型
+								    ,success: function(layero){
+							    		return false;
+								      }
+								  });
+								});
+							});
+						}
+				});
+			})
+	 	}) 
+		function pages(count){
+			  layui.use(['laypage', 'layer'], function(){
+				  var laypage = layui.laypage
+				  ,layer = layui.layer;
+				  
+				  //完整功能
+				  laypage.render({
+				    elem: 'paging'
+				    ,count: count
+				    ,theme:'#1787fb'
+				    ,layout: ['count', 'prev', 'page', 'next', 'limit']
+				    ,jump: function(obj,first){
+				      console.log(obj)
+				      var page = "1";
+			      if(obj.curr != undefined){
+			      	page = obj.curr;
+			      }
+			      if(first){
+			      	return false;
+			      }
+			      $.ajax({
+						type: 'post',
+						data : JSON.stringify(rlzyUser),
+						url: url+"?page="+page+"&pageSize="+obj.limit,
+						contentType: "application/json;charset=utf-8",
+						success:function(data){
+							let arr = new Array();
+	 			for(var i=0;i<data.length;i++){
+	 				var time = new Date(data[i].createDate).format("yyyy-MM-dd")
+	 				arr.push('<li>');
+	 				arr.push('<div class="infoname">');
+	 				arr.push('<h5><span class="lefth5"><span class="nameb">'+data[i].desiredindustry+'</span></span>')
+					arr.push('<span class="lefth5">');
+	 				arr.push('<span>'+data[i].name+'</span>&emsp;&emsp;');
+	 				arr.push('</span>');
+	 				arr.push('<span class="lefth5">');
+	 				arr.push('<span>'+data[i].liveplace+'</span>&emsp;&emsp;');
+					arr.push('</span>');
+					arr.push('<span class="lefth5 righth5">');
+					arr.push('发布时间：<span>'+time+'</span></span></h5>');
+					arr.push('<div class="bot">');
+					arr.push('<div class="imgntitle">')
+					arr.push('<img src="/rlzy/static/rlzy/img/1.png" />')
+					arr.push('</div>')
+					arr.push('<div class="letbot">');
+					arr.push('<p class="infopname1">');
+					arr.push('<span class="sitename">'+data[i].desiredposition+'</span>');
+					arr.push('<span class="sitename">'+data[i].sex+'</span>');
+					arr.push('<span class="sitename">'+data[i].age+'<span>岁</span></span>');
+					arr.push('<span class="sitename">'+data[i].education+'</span>');
+					arr.push('<span class="sitename">'+data[i].workingage+'</span>');
+					arr.push('</p>');
+					arr.push('<p class="infopname1">');
+					arr.push('<span class="sitename">'+data[i].major+'</span>');
+					arr.push('<span class="sitename">'+data[i].currentstate+'</span>');
+					arr.push('<span class="sitename">'+data[i].worknature+'</span>');
+					arr.push('<span class="sitename">'+data[i].salary+'</span>');
+					arr.push('</p>');
+					arr.push('<p class="infopname2">');
+					arr.push('<span class="sitename2">自我介绍：<span>'+data[i].selfdescription+'</span></span>');
+					arr.push('</p>');
+					arr.push('</div>');
+					arr.push('<div class="rightbot">');
+					arr.push('<a href="#"><button class="btnlock tdjl ckjl" onclick="javascript:window.open("/rlzy/talent/talentDetails?id="'+data[i].id+')">查看简历</button></a>');		
+					arr.push('<button class="btnlock sqzw sc" onclick="javascript:window.open("rlzy/talent/keepUser?userid='+data[i].userid+'&comoanyid='+data[i].companyid+')"></span>收&ensp;藏</button>');		
+					arr.push('</div>');			
+					arr.push('</div>');	
+					arr.push('</div>');
+					arr.push('</li>');				  
+	 			}
+	 			let html = arr.join('');
+	 			$("#ul1>li").remove();
+	 			$("#ul1").html(html);
+						}
+					});
+		    }
+		  });
+		});
+	 
+	 }
+	 
+	 
+	 
+	 layui.use(['laypage', 'layer'], function(){
+				  var laypage = layui.laypage
+				  ,layer = layui.layer;
+				  
+				  //完整功能
+				  laypage.render({
+				    elem: 'paging'
+				    ,count: count
+				    ,theme:'#1787fb'
+				    ,layout: ['count', 'prev', 'page', 'next', 'limit']
+				    ,jump: function(obj,first){
+				      console.log(obj)
+				      var page = "1";
+			      if(obj.curr != undefined){
+			      	page = obj.curr;
+			      }
+			      if(first){
+			      	return false;
+			      }
+			      $.ajax({
+						type: 'post',
+						data : JSON.stringify(rlzyUser),
+						url: url+"?page="+page+"&pageSize="+obj.limit,
+						contentType: "application/json;charset=utf-8",
+						success:function(data){
+							let arr = new Array();
+	 			for(var i=0;i<data.length;i++){
+	 				var time = new Date(data[i].createDate).format("yyyy-MM-dd")
+	 				arr.push('<li>');
+	 				arr.push('<div class="infoname">');
+	 				arr.push('<h5><span class="lefth5"><span class="nameb">'+data[i].desiredindustry+'</span></span>')
+					arr.push('<span class="lefth5">');
+	 				arr.push('<span>'+data[i].name+'</span>&emsp;&emsp;');
+	 				arr.push('</span>');
+	 				arr.push('<span class="lefth5">');
+	 				arr.push('<span>'+data[i].liveplace+'</span>&emsp;&emsp;');
+					arr.push('</span>');
+					arr.push('<span class="lefth5 righth5">');
+					arr.push('发布时间：<span>'+time+'</span></span></h5>');
+					arr.push('<div class="bot">');
+					arr.push('<div class="imgntitle">')
+					arr.push('<img src="/rlzy/static/rlzy/img/1.png" />')
+					arr.push('</div>')
+					arr.push('<div class="letbot">');
+					arr.push('<p class="infopname1">');
+					arr.push('<span class="sitename">'+data[i].desiredposition+'</span>');
+					arr.push('<span class="sitename">'+data[i].sex+'</span>');
+					arr.push('<span class="sitename">'+data[i].age+'<span>岁</span></span>');
+					arr.push('<span class="sitename">'+data[i].education+'</span>');
+					arr.push('<span class="sitename">'+data[i].workingage+'</span>');
+					arr.push('</p>');
+					arr.push('<p class="infopname1">');
+					arr.push('<span class="sitename">'+data[i].major+'</span>');
+					arr.push('<span class="sitename">'+data[i].currentstate+'</span>');
+					arr.push('<span class="sitename">'+data[i].worknature+'</span>');
+					arr.push('<span class="sitename">'+data[i].salary+'</span>');
+					arr.push('</p>');
+					arr.push('<p class="infopname2">');
+					arr.push('<span class="sitename2">自我介绍：<span>'+data[i].selfdescription+'</span></span>');
+					arr.push('</p>');
+					arr.push('</div>');
+					arr.push('<div class="rightbot">');
+					arr.push('<a href="#"><button class="btnlock tdjl ckjl" onclick="javascript:window.open("/rlzy/talent/talentDetails?id="'+data[i].id+')">查看简历</button></a>');		
+					arr.push('<button class="btnlock sqzw sc" onclick="javascript:window.open("rlzy/talent/keepUser?userid='+data[i].userid+'&comoanyid='+data[i].companyid+')"></span>收&ensp;藏</button>');		
+					arr.push('</div>');			
+					arr.push('</div>');	
+					arr.push('</div>');
+					arr.push('</li>');				  
+	 			}
+	 			let html = arr.join('');
+	 			$("#ul1>li").remove();
+	 			$("#ul1").html(html);
+						}
+					});
+		    }
+		  });
+		});
+	 
+	</script>
+	
+	</body>
+
+</html>

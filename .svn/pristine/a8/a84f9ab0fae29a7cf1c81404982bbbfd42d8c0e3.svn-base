@@ -1,0 +1,132 @@
+body {
+	  background: radial-gradient(200% 100% at bottom center, #87d9ff, #009dff, #3043ac, #1b2947);
+	  /* background: radial-gradient(220% 105% at top center, #1b2947 10%, #3043ac 40%, #009dff 65%, #87d9ff); */
+	   background: radial-gradient(220% 105% at top center, #1b2947 10%, #1b2947 40%, #1b2947 65%, #1b2947);
+	  background-attachment: fixed;
+	  overflow: hidden;
+	  color: #fff;
+	}
+	@keyframes rotate {
+	  0% {
+		transform: perspective(400px) rotateZ(20deg) rotateX(-40deg) rotateY(0);
+	  }
+	  100% {
+		transform: perspective(400px) rotateZ(20deg) rotateX(-40deg) rotateY(-360deg);
+	  }
+	}
+	.stars {
+	  transform: perspective(500px);
+	  transform-style: preserve-3d;
+	  position: absolute;
+	  bottom: 0;
+	  perspective-origin: 50% 100%;
+	  left: 50%;
+	  animation: rotate 90s infinite linear;
+	}
+	.star {
+	  width: 2px;
+	  height: 2px;
+	  background: #F7F7B6;
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  transform-origin: 0 0 -300px;
+	  transform: translate3d(0, 0, -300px);
+	  backface-visibility: hidden;
+	}
+	
+	.i-bo {
+		position: absolute;
+		width: 20px;
+		height: 20px;
+	}
+	.i-bo1 {
+		top: -2px;
+		left: -2px;
+		border-left: 2px solid #29D1EC;
+		border-top: 2px solid #29D1EC;
+	}
+	.i-bo2 {
+		top: -2px;
+	    right: -2px;
+	    border-right: 2px solid #29D1EC;
+	    border-top: 2px solid #29D1EC;
+	}
+	.i-bo3 {
+		bottom: -2px;
+		left: -2px;
+		border-bottom: 2px solid #29D1EC;
+		border-left: 2px solid #29D1EC;
+	}
+	.i-bo4 {
+		bottom: -2px;
+		right: -2px;
+		border-right: 2px solid #29D1EC;
+		border-bottom: 2px solid #29D1EC;
+	}	
+	.v{
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;	
+		height: 100%;
+		z-index: 999;
+		min-width: 1366px;
+	}
+	.tit-v{
+		height: 9vh;
+		position: relative;
+		margin-bottom: 15px;
+	}
+	.tit-bg{
+	    width: 100%;
+	    height: 80px;
+	    background: url(../image/title.png) no-repeat;
+	    background-size: 100% 100%;
+	}
+	.tit{
+		width: 100%;
+		height: 100%;
+		text-align: center;
+		font-size: 30px;
+		line-height: 66px;
+	}
+	.tit a{
+		color: #fff;
+		text-decoration:none;
+	}
+	.tit .tit-span{
+		padding: 0px 3px;
+		border: 1px solid #29D1EC;
+		color: #29D1EC;
+		font-size: 12px;
+		border-radius: 2px;
+		margin: 0 8px;
+		display: none;
+	}
+	.tit:hover .tit-span{
+		display: initial;
+	}
+	.time{
+		position: absolute;
+		top: 31px;
+		right: 23px;
+		font-size: 20px;
+	}
+	
+	.c{
+		width: 98%;
+		height: 90vh;
+		margin: 0 auto;
+		display: flex;
+	}
+	.pack-v{
+		height: 100%;
+		margin-top: 0%;
+		border: 1px solid #4788fb;
+		box-shadow: 0 0 10px #4788fb;
+		position: relative;
+	}
+	.ec-v{
+		height: 100%;
+	}

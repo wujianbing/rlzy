@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.portal.mapper.NewsMapper">
+    
+	<sql id="newsColumns">
+		a.id AS "id",
+		a.title AS "title",
+		a.brief AS "brief",
+		a.content AS "content",
+		a.is_top AS "isTop",
+		a.audit AS "audit",
+		a.amount AS "amount",
+		a.news_model_id AS "newsModel.id",
+		a.pic AS "pic",
+		a.create_date AS "createDate",
+		a.create_by AS "createBy.id",
+		a.update_date AS "updateDate",
+		a.update_by AS "updateBy.id",
+		a.remarks AS "remarks",
+		a.spe1 AS "spe1",
+		a.spe2 AS "spe2",
+		a.del_flag AS "delFlag",
+		(SELECT u.name FROM sys_user u WHERE u.id = a.create_by) AS "createBy.name",
+		b.name AS "newsModel.name"
+	</sql>
+	
+	<sql id="newsJoins">
+			LEFT JOIN p_news_model b ON b.id = a.news_model_id
+	</sql>
+	
+    <resultMap type="News" id="NewsResult" autoMapping="true">
+    	<result column="content" property="content"   typeHandler="com.jeeplus.core.mapper.ConvertBlobTypeHandler"/>
+    </resultMap>
+    
+	<select id="get" resultMap="NewsResult" >
+		SELECT 
+			<include refid="newsColumns"/>
+		FROM p_news a
+		<include refid="newsJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultMap="NewsResult" >
+		SELECT 
+			<include refid="newsColumns"/>
+		FROM p_news a
+		<include refid="newsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="title != null and title != ''">
+				AND a.title LIKE 
+					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{title},'%')</if>
+			</if>
+			<if test="isTop != null and isTop != ''">
+				AND a.is_top = #{isTop}
+			</if>
+			<if test="audit != null and audit != ''">
+				AND a.audit = #{audit}
+			</if>
+            <if test="newsModel != null  and newsModel.id != null and newsModel.id != ''">
+                AND (b.id = #{newsModel.id} OR b.parent_ids LIKE
+                <if test="dbName == 'oracle'">'%,'||#{newsModel.id}||',%')</if>
+                <if test="dbName == 'mysql'">CONCAT('%,', #{newsModel.id}, ',%'))</if>
+                <if test="dbName == 'mssql'">'%'+#{newsModel.id}+'%')</if>
+            </if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultMap="NewsResult" >
+		SELECT 
+			<include refid="newsColumns"/>
+		FROM p_news a
+		<include refid="newsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO p_news(
+			id,
+			title,
+			brief,
+			content,
+			is_top,
+			audit,
+			amount,
+			news_model_id,
+			pic,
+			create_date,
+			create_by,
+			update_date,
+			update_by,
+			remarks,
+			spe1,
+			spe2,
+			del_flag
+		) VALUES (
+			#{id},
+			#{title},
+			#{brief},
+			#{content},
+			#{isTop},
+			#{audit},
+			0,
+			#{newsModel.id},
+			#{pic},
+			#{createDate},
+			#{createBy.id},
+			#{updateDate},
+			#{updateBy.id},
+			#{remarks},
+			#{spe1},
+			#{spe2},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE p_news SET 	
+			title = #{title},
+			brief = #{brief},
+			content = #{content},
+			is_top = #{isTop},
+			audit = #{audit},
+			amount = #{amount},
+			news_model_id = #{newsModel.id},
+			pic = #{pic},
+			update_date = #{updateDate},
+			update_by = #{updateBy.id},
+			remarks = #{remarks},
+			spe1 = #{spe1},
+			spe2 = #{spe2}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM p_news
+		<choose>
+			<when test="id !=null and id != ''">
+				WHERE id = #{id}
+			</when>
+			<otherwise>
+				WHERE news_model_id = #{newsModel.id}
+			</otherwise>
+		</choose>
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE p_news SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		<choose>
+			<when test="id !=null and id != ''">
+				WHERE id = #{id}
+			</when>
+			<otherwise>
+				WHERE news_model_id = #{newsModel.id}
+			</otherwise>
+		</choose>
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="News" statementType="STATEMENT">
+		select * FROM p_news  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

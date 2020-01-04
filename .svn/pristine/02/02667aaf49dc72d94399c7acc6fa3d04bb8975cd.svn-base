@@ -1,0 +1,109 @@
+function Nav(){
+	this.navArr = [
+		{
+			title:"网站首页",
+			url:"#1"
+		},
+		{
+			title:"园区概况",
+			url:"#2"
+		},
+		{
+			title:"园区服务",
+			url:"#3"
+		},
+		{
+			title:"动态新闻",
+			url:"#4"
+		},
+		{
+			title:"技能提升",
+			url:"#5"
+		},
+		{
+			title:"企业入驻",
+			url:"#6"
+		},
+		{
+			title:"联系我们",
+			url:"#7"
+		}
+	],
+	this.tailArr = [
+		{
+			title:"关于我们",
+			url:"#1"
+		},
+		{
+			title:"联系我们",
+			url:"#2"
+		},
+		{
+			title:"客服中心",
+			url:"#3"
+		},
+		{
+			title:"招聘入口",
+			url:"#4"
+		}
+	]
+}
+Nav.prototype = {
+	init: function(){
+		let self = this;
+		let nav = '';
+		nav += "<div id='nav' class='nav'>";
+		nav += "<div class='titleTop'>";
+		nav += "<div class='rowTop'>";
+		nav += "<div class='title'>";
+		nav += "<h3>吴忠人力资源服务产业园</h3>";
+		nav += "<h6>Wu Zhong Human Resources Services Industrial Park</h6>";
+		nav += "</div>";
+		nav += "<div class='searchBar'>";
+		nav += "<div class='searchBar-left'>";
+		nav += "<div class='input-group input-key-v'>";
+		nav += "<input type='text' placeholder='在此输入关键字..' class='layui-input input-key'>";
+		nav += "<i class='layui-icon layui-icon-search search-se'></i>";
+		nav += "</div>";
+		nav += "</div>";
+		nav += "<div class='searchBar-right'>";
+		nav += "<a class='land login'>登陆</a>|<a class='land registered'>注册</a>";
+		nav += "</div>";
+		nav += "</div>";
+		nav += "</div>";
+		nav += "</div>";
+		nav += "<div class='bar'>";
+		nav += "<div class='row rowBar'>";
+		nav += "<ul class='nav nav-tabs'>";
+		for(let i = 0; i < self.navArr.length; i++){
+			nav += "<li class='presentation'>";
+			nav += "<a href="+self.navArr[i].url+">"+self.navArr[i].title+"</a>";
+			nav += "</li>";
+		}
+		nav += "</ul>";
+		nav += "</div>";
+		nav += "</div>";
+		nav += "</div>";
+		$("body").prepend(nav);
+		
+		let tail = '';
+		tail += '<div id="tail" class="tail">';
+		tail += '<div class="webLinkWork">';
+		for(let j = 0; j < self.tailArr.length; j++){
+			if(j == self.tailArr.length-1){
+				tail += '<span><a href='+self.tailArr[j].url+'>'+self.tailArr[j].title+'</a></span>';
+			}else{
+				tail += '<span><a href='+self.tailArr[j].url+'>'+self.tailArr[j].title+'</a></span>|';
+			}
+		}
+		tail += '</div>';
+		tail += '<div class="banquan">';
+		tail += '<span>Copyright</span>&emsp;&copy;<span> 2019 吴忠人力资源服务产业园,</span>&emsp;';
+		tail += '<span> All Rights Reserved</span>&emsp;　宁ICP备000000号';
+		tail += '</div>';
+		tail += '</div>';
+		$('body').append(tail);
+	}
+}
+var nav = new Nav();
+nav.init();

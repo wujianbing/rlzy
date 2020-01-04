@@ -1,0 +1,58 @@
+function MyJobwant(){
+	
+}
+MyJobwant.prototype = {
+	init: function(){
+
+		myJobwant.bind();
+		myJobwant.iframH('#app','iframe');
+	},
+
+	bind: function(){
+	
+		$(".lastfuli").on('click',function(){
+		 $(".fuli").toggle();
+		 myJobwant.iframH('#app','iframe');
+//		 parent.MyFind.prototype.height1();
+		})
+		$(".shouq").on('click',function(){
+		 $(".fuli").toggle()
+//		 parent.MyFind.prototype.height1();
+ myJobwant.iframH('#app','iframe');
+		})
+	 $(".fuli ul li").click(function(){
+             if($(this).hasClass("liact")){
+            	 $(this).removeClass("liact") ;
+              $(this).find(".correct").remove()
+              
+             }else{
+             
+             	
+                $(this).addClass("liact");
+           		$(this).append("<span class='correct'></span>");  
+             }
+         });
+
+	},
+	iframH: function(app,iframe){
+			console.log(1);
+			setTimeout(function(){
+				//父页面iframe高度
+				var apph = $(app).outerHeight();
+				let parIframe = window.parent.document.getElementById(iframe);
+				//console.log(apph);
+				$(parIframe).css({'height':apph});
+			},300);
+		},
+	
+}
+var myJobwant = new MyJobwant();
+myJobwant.init();
+
+
+
+
+
+
+
+

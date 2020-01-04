@@ -1,0 +1,598 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/webpage/include/taglib.jsp"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+	<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+	<title>吴忠人力资源首页</title>
+	<!-- Bootstrap -->
+	<link href="${ctxStatic }/rlzy/css/bootstrap.css" rel="stylesheet">
+	<link rel="stylesheet" href="${ctxStatic }/rlzy/css/jquery.my-modal.1.1.css" />
+	<link rel="stylesheet" href="${ctxStatic }/rlzy/css/findInfo.css" />
+</head>
+<body>
+	<!--首页内容-->
+	<div class="humanbox">
+		<!--标题栏-->
+		<div class="titleTop">
+			<div class="row rowTop">
+				<!--标题-->
+				<div class="col-md-2 title ">
+					<h3>吴忠人力资源服务产业园</h3>
+					<h6>Wu Zhong Human Resources Services Industrial Park</h6>
+				</div>
+				<!--搜索按钮-->
+				<div class="col-md-4 searchBar col-md-offset-6" style="padding: 0;">
+					<div class="col-lg-6">
+						<form action="" method="">
+							<div class="input-group">
+								<input type="text" class="form-control searchBarLeft" placeholder="在此输入关键字...">
+								<span class="input-group-btn searchBarRight">
+	      						 <button class="btn btn-default glyphicon glyphicon-search" type="button"></button>
+	     						</span>
+							</div>
+						</form>
+					</div>
+					<div class="col-lg-5" style="white-space: nowrap; color: #666; text-align: right;padding: 0;">
+						<a class="login">登陆</a>|
+						<a class="registered">注册</a>
+					</div>
+				</div>
+			</div>
+	
+		</div>
+		<!--导航条-->
+		<div class="bar">
+			<div class="row rowBar">
+				<ul class="nav nav-tabs">
+					<li role="presentation">
+						<a href="#">网站首页</a>
+					</li>
+					<li role="presentation">
+						<a href="#">园区概况</a>
+					</li>
+					<li role="presentation">
+						<a href="#">园区服务</a>
+					</li>
+					<li role="presentation">
+						<a href="#">新闻动态</a>
+					</li>
+					<li role="presentation">
+						<a href="#">技能提升</a>
+					</li>
+					<li role="presentation">
+						<a href="#">企业入驻</a>
+					</li>
+					<li role="presentation">
+						<a href="#">联系我们</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!--banner图-->
+		<div class="banner"></div>
+		<div class="selet">
+		<div class="sxl">
+			<div class="select-container">筛选条件：</div>
+				<div class="select-container gz">
+		        <span class="glyphicon glyphicon-menu-down"></span>
+		        <input   type="text" readonly="readonly"  value="职位薪资" onfocus="this.nextSibling.nextSibling.style.display='block';"
+		            onblur="var t=this;setTimeout(()=>{t.nextSibling.nextSibling.style.display='none';},150);" />
+		        <ul>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">不限</a>
+		            </li>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">1-3千/月</a>
+		            </li>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">3-5千/月</a>
+		            </li>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">5-8千/月</a>
+		            </li>
+		        </ul>
+		    </div>
+				<div class="select-container gz1">
+		        <span class="glyphicon glyphicon-menu-down"></span>
+		        <input  data-id="2" type="text" readonly="readonly" value="所属行业" onfocus="this.nextSibling.nextSibling.style.display='block';"
+		            onblur="var t=this;setTimeout(()=>{t.nextSibling.nextSibling.style.display='none';},150);" />
+		        <ul>
+		          
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">互联网</a>
+		            </li>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">政府企业</a>
+		            </li>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">教育/培训</a>
+		            </li>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">贸易/进出口</a>
+		            </li>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">房地产开发</a>
+		            </li>
+		        </ul>
+		    </div>
+				<div class="select-container gz2">
+		        <span class="glyphicon glyphicon-menu-down"></span>
+		        <input type="text" readonly="readonly" value="企业规模" onfocus="this.nextSibling.nextSibling.style.display='block';"
+		            onblur="var t=this;setTimeout(()=>{t.nextSibling.nextSibling.style.display='none';},150);" />
+		        <ul>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;" target="_blank">所属行业</a>
+		            </li>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">10-20人</a>
+		            </li>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">20-50人</a>
+		            </li>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">50-100人</a>
+		            </li>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">100-500人</a>
+		            </li>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">500+人</a>
+		            </li>
+		        </ul>
+		    </div>
+				<div class="select-container gz3">
+		        <span class="glyphicon glyphicon-menu-down"></span>
+		        <input type="text" readonly="readonly" value="工作性质" onfocus="this.nextSibling.nextSibling.style.display='block';"
+		            onblur="var t=this;setTimeout(()=>{t.nextSibling.nextSibling.style.display='none';},150);" />
+		        <ul>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">全职</a>
+		            </li>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">兼职</a>
+		            </li>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">实习</a>
+		            </li>
+		        </ul>
+		    </div>
+				<div class="select-container gz4">
+		        <span class="glyphicon glyphicon-menu-down"></span>
+		        <input type="text" readonly="readonly" value="学历要求" onfocus="this.nextSibling.nextSibling.style.display='block';"
+		            onblur="var t=this;setTimeout(()=>{t.nextSibling.nextSibling.style.display='none';},150);" />
+		        <ul>
+		           
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">初中</a>
+		            </li>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">高中</a>
+		            </li>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">大专</a>
+		            </li>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">本科</a>
+		            </li>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">博士</a>
+		            </li>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">硕士</a>
+		            </li>
+		        </ul>
+		    </div>
+				<div class="select-container gz5">
+		        <span class="glyphicon glyphicon-menu-down"></span>
+		        <input type="text" readonly="readonly" value="更新时间" onfocus="this.nextSibling.nextSibling.style.display='block';"
+		            onblur="var t=this;setTimeout(()=>{t.nextSibling.nextSibling.style.display='none';},150);" />
+		        <ul>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">3天内</a>
+		            </li>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">7天内</a>
+		            </li>
+		            <li onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
+		                <a href="javascript:;">15天内</a>
+		            </li>
+		        </ul>
+		    </div>
+		</div>
+		<div class="sxr">
+			<span class="lefttj">已筛选条件：</span>
+			<span class="lsp">
+			<span class="appendtj  appendt1" style="display: none;"><span id="yxgz1"></span>&emsp;&emsp;<span class="glyphicon glyphicon-remove"></span></span>
+			<span class="appendtj appendt2" style="display: none;"><span id="yxgz2"></span>&emsp;&emsp;<span class="glyphicon glyphicon-remove"></span></span>
+			<span class="appendtj appendt3" style="display: none;"><span id="yxgz3"></span>&emsp;&emsp;<span class="glyphicon glyphicon-remove"></span></span>
+			<span class="appendtj appendt4" style="display: none;"><span id="yxgz4"></span>&emsp;&emsp;<span class="glyphicon glyphicon-remove"></span></span>
+			<span class="appendtj appendt5" style="display: none;"><span id="yxgz5"></span>&emsp;&emsp;<span class="glyphicon glyphicon-remove"></span></span>
+			<span class="appendtj appendt6" style="display: none;"><span id="yxgz6"></span>&emsp;&emsp;<span class="glyphicon glyphicon-remove"></span></span>
+			</span>
+		</div>
+		</div>
+		<!--所有职位-->
+		<div class="titlebg">
+			<div class="leftbtn">
+				<button class="btns btnjob btnactive all">所有职位</button><button class="btns btnjob fast">急聘职位</button>
+			</div>
+			<div class="rightbtn">最新职位</div>
+		</div>
+		<!--个人信息部分-->
+		<div class="yuqbottom">
+			<!--左边简历部分-->
+			<div class="yuleft">
+				<!--基本信息-->
+				<ul class="alljob">
+					<li>
+						<div class="infoname">
+							<h5><span class="lefth5"><span>1111吴忠市</span>&emsp;&emsp;<span>人事主管</span></span>
+						<span class="lefth5">
+						<span>塞上e家</span>&emsp;&emsp;
+						<span>4-6千/月</span>
+						</span>
+						<span class="lefth5 righth5">
+						发布时间：<span>2019-11-1</span></span></h5>
+							<div class="bot">
+								<div class="letbot">
+									<p class="infopname1">
+										<span class="sitename">学历：<span>本科　</span></span>|
+										<span class="sitename">经验：<span>5-10年</span></span>|
+										<span class="sitename">职位性质:<span>全职</span>&emsp;&emsp;&emsp;|</span>
+										<span class="sitename">地点:<span>银川市</span></span>
+									</p>
+									<p class="infopname1">
+										<span class="sitename">岗位要求：<span>1）人力资源管理或其他管理类专业本科学历；1年左右相关工作经验或优秀应届毕业生；2）熟悉招聘流程；3）熟悉国家和当地的法律法规；4）熟悉培训体系搭建；5）了解考核...</span></span>
+									</p>
+	
+								</div>
+								<div class="rightbot">
+									<button class="btnlock tdjl">投递简历</button>
+									<button class="btnlock sqzw"><span class="glyphicon glyphicon-star"></span>&ensp;收藏职位</button>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="infoname">
+							<h5><span class="lefth5"><span>吴忠市</span>&emsp;&emsp;<span>人事主管</span></span>
+						<span class="lefth5">
+						<span>塞上e家</span>&emsp;&emsp;
+						<span>4-6千/月</span>
+						</span>
+						<span class="lefth5 righth5">
+						发布时间：<span>2019-11-1</span></span></h5>
+							<div class="bot">
+								<div class="letbot">
+									<p class="infopname1">
+										<span class="sitename">学历：<span>本科　</span></span>|
+										<span class="sitename">经验：<span>5-10年</span></span>|
+										<span class="sitename">职位性质:<span>全职</span>&emsp;&emsp;&emsp;|</span>
+										<span class="sitename">地点:<span>银川市</span></span>
+									</p>
+									<p class="infopname1">
+										<span class="sitename">岗位要求：<span>1）人力资源管理或其他管理类专业本科学历；1年左右相关工作经验或优秀应届毕业生；2）熟悉招聘流程；3）熟悉国家和当地的法律法规；4）熟悉培训体系搭建；5）了解考核...</span></span>
+									</p>
+	
+								</div>
+								<div class="rightbot">
+									<button class="btnlock tdjl">投递简历</button>
+									<button class="btnlock sqzw"><span class="glyphicon glyphicon-star"></span>&ensp;收藏职位</button>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+				<ul class="fastjob">
+					<li>
+						<div class="infoname">
+							<h5><span class="lefth5"><span>吴忠市</span>&emsp;&emsp;<span>人事主管</span></span>
+						<span class="lefth5">
+						<span>塞上e家</span>&emsp;&emsp;
+						<span>4-6千/月</span>
+						</span>
+						<span class="lefth5 righth5">
+						发布时间：<span>2019-11-1</span></span></h5>
+							<div class="bot">
+								<div class="letbot">
+									<p class="infopname1">
+										<span class="sitename">学历：<span>本科　</span></span>|
+										<span class="sitename">经验：<span>5-10年</span></span>|
+										<span class="sitename">职位性质:<span>全职</span>&emsp;&emsp;&emsp;|</span>
+										<span class="sitename">地点:<span>银川市</span></span>
+									</p>
+									<p class="infopname1">
+										<span class="sitename">岗位要求：<span>1）人力资源管理或其他管理类专业本科学历；1年左右相关工作经验或优秀应届毕业生；2）熟悉招聘流程；3）熟悉国家和当地的法律法规；4）熟悉培训体系搭建；5）了解考核...</span></span>
+									</p>
+	
+								</div>
+								<div class="rightbot">
+									<button class="btnlock tdjl">投递简历</button>
+									<button class="btnlock sqzw"><span class="glyphicon glyphicon-star"></span>&ensp;收藏职位</button>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="infoname">
+							<h5><span class="lefth5"><span>吴忠市</span>&emsp;&emsp;<span>人事主管</span></span>
+						<span class="lefth5">
+						<span>塞上e家</span>&emsp;&emsp;
+						<span>4-6千/月</span>
+						</span>
+						<span class="lefth5 righth5">
+						发布时间：<span>2019-11-1</span></span></h5>
+							<div class="bot">
+								<div class="letbot">
+									<p class="infopname1">
+										<span class="sitename">学历：<span>本科　</span></span>|
+										<span class="sitename">经验：<span>5-10年</span></span>|
+										<span class="sitename">职位性质:<span>全职</span>&emsp;&emsp;&emsp;|</span>
+										<span class="sitename">地点:<span>银川市</span></span>
+									</p>
+									<p class="infopname1">
+										<span class="sitename">岗位要求：<span>1）人力资源管理或其他管理类专业本科学历；1年左右相关工作经验或优秀应届毕业生；2）熟悉招聘流程；3）熟悉国家和当地的法律法规；4）熟悉培训体系搭建；5）了解考核...</span></span>
+									</p>
+	
+								</div>
+								<div class="rightbot">
+									<button class="btnlock tdjl">投递简历</button>
+									<button class="btnlock sqzw"><span class="glyphicon glyphicon-star"></span>&ensp;收藏职位</button>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="infoname">
+							<h5><span class="lefth5"><span>吴忠市</span>&emsp;&emsp;<span>人事主管</span></span>
+						<span class="lefth5">
+						<span>塞上e家</span>&emsp;&emsp;
+						<span>4-6千/月</span>
+						</span>
+						<span class="lefth5 righth5">
+						发布时间：<span>2019-11-1</span></span></h5>
+							<div class="bot">
+								<div class="letbot">
+									<p class="infopname1">
+										<span class="sitename">学历：<span>本科　</span></span>|
+										<span class="sitename">经验：<span>5-10年</span></span>|
+										<span class="sitename">职位性质:<span>全职</span>&emsp;&emsp;&emsp;|</span>
+										<span class="sitename">地点:<span>银川市</span></span>
+									</p>
+									<p class="infopname1">
+										<span class="sitename">岗位要求：<span>1）人力资源管理或其他管理类专业本科学历；1年左右相关工作经验或优秀应届毕业生；2）熟悉招聘流程；3）熟悉国家和当地的法律法规；4）熟悉培训体系搭建；5）了解考核...</span></span>
+									</p>
+	
+								</div>
+								<div class="rightbot">
+									<button class="btnlock tdjl">投递简历</button>
+									<button class="btnlock sqzw"><span class="glyphicon glyphicon-star"></span>&ensp;收藏职位</button>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="yuright">
+				<ul>
+					<li>
+						<div class="infoname namegc">
+							<h5><span class="lefth5"><span>人事主管</span></span>
+						<span class="lefth5"><span>4-6千/月</span></span>
+					</h5>
+							<div class="bot">
+								<div class="letbot lefttyt">
+									<p class="infopname1 info4">
+										<span class="sitename">银川塞上e家有限公司</span>
+									</p>
+									<p class="infopname1 info4">
+										<span class="sitename"><span>3-5K</span>/月</span>
+									</p>
+									<p class="infopname1 info4">
+										<span class="sitename"><span>本科</span>&emsp;丨&emsp;<span>经验不限</span></span>
+									</p>
+									<p class="infopname1 info4">
+										<span class="sitename"><span>2019/10/10-2019/10/20</span></span>
+									</p>
+									<p class="infopname1 info4">
+										<span class="sitename">银川市</span>
+									</p>
+	
+								</div>
+								<div class="rightbot righttyt">
+									<button class="btnlock ypsj">我要应聘</button>
+	
+								</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="infoname namegc">
+							<h5><span class="lefth5"><span>人事主管</span></span>
+						<span class="lefth5"><span>4-6千/月</span></span>
+					</h5>
+							<div class="bot">
+								<div class="letbot lefttyt">
+									<p class="infopname1 info4">
+										<span class="sitename">银川塞上e家有限公司</span>
+									</p>
+									<p class="infopname1 info4">
+										<span class="sitename"><span>3-5K</span>/月</span>
+									</p>
+									<p class="infopname1 info4">
+										<span class="sitename"><span>本科</span>&emsp;丨&emsp;<span>经验不限</span></span>
+									</p>
+									<p class="infopname1 info4">
+										<span class="sitename"><span>2019/10/10-2019/10/20</span></span>
+									</p>
+									<p class="infopname1 info4">
+										<span class="sitename">银川市</span>
+									</p>
+	
+								</div>
+								<div class="rightbot righttyt">
+									<button class="btnlock ypsj">我要应聘</button>
+	
+								</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="infoname namegc">
+							<h5><span class="lefth5"><span>人事主管</span></span>
+						<span class="lefth5"><span>4-6千/月</span></span>
+					</h5>
+							<div class="bot">
+								<div class="letbot lefttyt">
+									<p class="infopname1 info4">
+										<span class="sitename">银川塞上e家有限公司</span>
+									</p>
+									<p class="infopname1 info4">
+										<span class="sitename"><span>3-5K</span>/月</span>
+									</p>
+									<p class="infopname1 info4">
+										<span class="sitename"><span>本科</span>&emsp;丨&emsp;<span>经验不限</span></span>
+									</p>
+									<p class="infopname1 info4">
+										<span class="sitename"><span>2019/10/10-2019/10/20</span></span>
+									</p>
+									<p class="infopname1 info4">
+										<span class="sitename">银川市</span>
+									</p>
+	
+								</div>
+								<div class="rightbot righttyt">
+									<button class="btnlock ypsj">我要应聘</button>
+	
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+	
+			</div>
+		</div>
+			<!--分页按钮-->
+				<div class="infopname lastname lastjk">
+					<nav aria-label="Page navigation">
+						<ul class="pagination">
+							<li class="disabled">
+								<a href="#" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+								</a>
+							</li>
+							<li class="active">
+								<a href="#">1</a>
+							</li>
+							<li>
+								<a href="#">2</a>
+							</li>
+							<li>
+								<a href="#">3</a>
+							</li>
+							<li>
+								<a href="#">4</a>
+							</li>
+							<li>
+								<a href="#">5</a>
+							</li>
+							<li>
+								<a href="#" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+				<!--外部连接跳转-->
+			<div class="webLinkWork">
+				<span><a>关于我们</a></span>&emsp;|&emsp;
+				<span><a>联系我们</a></span>&emsp;|&emsp;
+				<span><a>客服中心</a></span>&emsp;|&emsp;
+				<span><a>招聘入口</a></span>
+			</div>
+			<!--版权号-->
+			<div class="banquan">
+				<span>Copyright</span>&emsp;&copy;<span> 2019 吴忠人力资源服务产业园,</span>&emsp;<span> All Rights Reserved</span>&emsp;　宁ICP备000000号
+			</div>
+		<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+		<script src="js/jquery.min.js"></script>
+		<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+		<script src="js/bootstrap.js"></script>
+</body>
+</html>
+<script type="text/javascript">
+	$('.sqzw').on("click", function() {
+		$(this).css("color", "#f7d213")
+	});
+//选项卡样式切换
+	$('.all').on("click", function() {
+		 $(this).addClass('btnactive').siblings().removeClass('btnactive');
+		 	$('.alljob').css("display", "block");
+		 	$('.fastjob').css("display", "none")
+	});
+	$('.fast').on("click", function() {
+		 $(this).addClass('btnactive').siblings().removeClass('btnactive');
+		 	$('.alljob').css("display", "none");
+		 	$('.fastjob').css("display", "block")
+	});
+	//收藏按钮
+	$(function() {
+		var i = 0;
+		$(".sqzw").click(function() {
+			i++;
+			if(i % 2 != 0) {
+				$(this).css("color", "#f7d213")
+
+			} else {
+				$(this).css("color", "#4b96cf")
+
+			}
+		});
+	})
+
+	$('.gz li').on("click", function() {
+		var s=$(this).text();
+		$(".appendt1").css("display", "block");
+		$('#yxgz1').html(s);
+	});
+
+	$('.gz1 li').on("click", function() {
+		var s=$(this).text();
+		$(".appendt2").css("display", "block");
+		$('#yxgz2').html(s);
+	});
+
+	$('.gz2 li').on("click", function() {
+		var s=$(this).text();
+		$(".appendt3").css("display", "block");
+		$('#yxgz3').html(s);
+	});
+
+	$('.gz3 li').on("click", function() {
+		var s=$(this).text();
+		$(".appendt4").css("display", "block");
+		$('#yxgz4').html(s);
+	});
+
+	$('.gz4 li').on("click", function() {
+		var s=$(this).text();
+		$(".appendt5").css("display", "block");
+		$('#yxgz5').html(s);
+	});
+	$('.gz5 li').on("click", function() {
+		var s=$(this).text();
+		$(".appendt6").css("display", "block");
+		$('#yxgz6').html(s);
+	});
+
+ 
+$('.glyphicon-remove').on("click", function() {
+		$(this).parent().css("display", "none");
+	});
+	
+</script>

@@ -1,0 +1,172 @@
+html,body{
+	width: 100%;
+	font-size: 62.5%;
+}
+.divs {
+    width: 49%;
+    float: left;
+    padding-left: 14px;
+}
+h5 {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-weight: bold;
+    height: 3rem;
+    line-height: 3rem;
+    color: #4b96cf;
+    text-align: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+.name1 {
+    font-size: 20px;
+    color: #20a1e0;
+    white-space: nowrap;
+}
+.name2 {
+    width: 100%;
+    display: inline-block;
+    border-top: 1px dotted #999;
+}
+.nutbtn{
+	margin-top: 2rem;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+}
+.sign{
+	color: red;
+}
+/*公共样式*/
+button.layui-btn {
+    font-size: 16px;
+    background: #4b96cf;
+    padding: 0px 4rem;
+}
+.layui-form-label {
+    float: left;
+    display: block;
+    padding: 9px 15px;
+    width: 159px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: right;
+    font-size: 16px;
+}
+.layui-input-block {
+    margin-left: 160px;
+    min-height: 36px;
+    width: 200px;
+}
+input.layui-input {
+    font-size: 16px;
+}
+.layui-form-select dl dd.layui-this {
+    background-color: #4b96cf;
+    color: #fff;
+    font-size: 16px;
+}
+.layui-form-select dl dd {
+    cursor: pointer;
+    font-size: 16px;
+}
+.jlpage {
+
+    padding: 40px 25px 20px 25px;
+    margin: 0 auto;
+}
+.layui-input-block.lastfuli {
+    width: 632px;
+    border: 1px solid #e6e6e6;
+    line-height: 37px;
+}
+.layui-textarea {
+    min-height: 100px;
+    height: auto;
+    line-height: 20px;
+    padding: 6px 10px;
+    resize: vertical;
+    width: 632px;
+}
+.setone{
+	width: 632px;
+}
+i.layui-icon.layui-icon-rate-solid {
+    margin-left: 602px;
+    color: #ffa6a5;
+}
+.fuli {
+    background: #fff;
+    color: #666;
+    width: 632px;
+    z-index: 999;
+  margin-top: 25px;
+      margin-left: 160px;
+       border: 1px solid #e6e6e6;
+    z-index: 9999999999;
+     padding:15px 14px 0;
+    min-height: 405px;
+   display: none;
+
+}
+ .fuli ul {
+ 	display: inline-block;
+    background: #fff;
+    color: #666;
+    width: 100%;
+
+}
+.fuli ul  li{
+	
+	list-style: none;
+    background: #fff;
+    text-align: center;
+    color: #666;
+    width: 120px;
+    text-align: center;
+    line-height: 50px;
+    height: 50px;
+    margin-right: 40px;
+    float:left;
+    font-size: 14px;
+    border: 1px solid #e6e6e6;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+.fuli ul  .liact{
+	
+    background:#4b96cf;
+    color: #fff
+  
+}
+.correct:before {
+	float: right;
+	margin-right: 10px;
+    content: '\2714';
+    color: #fff;
+}
+
+.fuli ul  li:nth-of-type(4n){
+    margin-right: 0;
+    
+}
+.btntt {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.shouq{
+	font-size: 16px;
+}
+.selectBox {
+    width: 632px;
+    border: 1px solid #e6e6e6;
+    /* margin: auto; */
+    margin-left: 160px;
+    margin-bottom: 15px;
+}

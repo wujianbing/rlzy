@@ -1,0 +1,66 @@
+
+function News(){
+	
+}
+News.prototype = {
+	init: function(){
+		news.bind();
+//		nav.contH('.news-v',20);
+//		nav.contH('.newsdeta-cont',107);
+	},
+
+	bind: function(){
+		let self = this;
+		$('.newstit-ul>li').click(function(){
+			let i = $(this).index();
+			$(this).addClass('active');
+			$(this).siblings().removeClass('active');
+			$('#news_span').text($(this).text());
+			$('.new-cont>.news-cont-bot').eq(i).show();
+			$('.new-cont>.news-cont-bot').eq(i).siblings().hide();
+			$('.newsdeta-cont').hide();
+		})
+		
+		$('.news-ul').on('click','li',function(){
+			self.newsDeta(this);
+		});
+	},
+	//新闻详情
+	newsDeta: function(obj){
+		console.log(obj);
+		let contTxt = $(obj).find('.newsli-cont').text();
+		let time =$(obj).find('.news-time').text();
+		console.log(contTxt);
+		$('.news-cont-bot').hide();
+		$('.newsdeta-cont').show();
+		//$('.newsdeta-cont').show();
+		$('#count').html(contTxt);
+		$('#title').html($(obj).find('.news-title').text());
+		$('#dates').html('发布日期：'+time);
+	}
+}
+
+let news = new News();
+news.init();
+
+//js时间格式化
+Date.prototype.format = function(fmt) { 
+   var o = { 
+      "M+" : this.getMonth()+1,                 //月份 
+      "d+" : this.getDate(),                    //日 
+      "h+" : this.getHours(),                   //小时 
+      "m+" : this.getMinutes(),                 //分 
+      "s+" : this.getSeconds(),                 //秒 
+      "q+" : Math.floor((this.getMonth()+3)/3), //季度 
+      "S"  : this.getMilliseconds()             //毫秒 
+  }; 
+  if(/(y+)/.test(fmt)) {
+          fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+  }
+   for(var k in o) {
+      if(new RegExp("("+ k +")").test(fmt)){
+           fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+       }
+   }
+  return fmt; 
+}

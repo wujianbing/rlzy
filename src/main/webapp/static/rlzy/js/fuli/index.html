@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
+		<link rel="stylesheet" type="text/css" href="css/tree.css"/>
+	</head>
+	<body>
+		<div class="wrapper">
+			
+			<div id="justAnInputBox2" class="select-tree-wrap"></div>
+		</div>
+		<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+		<script src="js/comboTreePlugin.js"></script>
+
+		<script>
+			var SampleJSONData ;
+			 $.ajax({
+			 	url: 'json/data.json',
+			 	type: 'get',
+			 	contentType : "application/json;charset=utf-8",
+			 	dataType:'json',
+			 	success: function(data) {
+			        SampleJSONData=data
+			       let bbb = $('#justAnInputBox2').comboTree({
+					source : SampleJSONData,
+					isMultiple: true,
+					isFirstClassSelectable:false, //第一级是否可选
+					cascadeSelect: true,
+					selectedlength: 100 //最多可选
+			});
+			 	}
+			 });
+
+//		 console.log(SampleJSONData)
+//			
+//
+//			 bbb.datas(); //获取数据
+
+		</script>
+
+
+
+	</body>
+</html>

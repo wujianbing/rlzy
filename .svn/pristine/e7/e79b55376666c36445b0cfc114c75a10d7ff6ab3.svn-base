@@ -1,0 +1,73 @@
+html,body{
+	width: 100%;
+	height: 100%;
+	padding: 5%  10%;
+	font-size: 62.5%;
+}
+h5 {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-weight: bold;
+    height: 3rem;
+    line-height: 3rem;
+    color: #4b96cf;
+    text-align: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+.name1 {
+    font-size: 18px;
+    color: #6d6d6d;
+    white-space: nowrap;
+}
+.name2 {
+    width: 100%;
+    display: inline-block;
+    border-top: 1px dotted #999;
+}
+.nutbtn{
+	margin-top: 2rem;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+}
+.sign{
+	color: red;
+}
+/*公共样式*/
+button.layui-btn {
+    font-size: 16px;
+    background: #4b96cf;
+    padding: 0px 4rem;
+}
+.layui-form-label {
+    float: left;
+    display: block;
+    padding: 9px 15px;
+    width: 156px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: right;
+    font-size: 15px;
+}
+.layui-input-block {
+    margin-left: 166px;
+    min-height: 36px;
+}
+input.layui-input {
+    font-size: 15px;
+}
+.layui-form-select dl dd.layui-this {
+    background-color: #4b96cf;
+    color: #fff;
+    font-size: 15px;
+}
+.layui-form-select dl dd {
+    cursor: pointer;
+    font-size: 15px;
+}

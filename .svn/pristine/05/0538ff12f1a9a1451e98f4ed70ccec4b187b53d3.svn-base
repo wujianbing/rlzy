@@ -1,0 +1,132 @@
+.left{
+	height: 200px;
+}
+.right{
+	position: relative;
+}
+.news-v{
+	display: flex;
+	margin-top: 20px;
+	/* overflow: hidden; */
+}
+.left-v{
+	padding: 30px 35px;
+	font-weight: 600;
+}
+.news-tit{
+	font-size: 18px;
+	color: #1787fb;
+	padding: 5px 0;
+	border-bottom: 2px solid #1787fb;
+	margin-bottom: 20px;
+}
+.newstit-ul>li{
+	color: #616161;
+	font-size: 16px;
+	padding: 4px 10px;
+	cursor: pointer;
+	user-select: none;
+}
+.newstit-ul>li.active{
+	color: #ffffff;
+	background: #1787fb;
+}
+.news-cont{
+	padding: 30px 80px 0;
+	color: #505050;
+	font-size: 15px;
+}
+.news-ul{
+	/* padding-top: 20px; */
+	/* height: 536px; */
+	/* height: 430px;
+	overflow: auto; */
+	min-height:400px;
+}
+.news-li{
+	padding: 10px 5px;
+	border-bottom: 1px #767676 dotted;
+	cursor: pointer;
+}
+.news-li:hover{
+	background: #fafafa;
+}
+.newsli-top{
+	display: flex;
+	align-items: center;
+}
+.newsli-top>div:first-child{
+	color: #4B96CF;
+	width: 20px;
+}
+.newsli-top>div:nth-child(2){
+	flex: 7;
+	font-size: 16px;
+	max-width: 300px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.newsli-top>div:nth-child(3){
+	flex: 2;
+	text-align: right;
+}
+.newsli-deta{
+	color: #767676;
+	padding: 5px 0 5px 20px;
+	text-align: justify;
+	font-size: 13px;
+}
+.news-cont-top{
+	font-size: 18px;
+	color: #1787fb;
+	padding: 5px 0;
+	border-bottom: 2px solid #1787fb;
+	font-weight: 600;
+	    height: 25px;
+}
+.paging-v{
+    /* position: absolute;
+    bottom: 3px;	
+	width: 100%;
+	margin-left: -80px; */
+	margin: 15px 0;
+	
+}
+.paging{
+	text-align: center;
+    /* margin: 40px -40px 20px;	 */
+}
+.n-tit{
+	padding: 10px 0;
+	border-bottom: 1px solid #dddddd;
+}
+.n-tit h3{
+	text-align: center;
+	padding: 10px 40px;
+}
+.data-v{
+	display: flex;
+}
+.data-v>div{
+	flex: 1;
+	text-align: center;
+	width: 500px;
+	margin: 0 auto;
+}
+.n-cont{
+	padding: 22px 0;
+}
+.n-cont p{
+	text-indent: 2em;
+	text-indent: 2em;
+    line-height: 30px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.newsdeta-cont{
+    overflow: auto;	
+    min-height: 400px;
+}
+
+

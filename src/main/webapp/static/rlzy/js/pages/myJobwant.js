@@ -1,0 +1,74 @@
+function MyJobwant() {
+
+}
+MyJobwant.prototype = {
+	init : function() {
+		/*myJobwant.get();*/
+		myJobwant.bind();
+	},
+	/*get : function() {
+		// 面试邀请
+		myJobwant.tabInvite();
+		// 申请记录
+		myJobwant.tabRecord();
+	},*/
+	bind : function() {
+		// 邀请申请切换
+		$("#title_txt>.title-x").on('click', function() {
+			let i = $(this).index();
+			i = i == 2 ? "1" : "0";
+			// console.log(i);
+			$(this).addClass('col-activ');
+			$(this).siblings().removeClass('col-activ');
+			$('#table_v .table-lst').eq(i).show();
+			$('#table_v .table-lst').eq(i).siblings().hide();
+		})
+		// 面试邀请接受拒绝
+		layui.use('table', function() {
+			var table = layui.table;
+			// 面试邀请
+			table.on('tool(invite)', function(obj) {
+				var data = obj.data;
+				if (obj.event === 'del') {
+					// 拒绝
+					parent.MyFind.prototype.tab1Decline(data);
+				} else if (obj.event === 'edit') {
+					// 接受
+					// layer.alert('编辑行：<br>'+ JSON.stringify(data));
+					parent.MyFind.prototype.tab1Accept(data);
+				} else if (obj.event === 'view') {
+					//邀请
+					parent.MyFind.prototype.tab9Decline(data);
+				}
+			});
+		});
+	},
+	// 面试邀请
+/*	tabInvite : function() {
+		layui.use('table', function() {
+			var table = layui.table;
+			table.reload('inviteTab', {
+				url : url + '/user/interview?userId=' + userId,
+				where : {}, // 设定异步数据接口的额外参数
+				height : 480,
+				page : true
+			});
+		});
+
+	},
+	// 申请记录
+	tabRecord : function() {
+		layui.use('table', function() {
+			var table = layui.table;
+			table.reload('recordTab', {
+				url : url + '/user/applyFor?userId=' + userId,
+				where : {}, // 设定异步数据接口的额外参数
+				height : 480,
+				page : true
+			});
+		});
+	}*/
+
+}
+var myJobwant = new MyJobwant();
+myJobwant.init();

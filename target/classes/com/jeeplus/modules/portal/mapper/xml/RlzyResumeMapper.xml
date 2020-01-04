@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.portal.mapper.RlzyResumeMapper">
+    
+	<sql id="rlzyResumeColumns">
+		a.id AS "id",
+		a.userid AS "userid",
+		a.name AS "name",
+		a.startdate AS "startdate",
+		a.enddate AS "enddate",
+		a.major AS "major",
+		a.describes AS "describes",
+		a.education AS "education",
+		a.course AS "course",
+		a.gaindate AS "gaindate",
+		a.experiencetype AS "experiencetype",
+		a.del_flag AS "delFlag",
+		a.remarks AS "remarks",
+		a.spe1 AS "spe1",
+		a.spe2 AS "spe2",
+		a.spe3 AS "spe3",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate"
+	</sql>
+	
+	<sql id="rlzyResumeJoins">
+		
+	</sql>
+    
+	<select id="get" resultType="RlzyResume" >
+		SELECT 
+			<include refid="rlzyResumeColumns"/>
+		FROM rlzy_resume a
+		<include refid="rlzyResumeJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RlzyResume" >
+		SELECT 
+			<include refid="rlzyResumeColumns"/>
+		FROM rlzy_resume a
+		<include refid="rlzyResumeJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="rlzyUser != null and rlzyUser != ''">
+				AND a.userid = #{rlzyUser.id}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RlzyResume" >
+		SELECT 
+			<include refid="rlzyResumeColumns"/>
+		FROM rlzy_resume a
+		<include refid="rlzyResumeJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rlzy_resume(
+			id,
+			userid,
+			name,
+			startdate,
+			enddate,
+			major,
+			describes,
+			education,
+			course,
+			gaindate,
+			experiencetype,
+			del_flag,
+			remarks,
+			spe1,
+			spe2,
+			spe3,
+			create_date,
+			update_date
+		) VALUES (
+			#{id},
+			#{userid},
+			#{name},
+			#{startdate},
+			#{enddate},
+			#{major},
+			#{describes},
+			#{education},
+			#{course},
+			#{gaindate},
+			#{experiencetype},
+			#{delFlag},
+			#{remarks},
+			#{spe1},
+			#{spe2},
+			#{spe3},
+			#{createDate},
+			#{updateDate}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rlzy_resume SET 	
+			userid = #{userid},
+			name = #{name},
+			startdate = #{startdate},
+			enddate = #{enddate},
+			major = #{major},
+			describes = #{describes},
+			education = #{education},
+			course = #{course},
+			gaindate = #{gaindate},
+			experiencetype = #{experiencetype},
+			remarks = #{remarks},
+			spe1 = #{spe1},
+			spe2 = #{spe2},
+			spe3 = #{spe3},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM rlzy_resume
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE rlzy_resume SET 
+			del_flag = #{DEL_FLAG_DELETE}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="RlzyResume" statementType="STATEMENT">
+		select * FROM rlzy_resume  where ${propertyName} = '${value}'
+	</select>
+</mapper>

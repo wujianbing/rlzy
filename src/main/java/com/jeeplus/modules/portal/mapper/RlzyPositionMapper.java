@@ -1,0 +1,36 @@
+/**
+ * Copyright &copy; 2015-2020 <a href="http://www.jeeplus.org/">JeePlus</a> All rights reserved.
+ */
+package com.jeeplus.modules.portal.mapper;
+
+import java.util.List;
+
+import com.jeeplus.core.persistence.BaseMapper;
+import com.jeeplus.core.persistence.annotation.MyBatisMapper;
+import com.jeeplus.modules.portal.entity.RlzyPosition;
+
+/**
+ * 职位表MAPPER接口
+ * @author 喻昆昆
+ * @version 2019-11-15
+ */
+@MyBatisMapper
+public interface RlzyPositionMapper extends BaseMapper<RlzyPosition> {
+	
+	//急聘岗位按时间降序排列查询
+	List<RlzyPosition> findDescList(RlzyPosition rlzyPosition);
+	
+	//普通职位按时间顺序排列查询
+	List<RlzyPosition> findDescsList(RlzyPosition rlzyPosition);
+	
+	//条件筛选查询
+	List<RlzyPosition> findNewList(RlzyPosition rlzyPosition);
+	
+	int findListCount(RlzyPosition rlzyPosition);
+	
+	int findListCounts(RlzyPosition rlzyPosition);
+	
+	RlzyPosition getRlzyPosition(RlzyPosition rlzyPosition);
+	
+	List<RlzyPosition> findPositionListById(String companyid);
+}

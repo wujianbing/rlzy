@@ -1,0 +1,94 @@
+/**
+ * Copyright &copy; 2015-2020 <a href="http://www.jeeplus.org/">JeePlus</a> All rights reserved.
+ */
+package com.jeeplus.modules.portal.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.jeeplus.common.utils.StringUtils;
+import com.jeeplus.core.persistence.Page;
+import com.jeeplus.core.service.CrudService;
+import com.jeeplus.modules.portal.entity.RlzyResume;
+import com.jeeplus.modules.portal.entity.RlzyUser;
+import com.jeeplus.modules.portal.mapper.RlzyResumeMapper;
+import com.jeeplus.modules.portal.mapper.RlzyUserMapper;
+
+/**
+ * 个人信息表Service
+ * @author 喻昆昆
+ * @version 2019-11-15
+ */
+@Service
+@Transactional(readOnly = true)
+public class RlzyUserService extends CrudService<RlzyUserMapper, RlzyUser> {
+
+	@Autowired
+	private RlzyResumeMapper rlzyResumeMapper;
+	@Autowired
+	private RlzyUserMapper rlzyUserMapper;
+	
+	
+	public RlzyUser get(String id) {
+		RlzyUser rlzyUser = super.get(id);
+		rlzyUser.setRlzyResumeList(rlzyResumeMapper.findList(new RlzyResume(rlzyUser)));
+		return rlzyUser;
+	}
+	
+	public RlzyUser getRlzyUser(RlzyUser rlzyUser) {
+		rlzyUser = rlzyUserMapper.getRlzyUser(rlzyUser);
+		rlzyUser.setRlzyResumeList(rlzyResumeMapper.findList(new RlzyResume(rlzyUser)));
+		return rlzyUser;
+	}
+	
+	public List<RlzyUser> findDetail(RlzyUser rlzyUser) {
+		return super.findList(rlzyUser);
+	}
+	
+	public Page<RlzyUser> findPage(Page<RlzyUser> page, RlzyUser rlzyUser) {
+		return super.findPage(page, rlzyUser);
+	}
+	
+	public int findListCount(RlzyUser rlzyUser) {
+		return rlzyUserMapper.findListCount(rlzyUser);
+	}
+	
+	public int findListCounts(RlzyUser rlzyUser) {
+		return rlzyUserMapper.findListCounts(rlzyUser);
+	}
+	
+	@Transactional(readOnly = false)
+	public void save(RlzyUser rlzyUser) {
+		super.save(rlzyUser);
+		for (RlzyResume rlzyResume : rlzyUser.getRlzyResumeList()){
+			if (rlzyResume.getId() == null){
+				continue;
+			}
+			if (RlzyResume.DEL_FLAG_NORMAL.equals(rlzyResume.getDelFlag())){
+				if (StringUtils.isBlank(rlzyResume.getId())){
+					rlzyResume.preInsert();
+					rlzyResumeMapper.insert(rlzyResume);
+				}else{
+					rlzyResume.preUpdate();
+					rlzyResumeMapper.update(rlzyResume);
+				}
+			}else{
+				rlzyResumeMapper.delete(rlzyResume);
+			}
+		}
+	}
+	
+	@Transactional(readOnly = false)
+	public void delete(RlzyUser rlzyUser) {
+		super.delete(rlzyUser);
+		rlzyResumeMapper.delete(new RlzyResume(rlzyUser));
+	}
+
+	public RlzyUser loginPasswordCompare(RlzyUser rlzyUser){
+		return rlzyUserMapper.loginPasswordCompare(rlzyUser);
+	}
+	
+}

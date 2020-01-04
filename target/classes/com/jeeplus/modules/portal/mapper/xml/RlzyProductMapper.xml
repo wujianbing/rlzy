@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.portal.mapper.RlzyProductMapper">
+    
+	<sql id="rlzyProductColumns">
+		a.id AS "id",
+		a.companyid AS "companyid",
+		a.title AS "title",
+		a.content AS "content",
+		a.intro AS "intro",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="rlzyProductJoins">
+		
+	</sql>
+	
+    
+	<select id="get" resultType="RlzyProduct" >
+		SELECT 
+			<include refid="rlzyProductColumns"/>
+		FROM rlzy_product a
+		<include refid="rlzyProductJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RlzyProduct" >
+		SELECT 
+			<include refid="rlzyProductColumns"/>
+		FROM rlzy_product a
+		<include refid="rlzyProductJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="companyid != null and companyid != ''">
+				AND a.companyid = #{companyid}
+			</if>
+			${dataScope}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RlzyProduct" >
+		SELECT 
+			<include refid="rlzyProductColumns"/>
+		FROM rlzy_product a
+		<include refid="rlzyProductJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rlzy_product(
+			id,
+			companyid,
+			title,
+			content,
+			intro,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{companyid},
+			#{title},
+			#{content},
+			#{intro},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rlzy_product SET 	
+			companyid = #{companyid},
+			title = #{title},
+			content = #{content},
+			intro = #{intro},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM rlzy_product
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE rlzy_product SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="RlzyProduct" statementType="STATEMENT">
+		select * FROM rlzy_product  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

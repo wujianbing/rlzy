@@ -1,0 +1,167 @@
+.center{
+ width: 100%;
+}
+.center:after{
+    content: "";
+    height: 0;
+    clear: both;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+}
+.yuleft{
+	width:285px;
+	min-height:60rem;
+	background: #fff;
+	float: left;
+}
+
+.yuright{
+	width: 875px;
+	min-height: 60rem;
+	background: #fff;
+	float:right;
+}
+.yuqbottom {
+	width: 1200px;
+    background: #f5f6f6;
+}
+.imgtop {
+    width: 100%;
+    height: 14rem;
+   text-align: center;
+  
+  
+}
+li{
+	list-style: none;
+}
+.imgtop img {
+	margin-top: 2rem;
+    width: 100px;
+    height: 100px;
+    border: none;
+    border-radius: 50%;
+}
+.nameimg{
+	margin-top: 1rem;
+	text-align: center;
+	font-size: 18px;
+	color: #4b96cf;
+	cursor:pointer;
+}
+.navbar-left{
+	width: 100%;
+	margin-top: 2rem;
+	
+}
+.navbar-left ul  li{
+	width: 100%;
+	height: 4rem;
+	line-height: 4rem;
+	font-size: 16px;
+	text-align:center;
+	color: #666666;
+	font-weight: 520;
+	cursor:pointer;
+}
+.infoname {
+    width: 100%;
+    padding: 0 10%;
+    margin: 0 auto;
+    margin-top: 2rem;
+}
+.infoname:after{
+    content: "";
+    height: 0;
+    clear: both;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+}
+.infopname1 {
+    width: 100%;
+    display: flex;
+    height: 3rem;
+    line-height: 3rem;
+    font-size: 14px;
+    color: #666666;
+}
+
+.infopname1 .sitename {
+    display: inline-block;
+    flex: 1;
+}
+h5 {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-weight: bold;
+    height: 3rem;
+    line-height: 3rem;
+    color: #4b96cf;
+    text-align: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+.leftimg{
+	width:82%;
+	float: left;
+	
+}
+
+.rightimg{
+	width:18%;
+	float: right;
+	height: 23rem;
+	
+	text-align: center;
+	display: flex;
+	justify-content: flex-end;
+	
+}
+.imgnmanee {
+    height: 3rem;
+    padding: 0 30px;
+    display: inline-block;
+    line-height: 3rem;
+    font-size: 14px;
+    color: #666;
+    background: #358acb;
+    margin-top: 1rem;
+    border-radius: 6px;
+    color: #FFF;
+}
+.name1 {
+    font-size: 18px;
+    color: #6d6d6d;
+    white-space: nowrap;
+}
+.name2 {
+    width: 100%;
+    display: inline-block;
+    border-top: 1px dotted #999;
+}
+.rowsy{
+	width: 100%;
+	padding: 0 2%;
+}
+.sign{
+	color: red;
+}
+.navbar-left ul li.active{
+	color:#4ba3dd;
+}
+.machineJob{
+	width: 100%;
+	min-height:60rem;
+	background: #fff;
+}
+iframe{
+	width: 100%;
+	height:1920px ;
+	border: none;
+}

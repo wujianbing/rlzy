@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.portal.mapper.RlzyUserMapper">
+    
+	<sql id="rlzyUserColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.sex AS "sex",
+		a.birthday AS "birthday",
+		a.photo AS "photo",
+		a.provincel AS "provincel",
+		a.cityl AS "cityl",
+		a.areal AS "areal",
+		a.education AS "education",
+		a.workingage AS "workingage",
+		a.phone AS "phone",
+		a.currentstate AS "currentstate",
+		a.worknature AS "worknature",
+		a.desiredindustry AS "desiredindustry",
+		a.desiredposition AS "desiredposition",
+		a.salary AS "salary",
+		a.selfdescription AS "selfdescription",
+		a.provincew AS "provincew",
+		a.cityw AS "cityw",
+		a.areaw AS "areaw",
+		a.ispublic AS "ispublic",
+		a.deliverytimes AS "deliverytimes",
+		a.del_flag AS "delFlag",
+		a.remarks AS "remarks",
+		a.sms AS "sms",
+		a.spe2 AS "spe2",
+		a.spe3 AS "spe3",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate"
+	</sql>
+	
+	<sql id="rlzyUserJoins">
+		
+	</sql>
+	
+    
+	<select id="get" resultType="RlzyUser" >
+		SELECT 
+			<include refid="rlzyUserColumns"/>
+		FROM rlzy_user a
+		<include refid="rlzyUserJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RlzyUser" >
+		SELECT 
+			<include refid="rlzyUserColumns"/>
+		FROM rlzy_user a
+		<include refid="rlzyUserJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="education != null and education != ''">
+				AND a.education = #{education}
+			</if>
+			<if test="workingage != null and workingage != ''">
+				AND a.workingage = #{workingage}
+			</if>
+			<if test="phone != null and phone != ''">
+				AND a.phone = #{phone}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RlzyUser" >
+		SELECT 
+			<include refid="rlzyUserColumns"/>
+		FROM rlzy_user a
+		<include refid="rlzyUserJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rlzy_user(
+			id,
+			name,
+			sex,
+			birthday,
+			photo,
+			provincel,
+			cityl,
+			areal,
+			education,
+			workingage,
+			phone,
+			currentstate,
+			worknature,
+			desiredindustry,
+			desiredposition,
+			salary,
+			selfdescription,
+			provincew,
+			cityw,
+			areaw,
+			ispublic,
+			deliverytimes,
+			del_flag,
+			remarks,
+			sms,
+			spe2,
+			spe3,
+			create_date,
+			update_date
+		) VALUES (
+			#{id},
+			#{name},
+			#{sex},
+			#{birthday},
+			#{photo},
+			#{provincel},
+			#{cityl},
+			#{areal},
+			#{education},
+			#{workingage},
+			#{phone},
+			#{currentstate},
+			#{worknature},
+			#{desiredindustry},
+			#{desiredposition},
+			#{salary},
+			#{selfdescription},
+			#{provincew},
+			#{cityw},
+			#{areaw},
+			#{ispublic},
+			#{deliverytimes},
+			#{delFlag},
+			#{remarks},
+			#{sms},
+			#{spe2},
+			#{spe3},
+			#{createDate},
+			#{updateDate}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rlzy_user SET 	
+			name = #{name},
+			sex = #{sex},
+			birthday = #{birthday},
+			photo = #{photo},
+			provincel = #{provincel},
+			cityl = #{cityl},
+			areal = #{areal},
+			education = #{education},
+			workingage = #{workingage},
+			phone = #{phone},
+			currentstate = #{currentstate},
+			worknature = #{worknature},
+			desiredindustry = #{desiredindustry},
+			desiredposition = #{desiredposition},
+			salary = #{salary},
+			selfdescription = #{selfdescription},
+			provincew = #{provincew},
+			cityw = #{cityw},
+			areaw = #{areaw},
+			ispublic = #{ispublic},
+			deliverytimes = #{deliverytimes},
+			remarks = #{remarks},
+			sms = #{sms},
+			spe2 = #{spe2},
+			spe3 = #{spe3},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM rlzy_user
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE rlzy_user SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="RlzyUser" statementType="STATEMENT">
+		select * FROM rlzy_user  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

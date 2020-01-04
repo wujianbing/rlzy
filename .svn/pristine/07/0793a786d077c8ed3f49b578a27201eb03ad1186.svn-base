@@ -1,0 +1,174 @@
+html,
+body {
+	width: 100%;
+	height: 100%;
+	font-size: 62.5%;
+}
+
+h5 {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+	font-weight: bold;
+	height: 3rem;
+	line-height: 3rem;
+	color: #4b96cf;
+	text-align: left;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 2rem;
+}
+.jlpage{
+	width: 835px;
+	padding:60px 40px 50px;
+	margin: 0 auto;
+}
+.name1 {
+	font-size: 18px;
+	color: #6d6d6d;
+	white-space: nowrap;
+}
+
+.name2 {
+	width: 100%;
+	display: inline-block;
+	border-top: 1px dotted #999;
+}
+
+.nutbtn {
+	margin-top: 2rem;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+}
+
+.sign {
+	color: red;
+}
+
+
+/*公共样式*/
+
+button.layui-btn {
+	font-size: 16px;
+	background: #4b96cf;
+	padding: 0px 4rem;
+}
+
+.layui-form-label {
+	float: left;
+	display: block;
+	padding: 9px 15px;
+	width: 156px;
+	font-weight: 400;
+	line-height: 20px;
+	text-align: right;
+	font-size: 15px;
+}
+
+.layui-input-block {
+	margin-left: 166px;
+	min-height: 36px;
+}
+
+input.layui-input {
+	font-size: 15px;
+}
+
+.layui-form-select dl dd.layui-this {
+	background-color: #4b96cf;
+	color: #fff;
+	font-size: 15px;
+}
+
+.layui-form-select dl dd {
+	cursor: pointer;
+	font-size: 15px;
+}
+
+.row4 {
+	width: 100%;
+	padding: 0 10px;
+	background: #edf4fa;
+	margin-right: 0;
+    margin-left: 0;
+	height: 4.5rem;
+	display: flex;
+	
+	
+}
+
+.gl2 {
+    width: 90px;
+	font-size: 16px;
+	color: #666666;
+	height: 4.5rem;
+	line-height: 4.5rem;
+	text-align: center;
+	
+}
+.al2{
+	width:217px ;
+	
+}
+.uldiv{
+	width: 100%;
+}
+
+.uldiv ul, li{
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	
+}
+.uldiv ul, li{
+	width:100%;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	
+}
+.edit{
+	font-size: 14px;
+     background: #4b96cf;
+     color: #fff;
+     padding: 7px 12px;
+     border-radius: 6px;
+     margin-right: 5px;
+     cursor:pointer;
+     
+}
+.edit2{
+	font-size: 14px;
+     background: #4b96cf;
+     color: #fff;
+     padding: 7px 12px;
+     border-radius: 6px;
+     margin-right: 5px;
+     cursor:pointer;
+     
+}
+.del{
+	
+	font-size: 14px;
+     background: #fff;
+     color: #4b96cf;
+     padding: 7px 12px;
+     border-radius: 6px;
+     border: 1px solid #4b96cf;
+     cursor:pointer;
+}
+
+.layui-form-mid.layui-word-aux.checkcode {
+    border: 1px solid #4b96cf;
+    width: 95px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    color: #4b96cf!important;
+    padding: 0!important;
+    border-radius: 6px;
+}

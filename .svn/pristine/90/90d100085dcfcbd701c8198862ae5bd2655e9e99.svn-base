@@ -1,0 +1,56 @@
+/**
+ * Copyright &copy; 2015-2020 <a href="http://www.jeeplus.org/">JeePlus</a> All rights reserved.
+ */
+package com.jeeplus.modules.portal.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.github.pagehelper.PageHelper;
+import com.jeeplus.core.persistence.Page;
+import com.jeeplus.core.service.CrudService;
+import com.jeeplus.modules.portal.entity.News;
+import com.jeeplus.modules.portal.entity.Video;
+import com.jeeplus.modules.portal.mapper.VideoMapper;
+
+/**
+ * 视频Service
+ * @author 李浩
+ * @version 2019-05-27
+ */
+@Service
+@Transactional(readOnly = true)
+public class VideoService extends CrudService<VideoMapper, Video> {
+	
+	@Autowired
+	private VideoMapper videoMapper;
+	public Video get(String id) {
+		return super.get(id);
+	}
+	
+	public List<Video> findList(Video video) {
+		return super.findList(video);
+	}
+	
+	public Page<Video> findPage(Page<Video> page, Video video) {
+		return super.findPage(page, video);
+	}
+	
+	@Transactional(readOnly = false)
+	public void save(Video video) {
+		super.save(video);
+	}
+	
+	@Transactional(readOnly = false)
+	public void delete(Video video) {
+		super.delete(video);
+	}
+	
+	public String getRow(String modelId) {
+		// TODO Auto-generated method stub
+		return videoMapper.getRow(modelId);
+	}
+}

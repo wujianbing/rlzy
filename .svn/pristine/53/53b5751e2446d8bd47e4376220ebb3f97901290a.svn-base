@@ -1,0 +1,63 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/webpage/include/taglib.jsp"%>
+<!DOCTYPE html>
+<html>
+<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>收藏职位</title>
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="${ctxStatic }/rlzy/css/common/layui-v2.5.5/layui/css/layui.css">
+		<link rel="stylesheet" href="${ctxStatic }/rlzy/css/pages/myJobwant.css">
+		<style>
+			.titlr-bor{
+				flex: 6;
+			}
+		</style>
+</head>
+<body>
+		<div class="jobwant-v">
+
+			<div class="title-v">
+				<div class="title">
+					<div id="title_txt" class="title-txt">
+						<div class="title-x col-activ">职位收藏夹</div>
+					</div>
+					<div class="titlr-bor"></div>
+				</div>
+			</div>
+
+			<div id="table_v" class="table-v">
+				<div class="table-lst">
+					<table class="layui-table" lay-data="{id:'inviteTab'}"
+					 lay-filter="invite">
+						<thead>
+							<tr>
+								<th lay-data="{field:'positionname',align:'center'}">职位名称</th>
+								<th lay-data="{field:'positionname',align:'center'}">公司名称</th>
+								<th lay-data="{field:'currentstate',align:'center'}">工作地点</th>
+								<th lay-data="{field:'salary',align:'center'}">薪资</th>
+								<th lay-data="{field:'updateDate', sort: true,align:'center'}">操作时间</th>
+								<th lay-data="{fixed: 'right', width:120, align:'center', toolbar: '#barInvite'}"></th>
+							</tr>
+						</thead>
+					</table>
+					<script type="text/html" id="barInvite">
+						<a class="layui-btn layui-btn-xs" lay-event="del">取消收藏</a>
+					</script>
+				</div>
+			</div>
+
+		</div>
+
+		<script src="${ctxStatic }/rlzy/css/common/layui-v2.5.5/layui/layui.js"></script>
+		<script src="${ctxStatic }/rlzy/js/jquery.min.js"></script>
+		<script src="${ctxStatic }/rlzy/js/pages/myCollect.js"></script>
+</body>
+</html>
+<script>
+var url = "${rlzyPath}";
+var userId = "${userId}";
+</script>

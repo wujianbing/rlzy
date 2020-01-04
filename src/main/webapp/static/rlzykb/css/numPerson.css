@@ -1,0 +1,23 @@
+	
+	.left-v1,.right-v1{
+		height: 40%;
+	}
+
+	.left-v2,.center-v2,.right-v2{
+		height: 54%;
+		margin-top: 35px;
+	}
+
+	.center-v1{
+		display: flex;
+		height: 40%;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	.pack-v1,.pack-v2{
+		width: 48.9%;
+	}
+
+
+
+	

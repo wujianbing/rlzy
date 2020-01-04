@@ -1,0 +1,323 @@
+package com.jeeplus.modules.api;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.jeeplus.core.persistence.Page;
+import com.jeeplus.modules.portal.entity.News;
+import com.jeeplus.modules.portal.entity.NewsModel;
+import com.jeeplus.modules.portal.entity.RlzyCompany;
+import com.jeeplus.modules.portal.entity.Video;
+import com.jeeplus.modules.portal.service.NewsService;
+import com.jeeplus.modules.portal.service.RlzyCompanyService;
+import com.jeeplus.modules.portal.service.VideoService;
+
+@Controller
+@RequestMapping("/api")
+public class ApiIndexController{
+
+	@Autowired
+	private NewsService newsService;
+	@Autowired
+	private VideoService videoService;
+	@Autowired
+	private RlzyCompanyService rlzyCompanyService;
+	/**
+	 * 首页
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/index")
+	public ReturnJson index() {
+		ReturnJson returnJson = new ReturnJson();
+		Page<News> page = new Page<>();
+		page.setPageNo(1);
+		page.setPageSize(10);
+		News news =new News();
+		//轮播图
+		NewsModel newsModel = new NewsModel();		
+		newsModel.setId("bff3d13450f54bc880319e0831dfcfcd");
+		news.setNewsModel(newsModel);
+		List<News> bannerList = newsService.findList(news);
+		
+		//最新要闻
+		newsModel.setId("7d4fecb7a48b487cab1e6fd1ab61129d");
+		news.setNewsModel(newsModel);
+		Page<News> zxywpage = newsService.findPage(page, news);
+
+		//政策导读
+		newsModel.setId("5ad717509e9b4cd6b10b608d6d17e709");
+		news.setNewsModel(newsModel);
+		Page<News> zcddpage = newsService.findPage(page, news);
+
+		//视频
+		Video video =new Video();
+		Page<Video> videopage = new Page<Video>();
+		videopage.setPageNo(1);
+		videopage.setPageSize(10);
+		videopage = videoService.findPage(videopage, video);
+		
+		//入驻企业
+		RlzyCompany rlzyCompany =new RlzyCompany();
+		Page<RlzyCompany> companypage = new Page<RlzyCompany>();
+		companypage.setPageNo(1);
+		companypage.setPageSize(8);
+		companypage =rlzyCompanyService.findPage(companypage, rlzyCompany);
+		
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("banner", bannerList);
+		map.put("zxyw", zxywpage.getList());
+		map.put("zcdd", zcddpage.getList());
+		map.put("video", videopage.getList());
+		map.put("company", companypage.getList());
+		returnJson.setCode("200");
+		returnJson.setStatus(true);
+		returnJson.setResult(map);
+		returnJson.setMessage("成功");
+		return returnJson;
+	}
+	
+	/**
+	 * 新闻列表
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/newList")
+	public ReturnJson newList() {
+		ReturnJson returnJson = new ReturnJson();
+		Page<News> page = new Page<>();
+		page.setPageNo(1);
+		page.setPageSize(10);
+		News news =new News();
+		NewsModel newsModel = new NewsModel();		
+		//最新要闻
+		newsModel.setId("7d4fecb7a48b487cab1e6fd1ab61129d");
+		news.setNewsModel(newsModel);
+		Page<News> zxywpage = newsService.findPage(page, news);
+
+		//政策导读
+		newsModel.setId("5ad717509e9b4cd6b10b608d6d17e709");
+		news.setNewsModel(newsModel);
+		Page<News> zcddpage = newsService.findPage(page, news);
+		
+		Map<String,Object> map = new HashMap<String, Object>();
+		news = newsService.get(news.getId());
+		map.put("zxyw", zxywpage.getList());
+		map.put("zcdd", zcddpage.getList());
+		returnJson.setCode("200");
+		returnJson.setStatus(true);
+		returnJson.setResult(map);
+		returnJson.setMessage("成功");
+		return returnJson;
+	}
+	
+	/**
+	 * 新闻详情
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/newDetail")
+	public ReturnJson newDetail(HttpServletRequest request,@RequestBody News news) {
+		ReturnJson returnJson = new ReturnJson();
+		Map<String,Object> map = new HashMap<String, Object>();
+		if(StringUtils.isNotBlank(news.getId())) {
+			news = newsService.get(news.getId());
+			map.put("news", news);
+			returnJson.setCode("200");
+			returnJson.setStatus(true);
+			returnJson.setResult(map);
+			returnJson.setMessage("操作成功");
+		}else {
+			returnJson.setStatus(false);
+			returnJson.setMessage("操作失败");
+		}
+		
+		return returnJson;
+	}
+	
+	/**
+	 * 视频列表
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/videoList")
+	public ReturnJson videoList(){
+		ReturnJson returnJson = new ReturnJson();
+		Video video =new Video();
+		Page<Video> pages = new Page<Video>();
+		pages.setPageNo(1);
+		pages.setPageSize(10);
+		Page<Video> videoList = videoService.findPage(pages, video);
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("video", videoList);
+		returnJson.setCode("200");
+		returnJson.setStatus(true);
+		returnJson.setResult(map);
+		returnJson.setMessage("成功");
+		return returnJson;
+	}
+	
+	/**
+	 * 职位列表
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/positionList")
+	public ReturnJson positionList(HttpServletRequest resquest,HttpServletResponse response) {
+		ReturnJson returnJson = new ReturnJson();
+		response.setHeader("Authorization", "123");
+		resquest.getHeader("Authorization");
+		returnJson.setStatus(true);
+		
+		return returnJson;
+	}
+	
+	/**
+	 * 职位分页列表
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/positionPageList")
+	public ReturnJson positionPageList() {
+		ReturnJson returnJson = new ReturnJson();
+		
+		
+		return returnJson;
+	}
+	
+	/**
+	 * 职位详情
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/positionDetail")
+	public ReturnJson positionDetail() {
+		ReturnJson returnJson = new ReturnJson();
+		
+		return returnJson;
+	}
+	
+	/**
+	 * 职位收藏
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/positionCollect")
+	public ReturnJson positionCollect() {
+		ReturnJson returnJson = new ReturnJson();
+		
+		
+		return returnJson;
+	}
+	
+	/**
+	 * 职位申请
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/positionApply")
+	public ReturnJson positionApply() {
+		ReturnJson returnJson = new ReturnJson();
+		
+		
+		return returnJson;
+	}
+	
+	/**
+	 * 人才列表
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/talentList")
+	public ReturnJson talentList() {
+		ReturnJson returnJson = new ReturnJson();
+		
+		return returnJson;
+	}
+	
+	/**
+	 * 人才分页列表
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/talentPageList")
+	public ReturnJson talentPageList() {
+		ReturnJson returnJson = new ReturnJson();
+		
+		return returnJson;
+	}
+	
+	/**
+	 * 人才详情
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/talentDetail")
+	public ReturnJson talentDetail() {
+		ReturnJson returnJson = new ReturnJson();
+		
+		return returnJson;
+	}
+	
+	/**
+	 * 人才收藏
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/talentCollect")
+	public ReturnJson talentCollect() {
+		ReturnJson returnJson = new ReturnJson();
+		
+		return returnJson;
+	}
+	
+	
+	/**
+	 * 人才邀请
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/talentInvite")
+	public ReturnJson talentInvite() {
+		ReturnJson returnJson = new ReturnJson();
+		
+		return returnJson;
+	}
+	
+	
+	/**
+	 * 服务机构
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/parkService")
+	public ReturnJson parkService() {
+		ReturnJson returnJson = new ReturnJson();
+		
+		return returnJson;
+	}
+	
+	/**
+	 * 企业详情
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/companyDetail")
+	public ReturnJson companyDetail() {
+		ReturnJson returnJson = new ReturnJson();
+		
+		return returnJson;
+	}
+	
+}

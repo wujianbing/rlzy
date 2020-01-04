@@ -1,0 +1,41 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/webpage/include/taglib.jsp"%>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>园区服务</title>
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="${ctxStatic }/rlzy/css/pages/parkService.css" />
+	</head>
+	<body>
+		<!-- 服务详情 -->
+		<div id="ser_v" class="ser-v">
+			<div class="service-data-v">
+				<div class="s-tit">
+					<div class="s-tit-l">ABC律师事务所</div>
+					<div class="s-data">2019-11-01入驻</div>
+				</div>
+				<div class="s-cont">
+					<p class="s-cont-lst">C律师事务所此专门打造的“易是网”法律服务平台，旨在以个人及中小企业为切入点，通过创新的方式，以“非诉”为导向，建设一个专业的个人及中小企业非诉法务平台。服务于广大个人及中小企业，集普法宣传、专业非诉法务支撑为一体，解决各种法律问题。</p>
+					<p class="s-cont-tit">【项目背景】</p>
+					<p class="s-cont-lst">C律师事务所此专门打造的“易是网”法律服务平台，旨在以个人及中小企业为切入点，通过创新的方式，以“非诉”为导向，建设一个专业的个人及中小企业非诉法务平台。服务于广大个人及中小企业，集普法宣传、专业非诉法务支撑为一体，解决各种法律问题。</p>
+					<p class="s-cont-lst">C律师事务所此专门打造的“易是网”法律服务平台，旨在以个人及中小企业为切入点，通过创新的方式，以“非诉”为导向，建设一个专业的个人及中小企业非诉法务平台。服务于广大个人及中小企业，集普法宣传、专业非诉法务支撑为一体，解决各种法律问题。</p>
+				</div>
+			</div>
+		</div>
+		
+	<script type="text/javascript">
+		var url='${rlzyPath}';
+	</script>	
+	<script src="${ctxStatic }/rlzy/js/jquery.min.js"></script>
+	<!-- <script src="css/common/layui-v2.5.5/layui/layui.js"></script>
+	<script src="js/pages/nav.js"></script>	
+	<script src="js/unti.js"></script>		 -->
+	<script src="${ctxStatic }/rlzy/js/pages/parkServiceData.js"></script>
+
+	</body>
+</html>

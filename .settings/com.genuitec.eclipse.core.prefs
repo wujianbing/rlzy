@@ -1,0 +1,3 @@
+eclipse.preferences.version=1
+validator.Checked=src/main/webapp/webpage/modules/home/company/alipayform.jsp,src/main/java/com/jeeplus/modules/home/web/RlzyPayController.java
+validator.Unchecked=

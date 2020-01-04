@@ -1,0 +1,635 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/webpage/include/taglib.jsp"%>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>吴忠人力资源</title>
+		<link rel="stylesheet" href="${ctxStatic }/rlzy/css/common/layui-v2.5.5/layui/css/layui.css">
+		<link rel="stylesheet" href="${ctxStatic }/rlzy/css/Registeredcomment.css" />
+		<link rel="stylesheet" href="${ctxStatic }/rlzy/css/pages/index.css" />
+	</head>
+	<body>
+		<div class="layui-carousel" id="carousel" lay-filter="carousel">
+		  <div class="carousel" carousel-item="">
+		  	<c:forEach items="${bannerList}" var="banner">
+		  		<div><img src="${banner.pic }"/></div>
+		  	</c:forEach>
+		  </div>
+		</div> 		
+		<div class="cont">
+			<div class="service-v">
+				<div class="service-f">
+					<a id="recruit" data-id="1" class="bg1" href="">人才招聘</a>
+					<a id="throw" data-id="2" class="bg2" href="${rlzyPath}/position/positionList">急聘岗位</a>
+					<a class="bg3" href="${rlzyPath}/home/videostudy">视频课程</a>
+					<a class="bg4" href="parkService.html">园区服务</a>
+				</div>
+			</div>
+			<div class="index-v">
+				<!-- 园区动态 -->
+				<div class="index-va">
+					<div class="tit">
+						<div>园区动态</div>
+						<div><a class="more" href="${rlzyPath }/home/newsList">更多></a></div>
+					</div>
+					<div class="index-cont">
+						<ul class="index-ul">
+							<li class="index-lst">
+								<div class="index-lst-tit">
+									<span class="tit-o"><i>●</i></span>
+									<span class="tit-txt">市人力资源社会保障局“三个到位”将学</span>
+									<span class="tit-data"><span class="top">顶</span>2019-11-7</span>
+								</div>
+								<div class="index-lst-cont">
+									人力资源和社会保障局举办“不忘初心、牢记使命”主题教育集中干部在学习时间上
+								</div>
+							</li>
+							<li class="index-lst">
+								<div class="index-lst-tit">
+									<span class="tit-o"><i>●</i></span>
+									<span class="tit-txt">市人力资源社会保障到位”将学习教育.</span>
+									<span class="tit-data"><span class="top">顶</span>2019-11-7</span>
+								</div>
+								<div class="index-lst-cont">
+									人力资源和社会保障局举办“不忘初心、牢记使命”主题教育集中实做到全体党员干部在学习时间上
+								</div>
+							</li>
+							<li class="index-lst">
+								<div class="index-lst-tit">
+									<span class="tit-o"><i>●</i></span>
+									<span class="tit-txt">市人力资源社会保障局“三个”将学习教育.</span>
+									<span class="tit-data"><span class="top">顶</span>2019-11-7</span>
+								</div>
+								<div class="index-lst-cont">
+									人力资源和社会保障局举办“不忘初心、牢记使命”主题教育集中补课班,为前 期集中学习缺课处级干部补课,切实做到全体党员干部在学习时间上
+								</div>
+							</li>
+							<li class="index-lst">
+								<div class="index-lst-tit">
+									<span class="tit-o"><i>●</i></span>
+									<span class="tit-txt">市人力资源局“三个到位”将学习教育.</span>
+									<span class="tit-data"><span class="top">顶</span>2019-11-7</span>
+								</div>
+								<div class="index-lst-cont">
+									人力资源和社会保障局举办“不忘初心、牢记使命”主题教育集中补课班,为前 期集中学习缺课处级干部补课,切实做到全体党员干部在学习时间上
+								</div>
+							</li>
+							<li class="index-lst">
+								<div class="index-lst-tit">
+									<span class="tit-o"><i>●</i></span>
+									<span class="tit-txt">市人力资源社会保到位”将学习教育.</span>
+									<span class="tit-data"><span class="top">顶</span>2019-11-7</span>
+								</div>
+								<div class="index-lst-cont">
+									人力资源和社会保障局举办“不忘初心、牢记使命”主题教育集中补课班,为前 期集中学习缺课处级干部补课,切实做到全体党员干部在学习时间上
+								</div>
+							</li>
+							<li class="index-lst">
+								<div class="index-lst-tit">
+									<span class="tit-o"><i>●</i></span>
+									<span class="tit-txt">市人力资源社会保障局“三个到位”将学习教育.</span>
+									<span class="tit-data"><span class="top">顶</span>2019-11-7</span>
+								</div>
+								<div class="index-lst-cont">
+									人力资源和社会保障局举办“不忘初心、牢记使命”主题教育集中补课班,为前 期集中学习缺课处级干部补课,切实做到全体党员干部在学习时间上
+								</div>
+							</li>
+							<li class="index-lst">
+								<div class="index-lst-tit">
+									<span class="tit-o"><i>●</i></span>
+									<span class="tit-txt">市人力资源社会保障局“三个到位”将学.</span>
+									<span class="tit-data"><span class="top">顶</span>2019-11-7</span>
+								</div>
+								<div class="index-lst-cont">
+									人力资源和社会保障局举办“不忘初心、牢记使命”主题教育集中补课班,为前 期集中学习缺课处级干部补课,切实做到全体党员干部在学习时间上
+								</div>
+							</li>
+							<li class="index-lst">
+								<div class="index-lst-tit">
+									<span class="tit-o"><i>●</i></span>
+									<span class="tit-txt">市人力资源社会保障局“三个到位”将学.</span>
+									<span class="tit-data"><span class="top">顶</span>2019-11-7</span>
+								</div>
+								<div class="index-lst-cont">
+									人力资源和社会保障局举办“不忘初心、牢记使命”主题教育集中补课班,为前 期集中学习缺课处级干部补课,切实做到全体党员干部在学习时间上
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- 招聘信息 -->
+				<div class="index-va">
+					<div class="tit">
+						<div>招聘信息</div>
+						<div><a class="more" href="##">更多></a></div>
+					</div>
+					<div class="index-cont">
+						<ul class="index-ul d-flex ji-info-v">
+							<li class="index-lst">
+								<div class="plate-tit">急聘板块</div>
+								<ul class="plate-ul">
+									<li class="plate-lst">
+										<div class="plate-lst-v">
+											<div class="platetit d-flex-c">
+												<div class="zw">人事经理<span class="ji">急聘</span></div>
+												<div class="price">3-5K/月</div>
+											</div>
+											<div>银川华信智科技有限公司</div>
+											<div>本科<span class="shu">|</span>经验不限</div>
+											<div class="d-flex-c">
+												<div class="flex-1">
+													<i class="layui-icon layui-icon-location"></i> 
+													<span class="addres">银川市</span>
+												 </div>
+												<div class="flex-1 text-right">
+													<button class="layui-btn layui-btn-sm layui-btn-primary">我要应聘</button>
+												</div>
+											</div> 
+										</div>
+									</li>
+									<li class="plate-lst">
+										<div class="plate-lst-v">
+											<div class="platetit d-flex-c">
+												<div class="zw">人事经理<span class="ji">急聘</span></div>
+												<div class="price">3-5K/月</div>
+											</div>
+											<div>银川华信智科技有限公司</div>
+											<div>本科<span class="shu">|</span>经验不限</div>
+											<div class="d-flex-c">
+												<div class="flex-1">
+													<i class="layui-icon layui-icon-location"></i> 
+													<span class="addres">银川市</span>
+												 </div>
+												<div class="flex-1 text-right">
+													<button class="layui-btn layui-btn-sm layui-btn-primary">我要应聘</button>
+												</div>
+											</div> 
+										</div>
+									</li>
+									<li class="plate-lst">
+										<div class="plate-lst-v">
+											<div class="platetit d-flex-c">
+												<div class="zw">人事经理<span class="ji">急聘</span></div>
+												<div class="price">3-5K/月</div>
+											</div>
+											<div>银川华信智科技有限公司</div>
+											<div>本科<span class="shu">|</span>经验不限</div>
+											<div class="d-flex-c">
+												<div class="flex-1">
+													<i class="layui-icon layui-icon-location"></i> 
+													<span class="addres">银川市</span>
+												 </div>
+												<div class="flex-1 text-right">
+													<button class="layui-btn layui-btn-sm layui-btn-primary">我要应聘</button>
+												</div>
+											</div> 
+										</div>
+									</li>
+									<li class="plate-lst">
+										<div class="plate-lst-v">
+											<div class="platetit d-flex-c">
+												<div class="zw">人事经理<span class="ji">急聘</span></div>
+												<div class="price">3-5K/月</div>
+											</div>
+											<div>银川华信智科技有限公司</div>
+											<div>本科<span class="shu">|</span>经验不限</div>
+											<div class="d-flex-c">
+												<div class="flex-1">
+													<i class="layui-icon layui-icon-location"></i> 
+													<span class="addres">银川市</span>
+												 </div>
+												<div class="flex-1 text-right">
+													<button class="layui-btn layui-btn-sm layui-btn-primary">我要应聘</button>
+												</div>
+											</div> 
+										</div>
+									</li>
+									<li class="plate-lst">
+										<div class="plate-lst-v">
+											<div class="platetit d-flex-c">
+												<div class="zw">人事经理<span class="ji">急聘</span></div>
+												<div class="price">3-5K/月</div>
+											</div>
+											<div>银川华信智科技有限公司</div>
+											<div>本科<span class="shu">|</span>经验不限</div>
+											<div class="d-flex-c">
+												<div class="flex-1">
+													<i class="layui-icon layui-icon-location"></i> 
+													<span class="addres">银川市</span>
+												 </div>
+												<div class="flex-1 text-right">
+													<button class="layui-btn layui-btn-sm  layui-btn-primary">我要应聘</button>
+												</div>
+											</div> 
+										</div>
+									</li>
+									<li class="plate-lst">
+										<div class="plate-lst-v">
+											<div class="platetit d-flex-c">
+												<div class="zw">人事经理<span class="ji">急聘</span></div>
+												<div class="price">3-5K/月</div>
+											</div>
+											<div>银川华信智科技有限公司</div>
+											<div>本科<span class="shu">|</span>经验不限</div>
+											<div class="d-flex-c">
+												<div class="flex-1">
+													<i class="layui-icon layui-icon-location"></i> 
+													<span class="addres">银川市</span>
+												 </div>
+												<div class="flex-1 text-right">
+													<button class="layui-btn layui-btn-sm  layui-btn-primary">我要应聘</button>
+												</div>
+											</div> 
+										</div>
+									</li>
+								</ul>
+							</li>
+							<li class="index-lst mar-left2">
+								<div class="plate-tit">最新信息</div>
+								<ul class="plate-ul">
+									<li class="plate-lst">
+										<div class="plate-lst-v">
+											<div class="platetit d-flex-c">
+												<div class="zw">人事经理<span class="ji xin">新</span></div>
+												<div class="price">3-5K/月</div>
+											</div>
+											<div>银川华信智科技有限公司</div>
+											<div>本科<span class="shu">|</span>经验不限</div>
+											<div class="d-flex-c">
+												<div class="flex-1">
+													<i class="layui-icon layui-icon-location"></i> 
+													<span class="addres">银川市</span>
+												 </div>
+												<div class="flex-1 text-right">
+													<button class="layui-btn layui-btn-sm layui-btn-primary">我要应聘</button>
+												</div>
+											</div> 
+										</div>
+									</li>
+									<li class="plate-lst">
+										<div class="plate-lst-v">
+											<div class="platetit d-flex-c">
+												<div class="zw">人事经理<span class="ji xin">新</span></div>
+												<div class="price">3-5K/月</div>
+											</div>
+											<div>银川华信智科技有限公司</div>
+											<div>本科<span class="shu">|</span>经验不限</div>
+											<div class="d-flex-c">
+												<div class="flex-1">
+													<i class="layui-icon layui-icon-location"></i> 
+													<span class="addres">银川市</span>
+												 </div>
+												<div class="flex-1 text-right">
+													<button class="layui-btn layui-btn-sm layui-btn-primary">我要应聘</button>
+												</div>
+											</div> 
+										</div>
+									</li>
+									<li class="plate-lst">
+										<div class="plate-lst-v">
+											<div class="platetit d-flex-c">
+												<div class="zw">人事经理<span class="ji xin">新</span></div>
+												<div class="price">3-5K/月</div>
+											</div>
+											<div>银川华信智科技有限公司</div>
+											<div>本科<span class="shu">|</span>经验不限</div>
+											<div class="d-flex-c">
+												<div class="flex-1">
+													<i class="layui-icon layui-icon-location"></i> 
+													<span class="addres">银川市</span>
+												 </div>
+												<div class="flex-1 text-right">
+													<button class="layui-btn layui-btn-sm layui-btn-primary">我要应聘</button>
+												</div>
+											</div> 
+										</div>
+									</li>
+									<li class="plate-lst">
+										<div class="plate-lst-v">
+											<div class="platetit d-flex-c">
+												<div class="zw">人事经理<span class="ji xin">新</span></div>
+												<div class="price">3-5K/月</div>
+											</div>
+											<div>银川华信智科技有限公司</div>
+											<div>本科<span class="shu">|</span>经验不限</div>
+											<div class="d-flex-c">
+												<div class="flex-1">
+													<i class="layui-icon layui-icon-location"></i> 
+													<span class="addres">银川市</span>
+												 </div>
+												<div class="flex-1 text-right">
+													<button class="layui-btn layui-btn-sm layui-btn-primary">我要应聘</button>
+												</div>
+											</div> 
+										</div>
+									</li>
+									<li class="plate-lst">
+										<div class="plate-lst-v">
+											<div class="platetit d-flex-c">
+												<div class="zw">人事经理<span class="ji xin">新</span></div>
+												<div class="price">3-5K/月</div>
+											</div>
+											<div>银川华信智科技有限公司</div>
+											<div>本科<span class="shu">|</span>经验不限</div>
+											<div class="d-flex-c">
+												<div class="flex-1">
+													<i class="layui-icon layui-icon-location"></i> 
+													<span class="addres">银川市</span>
+												 </div>
+												<div class="flex-1 text-right">
+													<button class="layui-btn layui-btn-sm  layui-btn-primary">我要应聘</button>
+												</div>
+											</div> 
+										</div>
+									</li>
+									<li class="plate-lst">
+										<div class="plate-lst-v">
+											<div class="platetit d-flex-c">
+												<div class="zw">人事经理<span class="ji xin">新</span></div>
+												<div class="price">3-5K/月</div>
+											</div>
+											<div>银川华信智科技有限公司</div>
+											<div>本科<span class="shu">|</span>经验不限</div>
+											<div class="d-flex-c">
+												<div class="flex-1">
+													<i class="layui-icon layui-icon-location"></i> 
+													<span class="addres">银川市</span>
+												 </div>
+												<div class="flex-1 text-right">
+													<button class="layui-btn layui-btn-sm  layui-btn-primary">我要应聘</button>
+												</div>
+											</div> 
+										</div>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- 新闻动态 -->
+				<div class="index-va">
+					<div class="index-cont">
+						<ul class="index-ul d-flex">
+							<li class="index-lst mar-left0">
+								<div class="tit">
+									<div>新闻动态</div>
+									<div><a class="more" href="${rlzyPath }/home/newsList">更多></a></div>
+								</div>
+								<ul class="plate-ul news-dt-v">
+									<li class="index-lst">
+										<div class="index-lst-tit">
+											<span class="tit-o"><i>●</i></span>
+											<span class="tit-txt">市人力资源社”将学习教育.</span>
+											<span class="tit-data"><span class="top">顶</span>2019-11-7</span>
+										</div>
+										<div class="index-lst-cont">
+											人力资源和社会保障局举办“不忘初心、牢记使命”主题教育集中补课班,为前 期集中学习
+										</div>
+									</li>
+									<li class="index-lst">
+										<div class="index-lst-tit">
+											<span class="tit-o"><i>●</i></span>
+											<span class="tit-txt">市人力资源社局“三个到位”将学习教育.</span>
+											<span class="tit-data"><span class="top">顶</span>2019-11-7</span>
+										</div>
+										<div class="index-lst-cont">
+											人力资源和社会保障局举办“不忘初心、牢记使命”主题教育集中补课班,为前 期集中学习缺课处级干部补课,切实做到全体党员干部在学习时间上
+										</div>
+									</li>
+									<li class="index-lst">
+										<div class="index-lst-tit">
+											<span class="tit-o"><i>●</i></span>
+											<span class="tit-txt">市人力资源社会保障局“三个到位”将学习教育局“三个到位”将学习教育局“三个到位”将学习教育.</span>
+											<span class="tit-data"><span class="top">顶</span>2019-11-7</span>
+										</div>
+										<div class="index-lst-cont">
+											人力资源和社会保障局举办“不忘初心、牢记使命”主题教育集中补课班,为前 期集中学习缺课处
+										</div>
+									</li>
+									<li class="index-lst">
+										<div class="index-lst-tit">
+											<span class="tit-o"><i>●</i></span>
+											<span class="tit-txt">市人力个到位”将学习教育.</span>
+											<span class="tit-data"><span class="top">顶</span>2019-11-7</span>
+										</div>
+										<div class="index-lst-cont">
+											人力资源和社会保障局举办“不忘初心、牢记使命”主题教育集中补课班,为前 期集中学习缺课处级干部补课,切实做到全体党员干部在学习时间上
+										</div>
+									</li>
+									<li class="index-lst">
+										<div class="index-lst-tit">
+											<span class="tit-o"><i>●</i></span>
+											<span class="tit-txt">市人力资源社会保障局“三个到位”将学.</span>
+											<span class="tit-data"><span class="top">顶</span>2019-11-7</span>
+										</div>
+										<div class="index-lst-cont">
+											人力资源和社会保障局举办“不忘初心、牢记使命”主题教育集中补课班,为前 期集中学习缺课处级干部补课,切实做到全体党员干部在学习时间上
+										</div>
+									</li>
+									<li class="index-lst">
+										<div class="index-lst-tit">
+											<span class="tit-o"><i>●</i></span>
+											<span class="tit-txt">市人力资源社会保障局“三个到位”将学.</span>
+											<span class="tit-data"><span class="top">顶</span>2019-11-7</span>
+										</div>
+										<div class="index-lst-cont">
+											人力资源和社会保障局举办“不忘初心、牢记使命”主题教育集中补课班,为前 期集中学习缺课处级干部补课,切实做到全体党员干部在学习时间上
+										</div>
+									</li>
+									<li class="index-lst">
+										<div class="index-lst-tit">
+											<span class="tit-o"><i>●</i></span>
+											<span class="tit-txt">市人力资源社会保障局“三个到位”将学.</span>
+											<span class="tit-data"><span class="top">顶</span>2019-11-7</span>
+										</div>
+										<div class="index-lst-cont">
+											人力资源和社会保障局举办“不忘初心、牢记使命”主题教育集中补课班,为前 期集中学习缺课处级干部补课,切实做到全体党员干部在学习时间上
+										</div>
+									</li>
+									<li class="index-lst">
+										<div class="index-lst-tit">
+											<span class="tit-o"><i>●</i></span>
+											<span class="tit-txt">市人力资源社会保障局“三个到位”将学.</span>
+											<span class="tit-data"><span class="top">顶</span>2019-11-7</span>
+										</div>
+										<div class="index-lst-cont">
+											人力资源和社会保障局举办“不忘初心、牢记使命”主题教育集中补课班,为前 期集中学习缺课处级干部补课,切实做到全体党员干部在学习时间上
+										</div>
+									</li>
+									<li class="index-lst">
+										<div class="index-lst-tit">
+											<span class="tit-o"><i>●</i></span>
+											<span class="tit-txt">市人力资源社会保障局“三个到位”将学.</span>
+											<span class="tit-data"><span class="top">顶</span>2019-11-7</span>
+										</div>
+										<div class="index-lst-cont">
+											人力资源和社会保障局举办“不忘初心、牢记使命”主题教育集中补课班,为前 期集中学习缺课处级干部补课,切实做到全体党员干部在学习时间上
+										</div>
+									</li>
+									<li class="index-lst">
+										<div class="index-lst-tit">
+											<span class="tit-o"><i>●</i></span>
+											<span class="tit-txt">市人力资源社会保障局“三个到位”将学.</span>
+											<span class="tit-data"><span class="top">顶</span>2019-11-7</span>
+										</div>
+										<div class="index-lst-cont">
+											人力资源和社会保障局举办“不忘初心、牢记使命”主题教育集中补课班,为前 期集中学习缺课处级干部补课,切实做到全体党员干部在学习时间上
+										</div>
+									</li>
+									<li class="index-lst">
+										<div class="index-lst-tit">
+											<span class="tit-o"><i>●</i></span>
+											<span class="tit-txt">市人力资源社会保障局“三个到位”将学.</span>
+											<span class="tit-data"><span class="top">顶</span>2019-11-7</span>
+										</div>
+										<div class="index-lst-cont">
+											人力资源和社会保障局举办“不忘初心、牢记使命”主题教育集中补课班,为前 期集中学习缺课处级干部补课,切实做到全体党员干部在学习时间上
+										</div>
+									</li>
+									
+								</ul>
+							</li>
+							<li class="index-lst mar-left2">
+								<div class="tit">
+									<div>视频课程</div>
+									<div><a class="more" href="${rlzyPath }/home/videostudy">更多></a></div>
+								</div>
+								<ul class="plate-ul news-dt-v video-v">
+									<li class="video-lst">
+										<video class="video" src="http://valipl.cp31.ott.cibntv.net/69748278c034c71f470872c63/03000801005D722B3BCF794003E88012289D90-F81A-499D-8947-F399E6604089.mp4?ccode=0502&duration=5523&expire=18000&psid=0b6e88ef21ae5ed91831e19c7e42b658&ups_client_netip=6f705464&ups_ts=1574246776&ups_userid=&utid=BuZaEyQW%2FRQCAW9wSlvuugeR&vid=XNDM0MjA5Njc5Ng%3D%3D&vkey=A1f24df90fa8d9a8ca73c062479fed447"
+										 controls="controls">
+											您的浏览器不支持 video 标签。
+										</video>
+										<div class="video-tit">通讯入门课程</div>
+									</li>
+									<li class="video-lst">
+										<video class="video" src="http://valipl.cp31.ott.cibntv.net/69748278c034c71f470872c63/03000801005D722B3BCF794003E88012289D90-F81A-499D-8947-F399E6604089.mp4?ccode=0502&duration=5523&expire=18000&psid=0b6e88ef21ae5ed91831e19c7e42b658&ups_client_netip=6f705464&ups_ts=1574246776&ups_userid=&utid=BuZaEyQW%2FRQCAW9wSlvuugeR&vid=XNDM0MjA5Njc5Ng%3D%3D&vkey=A1f24df90fa8d9a8ca73c062479fed447"
+										 controls="controls">
+											您的浏览器不支持 video 标签。
+										</video>
+										<div class="video-tit">通讯入门课程</div>
+									</li>
+									<li class="video-lst">
+										<video class="video" src="http://valipl.cp31.ott.cibntv.net/69748278c034c71f470872c63/03000801005D722B3BCF794003E88012289D90-F81A-499D-8947-F399E6604089.mp4?ccode=0502&duration=5523&expire=18000&psid=0b6e88ef21ae5ed91831e19c7e42b658&ups_client_netip=6f705464&ups_ts=1574246776&ups_userid=&utid=BuZaEyQW%2FRQCAW9wSlvuugeR&vid=XNDM0MjA5Njc5Ng%3D%3D&vkey=A1f24df90fa8d9a8ca73c062479fed447"
+										 controls="controls">
+											您的浏览器不支持 video 标签。
+										</video>
+										<div class="video-tit">通讯入门课程</div>
+									</li>
+									<li class="video-lst">
+										<video class="video" src="http://valipl.cp31.ott.cibntv.net/69748278c034c71f470872c63/03000801005D722B3BCF794003E88012289D90-F81A-499D-8947-F399E6604089.mp4?ccode=0502&duration=5523&expire=18000&psid=0b6e88ef21ae5ed91831e19c7e42b658&ups_client_netip=6f705464&ups_ts=1574246776&ups_userid=&utid=BuZaEyQW%2FRQCAW9wSlvuugeR&vid=XNDM0MjA5Njc5Ng%3D%3D&vkey=A1f24df90fa8d9a8ca73c062479fed447"
+										 controls="controls">
+											您的浏览器不支持 video 标签。
+										</video>
+										<div class="video-tit">通讯入门课程</div>
+									</li>
+									<li class="video-lst">
+										<video class="video" src="http://valipl.cp31.ott.cibntv.net/69748278c034c71f470872c63/03000801005D722B3BCF794003E88012289D90-F81A-499D-8947-F399E6604089.mp4?ccode=0502&duration=5523&expire=18000&psid=0b6e88ef21ae5ed91831e19c7e42b658&ups_client_netip=6f705464&ups_ts=1574246776&ups_userid=&utid=BuZaEyQW%2FRQCAW9wSlvuugeR&vid=XNDM0MjA5Njc5Ng%3D%3D&vkey=A1f24df90fa8d9a8ca73c062479fed447"
+										 controls="controls">
+											您的浏览器不支持 video 标签。
+										</video>
+										<div class="video-tit">通讯入门课程</div>
+									</li>
+									<li class="video-lst">
+										<video class="video" src="http://valipl.cp31.ott.cibntv.net/69748278c034c71f470872c63/03000801005D722B3BCF794003E88012289D90-F81A-499D-8947-F399E6604089.mp4?ccode=0502&duration=5523&expire=18000&psid=0b6e88ef21ae5ed91831e19c7e42b658&ups_client_netip=6f705464&ups_ts=1574246776&ups_userid=&utid=BuZaEyQW%2FRQCAW9wSlvuugeR&vid=XNDM0MjA5Njc5Ng%3D%3D&vkey=A1f24df90fa8d9a8ca73c062479fed447"
+										 controls="controls">
+											您的浏览器不支持 video 标签。
+										</video>
+										<div class="video-tit">通讯入门课程</div>
+									</li>
+									<li class="video-lst">
+										<video class="video" src="http://valipl.cp31.ott.cibntv.net/69748278c034c71f470872c63/03000801005D722B3BCF794003E88012289D90-F81A-499D-8947-F399E6604089.mp4?ccode=0502&duration=5523&expire=18000&psid=0b6e88ef21ae5ed91831e19c7e42b658&ups_client_netip=6f705464&ups_ts=1574246776&ups_userid=&utid=BuZaEyQW%2FRQCAW9wSlvuugeR&vid=XNDM0MjA5Njc5Ng%3D%3D&vkey=A1f24df90fa8d9a8ca73c062479fed447"
+										 controls="controls">
+											您的浏览器不支持 video 标签。
+										</video>
+										<div class="video-tit">通讯入门课程</div>
+									</li>
+									<li class="video-lst">
+										<video class="video" src="http://valipl.cp31.ott.cibntv.net/69748278c034c71f470872c63/03000801005D722B3BCF794003E88012289D90-F81A-499D-8947-F399E6604089.mp4?ccode=0502&duration=5523&expire=18000&psid=0b6e88ef21ae5ed91831e19c7e42b658&ups_client_netip=6f705464&ups_ts=1574246776&ups_userid=&utid=BuZaEyQW%2FRQCAW9wSlvuugeR&vid=XNDM0MjA5Njc5Ng%3D%3D&vkey=A1f24df90fa8d9a8ca73c062479fed447"
+										 controls="controls">
+											您的浏览器不支持 video 标签。
+										</video>
+										<div class="video-tit">通讯入门课程</div>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- 企业入驻 -->
+				<div class="index-va">
+					<div class="tit">
+						<div>企业入驻</div>
+						<div><a class="more" href="${rlzyPath }/home/companyGarrisonList">更多></a></div>
+					</div>
+					<div class="index-cont">
+						<ul class="index-ul ruzhu-v">
+							<li class="index-lst">
+								<img src="img/xianzhi.png"/>
+							</li>
+							<li class="index-lst">
+								<img src="img/xianzhi.png"/>
+							</li>
+							<li class="index-lst">
+								<img src="img/xianzhi.png"/>
+							</li>
+							<li class="index-lst">
+								<img src="img/xianzhi.png"/>
+							</li>
+							<li class="index-lst">
+								<img src="img/xianzhi.png"/>
+							</li>
+							<li class="index-lst">
+								<img src="img/xianzhi.png"/>
+							</li>
+							<li class="index-lst">
+								<img src="img/xianzhi.png"/>
+							</li>
+							<li class="index-lst">
+								<img src="img/xianzhi.png"/>
+							</li>
+							<li class="index-lst">
+								<img src="img/xianzhi.png"/>
+							</li>
+							<li class="index-lst">
+								<img src="img/xianzhi.png"/>
+							</li>
+							<li class="index-lst">
+								<img src="img/xianzhi.png"/>
+							</li>
+							<li class="index-lst">
+								<img src="img/xianzhi.png"/>
+							</li>
+						</ul>
+						<div class="rz-btn-v">
+							<a href="##" class="layui-btn layui-btn-normal rz-btn">申请入驻</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<script src="${ctxStatic }/rlzy/js/jquery.min.js"></script>
+	<script src="${ctxStatic }/rlzy/css/common/layui-v2.5.5/layui/layui.js"></script>
+	<script>
+	var url='${rlzyPath}';
+	layui.use(['carousel', 'form'], function(){
+	  var carousel = layui.carousel
+	  ,form = layui.form;
+	  //常规轮播
+	  carousel.render({
+	    elem: '#carousel',
+	    arrow: 'always',
+		width:'100%',
+		height:'350px',
+		interval:'5000'
+	  });
+	});
+	</script>	
+	<script src="${ctxStatic }/rlzy/js/pages/nav.js"></script>
+	<script src="${ctxStatic }/rlzy/js/pages/index.js"></script>
+	</body>
+</html>

@@ -1,0 +1,229 @@
+package com.jeeplus.modules.home.web;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.jeeplus.modules.home.utils.SmsCodeUtil;
+import com.jeeplus.modules.home.web.exception.SmsException;
+import com.jeeplus.modules.portal.entity.News;
+import com.jeeplus.modules.portal.entity.NewsModel;
+import com.jeeplus.modules.portal.entity.RlzyUser;
+import com.jeeplus.modules.portal.service.NewsService;
+import com.jeeplus.modules.portal.service.RlzyUserService;
+
+/**
+ * home首页控制层
+ * 
+ * @author 胡林斐
+ * @Date 2019-11-12 14:25:17    
+ */
+@Controller
+@RequestMapping("/home")
+public class HomeController {
+	
+	@Autowired
+	NewsService newsService;
+	
+	@Autowired
+	private RlzyUserService rlzyUserService;
+	
+	/**
+	 * 新闻查询
+	 * @param model
+	 * @param news
+	 * @return
+	 */
+	@RequestMapping("/index")
+	public String getList(Model model,News news) {
+		List<News> rlzyNewsList = newsService.findList(news);
+		model.addAttribute("rlzyNews",rlzyNewsList);
+		return "modules/home/humanIndex";
+	}
+	
+	/**
+	 * 个人注册
+	 * @param model
+	 * @param rlzyUser
+	 * @param flag
+	 * @return
+	 */
+	@RequestMapping("/register")
+	public String register(Model model,RlzyUser rlzyUser,String flag) {
+		return "modules/home/personalRegister";
+	}
+	
+	/**
+	 * 
+	 * @param model
+	 * @param flag
+	 * @return
+	 */
+	@RequestMapping("/recruitment")
+	public String register(Model model,String flag) {
+		return "modules/home/findInfo";
+	}
+	
+	/**
+	 * 判断手机号是否存在
+	 * @param model
+	 * @param session
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="check")
+	public String check(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+		String phone = request.getParameter("phone");
+		RlzyUser rlzyUser = new RlzyUser();
+		rlzyUser.setPhone(phone);
+		List<RlzyUser> list = rlzyUserService.findList(rlzyUser);
+		if(list.size() > 0) {
+			session.setAttribute("userId",list.get(0).getId());
+			return "2";
+		}else {
+			return "3";
+		}
+	}
+	
+	/**
+	 * 发送验证码
+	 * @param phone
+	 * @param model
+	 * @param session
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="sendSms")
+	public String sendSms(String phone,Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+		//缓存存储手机号
+		session.setAttribute("tel", phone);
+		// 4位验证码
+		String smsCode = SmsCodeUtil.createRandomVcode();
+		// SmsCodeUtil
+		try {
+			// 发送验证码
+			SmsCodeUtil.sendCode(smsCode, phone, session);
+		} catch (SmsException e) {
+			// TODO Auto-generated catch block
+			e.getMessage();
+		}
+		return "";
+	}
+
+	/**
+	 * 有效验证码
+	 * @param model
+	 * @param session
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="checkSms")
+	public String[] checkSms(Model model, HttpSession session, HttpServletRequest request,HttpServletResponse response) {
+		String phone = (String) session.getAttribute("tel");
+		String smsCode = request.getParameter("code");
+		
+		String[] flag = new String[2];
+		try {
+			SmsCodeUtil.validateCode(phone, smsCode, session);
+		} catch (SmsException e) {
+			flag[0] = "0";
+			flag[1] = e.getMessage();
+			return flag;
+		}
+		flag[0] = "1";
+		SmsCodeUtil.consumeCode(session);
+		return flag;
+	}
+	
+	/**
+	 * 保存用户注册信息
+	 * @param phone
+	 * @param model
+	 * @param session
+	 * @param rlzyUser
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="saveUser")
+	public String saveUser(RlzyUser rlzyUser) {
+		rlzyUser.setIspublic("2");
+         Date birth =rlzyUser.getBirthday();
+         Calendar now = Calendar.getInstance();
+         Calendar born = Calendar.getInstance();
+         
+         now.setTime(new Date());
+         born.setTime(birth);
+         
+         if(born.after(now)){
+             throw new IllegalArgumentException("Can't be born in the future"); 
+         }
+         
+         int age = now.get(Calendar.YEAR)-born.get(Calendar.YEAR);
+         if(now.get(Calendar.DAY_OF_YEAR) < born.get(Calendar.DAY_OF_YEAR)) {
+             age -= 1;
+         }
+        rlzyUser.setAge(String.valueOf(age));
+		rlzyUserService.save(rlzyUser);
+		return "1";
+	}
+	/**
+	 * 初次点击进入新闻列表
+	 * @param news
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("newsList")
+	public String newsList(News news,Model model,HttpServletRequest request,HttpServletResponse response){
+		
+		NewsModel newsModel = new NewsModel();
+		newsModel.setId("5ad717509e9b4cd6b10b608d6d17e709");
+		news.setNewsModel(newsModel);
+		List<News> newsList = newsService.findPageList(1, 10, news);
+		List<News> ListCount = newsService.findList(news);
+		newsModel.setId("7d4fecb7a48b487cab1e6fd1ab61129d");
+		news.setNewsModel(newsModel);
+		List<News> busNewsList = newsService.findPageList(1, 10, news);
+		List<News> ListCounts = newsService.findList(news);
+		model.addAttribute("count",ListCount.size());
+		model.addAttribute("counts",ListCounts.size());
+		model.addAttribute("newsList", newsList);
+		model.addAttribute("busNewsList", busNewsList);
+		return "modules/home/news";
+	}
+	/**
+	 * 根据页码显示新闻
+	 * @param id
+	 * @param page
+	 * @param pageSize
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("pageList")
+	public List<News> pageList(String id,String page,String pageSize){
+		News news = new News();
+		NewsModel newsModel = new NewsModel();
+		newsModel.setId(id);
+		news.setNewsModel(newsModel);
+		List<News> newsList = newsService.findPageList(Integer.parseInt(page),Integer.parseInt(pageSize), news);
+		return newsList;
+	}
+}

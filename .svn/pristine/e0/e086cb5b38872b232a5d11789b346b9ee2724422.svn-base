@@ -1,0 +1,76 @@
+//点击收藏按钮，字体颜色改变
+	$(function() {
+		var i = 0;
+		$(".sqzw").click(function() {
+			i++;
+			if(i % 2 != 0) {
+				$(this).css("color", "#f7d213")
+
+			} else {
+				$(this).css("color", "#4b96cf")
+
+			}
+		});
+	})
+//点击下拉选择框的时候，对应下面的标签框内容出现，当成功选择后，标签内容改变
+	$('.gz li').on("click", function() {
+		var s=$(this).text();
+		$(".appendt1").css("display", "block");
+		$('#yxgz1').html(s);
+	});
+
+	$('.gz1 li').on("click", function() {
+		var s=$(this).text();
+		$(".appendt2").css("display", "block");
+		$('#yxgz2').html(s);
+	});
+
+	$('.gz2 li').on("click", function() {
+		var s=$(this).text();
+		$(".appendt3").css("display", "block");
+		$('#yxgz3').html(s);
+	});
+
+	$('.gz3 li').on("click", function() {
+		var s=$(this).text();
+		$(".appendt4").css("display", "block");
+		$('#yxgz4').html(s);
+	});
+
+	$('.gz4 li').on("click", function() {
+		var s=$(this).text();
+		$(".appendt5").css("display", "block");
+		$('#yxgz5').html(s);
+	});
+	$('.gz5 li').on("click", function() {
+		var s=$(this).text();
+		$(".appendt6").css("display", "block");
+		$('#yxgz6').html(s);
+	});
+	$('.gz6 li').on("click", function() {
+		var s=$(this).text();
+		$(".appendt7").css("display", "block");
+		$('#yxgz7').html(s);
+	});
+	$('.gz7 li').on("click", function() {
+		var s=$(this).text();
+		$(".appendt8").css("display", "block");
+		$('#yxgz8').html(s);
+	});
+
+ //点击关闭当前标签条件
+$('.layui-icon-close').on("click", function() {
+		$(this).parent().css("display", "none");
+	});
+	
+	
+	//分页事件
+	layui.use('laypage', function(){
+  var laypage = layui.laypage;
+  
+  //执行一个laypage实例
+  laypage.render({
+    elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+    ,count: 50 //数据总数，从服务端得到
+  });
+});

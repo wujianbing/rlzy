@@ -1,0 +1,322 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/webpage/include/taglib.jsp"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+<title>吴忠人力资源首页</title>
+	<!-- Bootstrap -->
+	<link href="${ctxStatic }/rlzy/css/bootstrap.css" rel="stylesheet">
+	<link rel="stylesheet" href="${ctxStatic }/rlzy/css/jquery.my-modal.1.1.css" />
+	<link rel="stylesheet" href="${ctxStatic }/rlzy/css/findHuman.css" />
+</head>
+<body>
+	<!--首页内容-->
+	<div class="humanbox">
+		<!--标题栏-->
+		<div class="titleTop">
+			<div class="row rowTop">
+				<!--标题-->
+				<div class="col-md-2 title ">
+					<h3>吴忠人力资源服务产业园</h3>
+					<h6>Wu Zhong Human Resources Services Industrial Park</h6>
+				</div>
+				<!--搜索按钮-->
+				<div class="col-md-4 searchBar col-md-offset-6" style="padding: 0;">
+					<div class="col-lg-6">
+						<form action="" method="">
+							<div class="input-group">
+								<input type="text" class="form-control searchBarLeft" placeholder="在此输入关键字...">
+								<span class="input-group-btn searchBarRight">
+       						 <button class="btn btn-default glyphicon glyphicon-search" type="button"></button>
+      						</span>
+							</div>
+						</form>
+					</div>
+					<div class="col-lg-5" style="white-space: nowrap; color: #666; text-align: right;padding: 0;">
+						<a class="login">登陆</a>|
+						<a class="registered">注册</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!--导航条-->
+		<div class="bar">
+			<div class="row rowBar">
+				<ul class="nav nav-tabs">
+					<li role="presentation">
+						<a href="#">网站首页</a>
+					</li>
+					<li role="presentation">
+						<a href="#">园区概况</a>
+					</li>
+					<li role="presentation">
+						<a href="#">园区服务</a>
+					</li>
+					<li role="presentation">
+						<a href="#">新闻动态</a>
+					</li>
+					<li role="presentation">
+						<a href="#">技能提升</a>
+					</li>
+					<li role="presentation">
+						<a href="#">企业入驻</a>
+					</li>
+					<li role="presentation">
+						<a href="#">联系我们</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!--banner图-->
+		<div class="banner">
+			<div class="bannerdel">
+			  <form:form action="" modelAttribute="rlzyPosition" method="post" >
+				<p class="findman"><span class="leftman renshi">${rlzyPosition.positionname }</span><span class="rightman time"><fmt:formatDate value="${rlzyPosition.createDate }" pattern="yyyy-MM-dd" /> 发布</span></p>
+				<p class="findman"><span class="leftman"><span>${fns:getDictLabel(rlzyPosition.salaryrange, "salary", defaultValue)}</span></span><span class="rightman sq btn1">申请职位</span></p>
+				<p class="findman"><span class="leftman">${rlzyCompany.companyname }</span>
+					<span class="rightman shoucang"><span class="glyphicon glyphicon-star"></span>&ensp;<span>收藏</span></span>
+				</p>
+			  </form:form>
+			</div>
+		</div>
+		<!--个人信息部分-->
+		<div class="yuqbottom">
+			<!--左边简历部分-->
+			<div class="yuleft">
+			  <form:form action="" modelAttribute="rlzyPosition" method="post" >
+				<!--基本信息-->
+				<div class="infoname">
+					<h5>基本信息</h5>
+					<p class="infopname1">
+						<span class="sitename">职位性质：<span>${fns:getDictLabel(rlzyPosition.positiontype, "work_nature", defaultValue)}</span></span>
+						<span class="sitename">招聘人数：<span>${rlzyPosition.recruitnumber }</span></span>
+					</p>
+					<p class="infopname1">
+						<span class="sitename">学历要求：<span>${fns:getDictLabel(rlzyPosition.education, "education", defaultValue)}</span></span>
+						<span class="sitename">工作经验：<span>${fns:getDictLabel(rlzyPosition.workingage, "working_age", defaultValue)}</span></span>
+						<span class="sitename">年龄要求：<span>${rlzyPosition.agerequirement }</span></span>
+					</p>
+					<p class="infopname1 lastname">
+						<span class="sitename">工作地点:<span>${rlzyPosition.workingplace }</span></span>
+					</p>
+				</div>
+				<!--联系方式-->
+				<div class="infoname">
+					<h5>联系方式</h5>
+					<p class="infopname1">
+						<span class="sitename">联系人：<span>${rlzyPosition.contacts }</span></span>
+
+					</p>
+					<p class="infopname1">
+						<span class="sitename">联系电话：<span>${rlzyPosition.phone }</span></span>
+
+					</p>
+					<p class="infopname1 lastname">
+						<span class="sitename">电子邮箱：<span>${rlzyCompany.email }</span></span>
+					</p>
+				</div>
+				<!--职位描述-->
+				<div class="infoname infolast">
+					<h5>职位描述</h5>
+					<p class="infopname1">岗位要求：</p>
+					<ol start="1">
+						<li>${rlzyPosition.positiondescription }</li>
+					</ol>
+				</div>
+				<!--按钮-->
+				<div class="infopname lastname lastjk">
+					<span class="btn btn1">申请职位</span>
+					<span class="yx">查看简历</span>
+				</div>
+			  </form:form>
+			</div>
+			<div class="yuright">
+				<div class="righttop">
+				  <form:form action="" modelAttribute="rlzyPosition" method="post" >
+					<!--公司图片-->
+					<div class="imgimg">
+						<img src="${ctxStatic }/rlzy/img/logimg.png" />
+					</div>
+					<!--公司信息-->
+					<div class="imgname">
+						<p class="infopname1">
+							<span class="sitename">性质：<span>${fns:getDictLabel(rlzyCompany.companynature, "company_nature", defaultValue)}</span></span>
+
+						</p>
+						<p class="infopname1">
+							<span class="sitename">行业：<span>${ fns:getDictLabel (rlzyCompany.industry, "desired_position", defaultValue)}</span></span>
+
+						</p>
+						<p class="infopname1 lastname">
+							<span class="sitename">规模：<span>${ fns:getDictLabel (rlzyCompany.companynature, "company_scale", defaultValue)}</span></span>
+						</p>
+					</div>
+				  </form:form>
+				</div>
+				<div class="rightbottom">
+					<p class="infopname1 lastname">
+						<span class="sitename">给我留言：</span>
+					</p>
+					<div class="textword">
+						<textarea name="" rows="12" placeholder="请输入你的疑问。比如工作地点，薪 资，福利等等，我会及时给您回复！ 期待与您的合作。"></textarea>
+					</div>
+					<div class="infosend">
+						<span class="btn">发送</span>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--外部连接跳转-->
+		<div class="webLinkWork">
+			<span><a>关于我们</a></span>&emsp;|&emsp;
+			<span><a>联系我们</a></span>&emsp;|&emsp;
+			<span><a>客服中心</a></span>&emsp;|&emsp;
+			<span><a>招聘入口</a></span>
+		</div>
+		<!--版权号-->
+		<div class="banquan">
+			<span>Copyright</span>&emsp;&copy;<span> 2019 吴忠人力资源服务产业园,</span>&emsp;<span> All Rights Reserved</span>&emsp;　宁ICP备000000号
+		</div>
+	</div>
+	<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+	<script src="${ctxStatic }/rlzy/js/jquery.min.js"></script>
+	<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+	<script src="${ctxStatic }/rlzy/js/bootstrap.js"></script>
+	<div class="m-modal">
+		<div class="m-modal-dialog">
+			<div class="m-top">
+				<h4 class="m-modal-title">
+					      
+				</h4>
+				<span class="m-modal-close">&times;</span>
+			</div>
+			<!--模态框的简历基本信息-->
+			<div class="m-middle">
+				<div class="infoname">
+					<h5>基本信息</h5>
+					<p class="infopname1">
+						<span class="sitename">姓名：<span>叶鹏</span></span>
+						<span class="sitename">性别：<span>男</span></span>
+						<span class="sitename">年龄：<span>22</span></span>
+
+					</p>
+					<p class="infopname1">
+						<span class="sitename">婚否：<span>未婚</span></span>
+						<span class="sitename">身高：<span>未填写</span></span>
+						<span class="sitename">学历：<span>本科</span></span>
+
+					</p>
+					<p class="infopname1 lastname">
+						<span class="sitename">工作经验：<span>1年以下</span></span>
+						<span class="sitename">居住地：<span>银川市</span></span>
+						<span class="sitename">专业：<span>计算机</span></span>
+					</p>
+					<p class="infopname1 lastname">
+						<span class="sitename">籍贯：<span>未填写</span></span>
+						<span class="sitename">QQ:<span>未填写</span></span>
+						<span class="sitename">微信号：<span>未填写</span></span>
+					</p>
+					<p class="infopname1 lastname">
+						<span class="sitename">手机号：<span>15226277405</span></span>
+					</p>
+				</div>
+				<!--求职意向-->
+				<div class="infoname">
+					<h5>求职意向</h5>
+					<p class="infopname1">
+						<span class="sitename">求职状态：<span>离职</span></span>
+						<span class="sitename">工作性质：<span>全职</span></span>
+						<span class="sitename">工作地区：<span>银川市，兴庆区</span></span>
+
+					</p>
+					<p class="infopname1">
+						<span class="sitename">期望行业：<span>不限</span></span>
+						<span class="sitename">期望职位：<span>计算机</span></span>
+						<span class="sitename">期望薪资：<span>3-5千/月	</span></span>
+
+					</p>
+
+				</div>
+				<!--职位描述-->
+				<div class="infoname infolast">
+					<h5>自我描述</h5>
+					<p class="wordmy"> 1）人力资源管理或其他管理类专业本科学历；1年左右相关工作经验或优秀应届毕业生； 2）熟悉招聘流程； 3）熟悉国家法律</p>
+
+				</div>
+				<div class="infoname">
+					<h5>教育经历</h5>
+					<p class="infopname1">
+						<span class="sitename">就读时间：<span>2015.9--2019.6</span></span>
+						<span class="sitename">学校名称：<span>宁夏大学新华学院</span></span>
+						<span class="sitename">学历：<span>本科</span></span>
+					</p>
+					<p class="infopname1">
+						<span class="sitename">专业名称：<span>计算机网络</span></span>
+					</p>
+				</div>
+				<div class="infoname">
+					<h5>工作经历</h5>
+					<p class="infopname1">
+
+					</p>
+
+				</div>
+				<div class="infoname">
+					<h5>培训经历</h5>
+					<p class="infopname1">
+
+					</p>
+
+				</div>
+				<div class="infoname">
+					<h5>获得证书</h5>
+					<p class="infopname1">
+
+					</p>
+
+				</div>
+				<div class="infoname">
+					<h5>语言能力</h5>
+					<p class="infopname1">
+
+					</p>
+
+				</div>
+				<div class="infoname">
+					<h5>附件简历</h5>
+					<p class="infopname1">
+
+					</p>
+
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="${ctxStatic }/rlzy/js/jquery.my-modal.1.1.js"></script>
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		$(".btn1").click(function() {
+			alert("已申请职位");
+		});
+	});
+
+	var m1 = new MyModal.modal(function() {
+		/*alert("你点击了确定");*/
+	});
+	$('.yx').on("click", function() {
+		m1.show();
+	});
+	$('.shoucang').on("click", function() {
+		$(".glyphicon-star").css("color","#f7d213");
+	});
+</script>

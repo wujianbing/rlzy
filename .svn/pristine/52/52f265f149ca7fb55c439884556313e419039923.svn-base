@@ -1,0 +1,50 @@
+package com.jeeplus.modules.home.utils;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.serializer.SimplePropertyPreFilter;
+
+
+
+public class JsonUtils {
+        private static final String DEFAULT_CHARSET_NAME = "UTF-8";
+       
+        /**
+         * serialize（T object,SimplePropertyPreFilter sf）
+         * 对象转为json字符串，SimplePropertyPreFilter过滤器可以将需要字段放在过滤器中，不需要字段自动过滤，
+         * 如SimplePropertyPreFilter sf = new SimplePropertyPreFilter("title","brief","content","isTop");
+         * json会解析过滤器中字段，关联外键字段解析会出现栈溢出异常，只能单独遍历取出做json解析
+         * 例：
+         * JSONArray jsonMembers = new JSONArray();
+         *	for ( Comment comment : commentsList) {
+    	 *	JSONObject jsonObject = new JSONObject();
+       	 *	jsonObject.put("id", blogComment.getId());
+    	 *	...
+    	 *	...
+    	 *	jsonMembers.put(jsonObject);
+		 *	}
+		 *jsonMembers.toJSONString();
+         * @param object
+         * @param sf
+         * @return
+         */
+        public static <T> String serialize(T object,SimplePropertyPreFilter sf) {
+            return JSON.toJSONString(object, sf,  SerializerFeature.DisableCircularReferenceDetect);
+        }
+        
+      
+        public static <T> T deserialize(String string, Class<T> clz) {
+        	
+            return JSON.parseObject(string, clz);
+        }
+
+       
+        public static <T> T load(Path path, Class<T> clz) throws IOException {
+            return deserialize(
+                    new String(Files.readAllBytes(path), DEFAULT_CHARSET_NAME), clz);
+        }       
+}

@@ -1,0 +1,72 @@
+
+span{
+	color: #555;
+}
+.sign{
+	color: red;
+}
+.layui-form-label{
+	font-size: 15px;
+	color: #666;
+	width: 89px;
+	white-space: nowrap;
+}
+.layui-form-item {
+    margin-bottom: 22px;
+    clear: both;
+    *zoom: 1;
+}
+.ac{
+	    width: 112px;
+		margin-right: 35px;
+}
+.layui-input-block {
+    margin-left: 122px;
+    min-height: 36px;
+}
+.layui-form-label .layui-input{
+	color: #666;
+}
+.jobwant-v{
+	padding: 40px 25px 20px 25px;
+	background: #ffffff;
+    color: #555;	
+}
+.title{
+	display: flex;
+	align-items: center;
+}
+.title-txt{
+	flex: 1;
+	display: flex;
+}
+.titlr-bor{
+	flex: 9;
+	border-top: 1px dotted #333333;
+}
+
+.title-x{
+	font-size: 20px;
+	color: #6d6d6d;
+	white-space: nowrap;
+	font-weight: 600;
+	cursor: pointer;
+}
+.col-activ{
+	color: #20A1E0;
+}
+
+
+.table-v{
+	padding: 20px 0;
+}
+.layui-form-label {
+    font-size: 15px;
+    color: #666;
+    width: 101px;
+    white-space: nowrap;
+}
+.layui-input-block {
+    margin-left: 135px;
+    min-height: 36px;
+}

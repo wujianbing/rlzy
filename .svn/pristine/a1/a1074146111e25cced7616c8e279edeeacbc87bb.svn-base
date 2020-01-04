@@ -1,0 +1,283 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/webpage/include/taglib.jsp"%>
+<html>
+<head>
+	<title>个人信息管理</title>
+	<meta name="decorator" content="ani"/>
+	<script type="text/javascript">
+
+		$(document).ready(function() {
+		});
+
+		function save() {
+            var isValidate = jp.validateForm('#inputForm');//校验表单
+            if(!isValidate){
+                return false;
+			}else{
+                jp.loading();
+                jp.post("${ctx}/portal/rlzyUser/save",$('#inputForm').serialize(),function(data){
+                    if(data.success){
+                        jp.getParent().refresh();
+                        var dialogIndex = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+                        parent.layer.close(dialogIndex);
+                        jp.success(data.msg)
+
+                    }else{
+                        jp.error(data.msg);
+                    }
+                })
+			}
+
+        }
+		function addRow(list, idx, tpl, row){
+			$(list).append(Mustache.render(tpl, {
+				idx: idx, delBtn: true, row: row
+			}));
+			$(list+idx).find("select").each(function(){
+				$(this).val($(this).attr("data-value"));
+			});
+			$(list+idx).find("input[type='checkbox'], input[type='radio']").each(function(){
+				var ss = $(this).attr("data-value").split(',');
+				for (var i=0; i<ss.length; i++){
+					if($(this).val() == ss[i]){
+						$(this).attr("checked","checked");
+					}
+				}
+			});
+			$(list+idx).find(".form_datetime").each(function(){
+				 $(this).datetimepicker({
+					 format: "YYYY-MM-DD HH:mm:ss"
+			    });
+			});
+		}
+		function delRow(obj, prefix){
+			var id = $(prefix+"_id");
+			var delFlag = $(prefix+"_delFlag");
+			if (id.val() == ""){
+				$(obj).parent().parent().remove();
+			}else if(delFlag.val() == "0"){
+				delFlag.val("1");
+				$(obj).html("&divide;").attr("title", "撤销删除");
+				$(obj).parent().parent().addClass("error");
+			}else if(delFlag.val() == "1"){
+				delFlag.val("0");
+				$(obj).html("&times;").attr("title", "删除");
+				$(obj).parent().parent().removeClass("error");
+			}
+		}
+	</script>
+</head>
+<body class="bg-white">
+		<form:form id="inputForm" modelAttribute="rlzyUser" action="${ctx}/portal/rlzyUser/save" method="post" class="form-horizontal">
+		<form:hidden path="id"/>
+		<table class="table table-bordered">
+		   <tbody>
+				<tr>
+					<td class="width-15 active"><label class="pull-right">姓名：</label></td>
+					<td class="width-35">
+						<form:input path="name" htmlEscape="false"    class="form-control "/>
+					</td>
+					<td class="width-15 active"><label class="pull-right">性别：</label></td>
+					<td class="width-35">
+						<form:input path="sex" htmlEscape="false"    class="form-control "/>
+					</td>
+				</tr>
+				<tr>
+					<td class="width-15 active"><label class="pull-right">出生年月：</label></td>
+					<td class="width-35">
+						<form:input path="birthday" htmlEscape="false"    class="form-control "/>
+					</td>
+					<td class="width-15 active"><label class="pull-right">照片：</label></td>
+					<td class="width-35">
+						<form:input path="photo" htmlEscape="false"    class="form-control "/>
+					</td>
+				</tr>
+				<tr>
+					<td class="width-15 active"><label class="pull-right">居住省：</label></td>
+					<td class="width-35">
+						<form:input path="provincel" htmlEscape="false"    class="form-control "/>
+					</td>
+					<td class="width-15 active"><label class="pull-right">居住市：</label></td>
+					<td class="width-35">
+						<form:input path="cityl" htmlEscape="false"    class="form-control "/>
+					</td>
+				</tr>
+				<tr>
+					<td class="width-15 active"><label class="pull-right">居住区：</label></td>
+					<td class="width-35">
+						<form:input path="areal" htmlEscape="false"    class="form-control "/>
+					</td>
+					<td class="width-15 active"><label class="pull-right">学历：</label></td>
+					<td class="width-35">
+						<form:input path="education" htmlEscape="false"    class="form-control "/>
+					</td>
+				</tr>
+				<tr>
+					<td class="width-15 active"><label class="pull-right">工作年限：</label></td>
+					<td class="width-35">
+						<form:input path="workingage" htmlEscape="false"    class="form-control "/>
+					</td>
+					<td class="width-15 active"><label class="pull-right">手机号：</label></td>
+					<td class="width-35">
+						<form:input path="phone" htmlEscape="false"    class="form-control "/>
+					</td>
+				</tr>
+				<tr>
+					<td class="width-15 active"><label class="pull-right">工作状态：</label></td>
+					<td class="width-35">
+						<form:input path="currentstate" htmlEscape="false"    class="form-control "/>
+					</td>
+					<td class="width-15 active"><label class="pull-right">工作性质：</label></td>
+					<td class="width-35">
+						<form:input path="worknature" htmlEscape="false"    class="form-control "/>
+					</td>
+				</tr>
+				<tr>
+					<td class="width-15 active"><label class="pull-right">期望行业：</label></td>
+					<td class="width-35">
+						<form:input path="desiredindustry" htmlEscape="false"    class="form-control "/>
+					</td>
+					<td class="width-15 active"><label class="pull-right">期望职位：</label></td>
+					<td class="width-35">
+						<form:input path="desiredposition" htmlEscape="false"    class="form-control "/>
+					</td>
+				</tr>
+				<tr>
+					<td class="width-15 active"><label class="pull-right">期望薪资：</label></td>
+					<td class="width-35">
+						<form:input path="salary" htmlEscape="false"    class="form-control "/>
+					</td>
+					<td class="width-15 active"><label class="pull-right">自我描述：</label></td>
+					<td class="width-35">
+						<form:input path="selfdescription" htmlEscape="false"    class="form-control "/>
+					</td>
+				</tr>
+				<tr>
+					<td class="width-15 active"><label class="pull-right">工作省：</label></td>
+					<td class="width-35">
+						<form:input path="provincew" htmlEscape="false"    class="form-control "/>
+					</td>
+					<td class="width-15 active"><label class="pull-right">工作市：</label></td>
+					<td class="width-35">
+						<form:input path="cityw" htmlEscape="false"    class="form-control "/>
+					</td>
+				</tr>
+				<tr>
+					<td class="width-15 active"><label class="pull-right">工作地区：</label></td>
+					<td class="width-35">
+						<form:input path="areaw" htmlEscape="false"    class="form-control "/>
+					</td>
+					<td class="width-15 active"><label class="pull-right">是否公开：</label></td>
+					<td class="width-35">
+						<form:input path="ispublic" htmlEscape="false"    class="form-control "/>
+					</td>
+				</tr>
+				<tr>
+					<td class="width-15 active"><label class="pull-right">投递次数：</label></td>
+					<td class="width-35">
+						<form:input path="deliverytimes" htmlEscape="false"    class="form-control "/>
+					</td>
+					<td class="width-15 active"></td>
+		   			<td class="width-35" ></td>
+		  		</tr>
+		 	</tbody>
+		</table>
+		<div class="tabs-container">
+            <ul class="nav nav-tabs">
+				<li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">个人简历表：</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+				<div id="tab-1" class="tab-pane fade in  active">
+			<a class="btn btn-white btn-sm" onclick="addRow('#rlzyResumeList', rlzyResumeRowIdx, rlzyResumeTpl);rlzyResumeRowIdx = rlzyResumeRowIdx + 1;" title="新增"><i class="fa fa-plus"></i> 新增</a>
+			<table class="table table-striped table-bordered table-condensed">
+				<thead>
+					<tr>
+						<th class="hide"></th>
+						<th>名称</th>
+						<th>开始时间</th>
+						<th>结束时间</th>
+						<th>专业(行业）</th>
+						<th>描述</th>
+						<th>学历</th>
+						<th>培训课程</th>
+						<th>获得时间</th>
+						<th>类型(教育，工作经验等）</th>
+						<th width="10">&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody id="rlzyResumeList">
+				</tbody>
+			</table>
+			<script type="text/template" id="rlzyResumeTpl">//<!--
+				<tr id="rlzyResumeList{{idx}}">
+					<td class="hide">
+						<input id="rlzyResumeList{{idx}}_id" name="rlzyResumeList[{{idx}}].id" type="hidden" value="{{row.id}}"/>
+						<input id="rlzyResumeList{{idx}}_delFlag" name="rlzyResumeList[{{idx}}].delFlag" type="hidden" value="0"/>
+					</td>
+					
+					<td>
+						<input id="rlzyResumeList{{idx}}_name" name="rlzyResumeList[{{idx}}].name" type="text" value="{{row.name}}"    class="form-control "/>
+					</td>
+					
+					
+					<td>
+						<input id="rlzyResumeList{{idx}}_startdate" name="rlzyResumeList[{{idx}}].startdate" type="text" value="{{row.startdate}}"    class="form-control "/>
+					</td>
+					
+					
+					<td>
+						<input id="rlzyResumeList{{idx}}_enddate" name="rlzyResumeList[{{idx}}].enddate" type="text" value="{{row.enddate}}"    class="form-control "/>
+					</td>
+					
+					
+					<td>
+						<input id="rlzyResumeList{{idx}}_major" name="rlzyResumeList[{{idx}}].major" type="text" value="{{row.major}}"    class="form-control "/>
+					</td>
+					
+					
+					<td>
+						<input id="rlzyResumeList{{idx}}_describe" name="rlzyResumeList[{{idx}}].describe" type="text" value="{{row.describe}}"    class="form-control "/>
+					</td>
+					
+					
+					<td>
+						<input id="rlzyResumeList{{idx}}_education" name="rlzyResumeList[{{idx}}].education" type="text" value="{{row.education}}"    class="form-control "/>
+					</td>
+					
+					
+					<td>
+						<input id="rlzyResumeList{{idx}}_course" name="rlzyResumeList[{{idx}}].course" type="text" value="{{row.course}}"    class="form-control "/>
+					</td>
+					
+					
+					<td>
+						<input id="rlzyResumeList{{idx}}_gaindate" name="rlzyResumeList[{{idx}}].gaindate" type="text" value="{{row.gaindate}}"    class="form-control "/>
+					</td>
+					
+					
+					<td>
+						<input id="rlzyResumeList{{idx}}_type" name="rlzyResumeList[{{idx}}].type" type="text" value="{{row.type}}"    class="form-control "/>
+					</td>
+					
+					<td class="text-center" width="10">
+						{{#delBtn}}<span class="close" onclick="delRow(this, '#rlzyResumeList{{idx}}')" title="删除">&times;</span>{{/delBtn}}
+					</td>
+				</tr>//-->
+			</script>
+			<script type="text/javascript">
+				var rlzyResumeRowIdx = 0, rlzyResumeTpl = $("#rlzyResumeTpl").html().replace(/(\/\/\<!\-\-)|(\/\/\-\->)/g,"");
+				$(document).ready(function() {
+					var data = ${fns:toJson(rlzyUser.rlzyResumeList)};
+					for (var i=0; i<data.length; i++){
+						addRow('#rlzyResumeList', rlzyResumeRowIdx, rlzyResumeTpl, data[i]);
+						rlzyResumeRowIdx = rlzyResumeRowIdx + 1;
+					}
+				});
+			</script>
+			</div>
+		</div>
+		</div>
+		</form:form>
+</body>
+</html>

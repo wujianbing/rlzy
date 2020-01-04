@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.jeeplus.modules.portal.mapper.RlzyPositionMapper">
+
+	<sql id="rlzyPositionColumns">
+		a.id AS "id",
+		a.companyid AS "companyid",
+		a.positiontype AS "positiontype",
+		a.positionname AS "positionname",
+		a.workingplace AS "workingplace",
+		a.salaryrange AS "salaryrange",
+		a.education AS "education",
+		a.workingage AS "workingage",
+		a.recruitnumber AS "recruitnumber",
+		a.welfaretype AS "welfaretype",
+		a.contacts AS "contacts",
+		a.phone AS "phone",
+		a.positiondescription AS "positiondescription",
+		a.postflag AS "postflag",
+		a.remarks AS "remarks",
+		a.agerequirement AS "agerequirement",
+		a.num AS "num",
+		a.is_top AS "isTop",
+		a.spe3 AS "spe3",
+		a.line AS "line",
+		a.del_flag AS "delFlag",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate"
+	</sql>
+	
+	<sql id="rlzyPositionsColumns">
+		a.id AS "id",
+		a.companyid AS "companyid",
+		a.positiontype AS "positiontype",
+		a.positionname AS "positionname",
+		a.workingplace AS "workingplace",
+		a.salaryrange AS "salaryrange",
+		a.education AS "education",
+		a.workingage AS "workingage",
+		a.recruitnumber AS "recruitnumber",
+		a.welfaretype AS "welfaretype",
+		a.contacts AS "contacts",
+		a.phone AS "phone",
+		a.positiondescription AS "positiondescription",
+		a.postflag AS "postflag",
+		a.remarks AS "remarks",
+		a.agerequirement AS "agerequirement",
+		a.num AS "num",
+		a.is_top AS "isTop",
+		a.spe3 AS "spe3",
+		a.line AS "line",
+		a.del_flag AS "delFlag",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
+		b.companyname AS "companyname",
+		b.companywebsite AS "companywebsite",
+		b.industry AS "industry",
+		b.companyscale AS "companyscale",
+		b.email AS "email"
+	</sql>
+
+	<sql id="rlzyPositionJoins">
+	
+	</sql>
+
+	<select id="findNewList" resultType="RlzyPosition">
+		select
+		<include refid="rlzyPositionsColumns" />
+		FROM 
+		rlzy_position a LEFT JOIN rlzy_company b ON b.id = a.companyid
+		<where>
+			1=1
+			AND a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="postflag != null and postflag != ''">
+				AND a.postflag = #{postflag}
+			</if>
+			<if test="salaryrange != null and salaryrange != ''">
+				AND a.salaryrange = #{salaryrange}
+			</if>
+			<if test="industry != null and industry != ''">
+				AND b.industry = #{industry}
+			</if>
+			<if test="companyscale != null and companyscale != ''">
+				AND b.companyscale = #{companyscale}
+			</if>
+			<if test="positiontype != null and positiontype != ''">
+				AND a.positiontype = #{positiontype}
+			</if>
+			<if test="education != null and education != ''">
+				AND a.education = #{education}
+			</if>
+			<if test="line != null and line != ''">
+				AND a.line = #{line}
+			</if>
+			<if test="isTop != null and isTop != ''">
+				AND a.is_top = #{isTop}
+			</if>
+			<if test="utime != null and utime != ''">
+				AND a.update_date >= DATE_SUB( CURDATE(), INTERVAL #{utime} DAY )
+			</if>
+			ORDER BY a.create_date DESC,a.is_top DESC
+		</where>
+	</select>
+
+	<select id="findDescList" resultType="RlzyPosition">
+		select
+		<include refid="rlzyPositionsColumns" />
+		From
+		rlzy_position a LEFT JOIN rlzy_company b ON b.id = a.companyid
+
+		WHERE postflag=1 AND line = 1 ORDER BY createDate DESC
+	</select>
+	
+	<select id="findDescsList" resultType="RlzyPosition">
+		select
+		<include refid="rlzyPositionsColumns" />
+		From
+		rlzy_position a LEFT JOIN rlzy_company b ON b.id = a.companyid
+
+		WHERE 
+		postflag=0 
+		AND line = 1
+		ORDER BY createDate DESC
+	</select>
+	
+	<select id="findListCount" resultType="int" >
+		SELECT 
+			count(*)
+		FROM rlzy_position a LEFT JOIN rlzy_relation b ON a.id = b.positionid
+		<where>
+		b.userid = #{userid}
+		and
+		b.positionid =#{id}
+		and
+		b.collectionstate='1'
+		</where>
+	</select>
+	
+	<select id="findListCounts" resultType="int" >
+		SELECT 
+			count(*)
+		FROM rlzy_position a LEFT JOIN rlzy_relation b ON a.id = b.positionid
+		<where>
+		b.userid = #{userid}
+		and
+		b.positionid =#{id}
+		and
+		b.deliverystate='1'
+		</where>
+	</select>
+	
+	<select id="get" resultType="RlzyPosition">
+		SELECT
+		<include refid="rlzyPositionColumns" />
+		FROM rlzy_position a
+		<include refid="rlzyPositionJoins" />
+		WHERE a.id = #{id}
+	</select>
+
+	<select id="getRlzyPosition" resultType="RlzyPosition">
+		SELECT
+		<include refid="rlzyPositionsColumns" />
+		from rlzy_position a LEFT JOIN rlzy_company b ON b.id = a.companyid
+		WHERE a.id = #{id}
+	</select>
+
+	<select id="findList" resultType="RlzyPosition">
+		SELECT
+		<include refid="rlzyPositionColumns" />
+		FROM rlzy_position a
+		<include refid="rlzyPositionJoins" />
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="rlzyCompany != null and rlzyCompany != ''">
+				AND a.companyid = #{rlzyCompany.id}
+			</if>
+			<if test="companyid != null and companyid != ''">
+				AND a.companyid = #{companyid}
+			</if>
+			<if test="line != null and line != ''">
+				AND a.line = #{line}
+			</if>
+		</where>
+		<choose>
+			<when
+				test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date DESC
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findAllList" resultType="RlzyPosition">
+		SELECT
+		<include refid="rlzyPositionColumns" />
+		FROM rlzy_position a
+		<include refid="rlzyPositionJoins" />
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>
+		<choose>
+			<when
+				test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+
+	<insert id="insert">
+		INSERT INTO rlzy_position(
+		id,
+		companyid,
+		positiontype,
+		positionname,
+		workingplace,
+		salaryrange,
+		education,
+		workingage,
+		recruitnumber,
+		welfaretype,
+		contacts,
+		phone,
+		positiondescription,
+		postflag,
+		remarks,
+		agerequirement,
+		num,
+		is_top,
+		spe3,
+		line,
+		del_flag,
+		create_date,
+		update_date
+		) VALUES (
+		#{id},
+		#{companyid},
+		#{positiontype},
+		#{positionname},
+		#{workingplace},
+		#{salaryrange},
+		#{education},
+		#{workingage},
+		#{recruitnumber},
+		#{welfaretype},
+		#{contacts},
+		#{phone},
+		#{positiondescription},
+		#{postflag},
+		#{remarks},
+		#{agerequirement},
+		#{num},
+		#{isTop},
+		#{spe3},
+		#{line},
+		#{delFlag},
+		#{createDate},
+		#{updateDate}
+		)
+	</insert>
+
+	<update id="update">
+		UPDATE rlzy_position SET
+		companyid = #{companyid},
+		positiontype = #{positiontype},
+		positionname = #{positionname},
+		workingplace = #{workingplace},
+		salaryrange = #{salaryrange},
+		education = #{education},
+		workingage = #{workingage},
+		recruitnumber = #{recruitnumber},
+		welfaretype = #{welfaretype},
+		contacts = #{contacts},
+		phone = #{phone},
+		positiondescription = #{positiondescription},
+		postflag = #{postflag},
+		remarks = #{remarks},
+		agerequirement = #{agerequirement},
+		num = #{num},
+		is_top = #{isTop},
+		spe3 = #{spe3},
+		line = #{line},
+		update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+
+
+	<!--物理删除 -->
+	<update id="delete">
+		DELETE FROM rlzy_position
+	</update>
+
+	<!--逻辑删除 -->
+	<update id="deleteByLogic">
+		UPDATE rlzy_position SET
+		del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+
+
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="RlzyPosition"
+		statementType="STATEMENT">
+		select * FROM rlzy_position where ${propertyName} =
+		'${value}'
+	</select>
+	
+	<select id="findPositionListById" resultType="RlzyPosition">
+		select id,positionname from rlzy_position WHERE companyid=#{companyid}
+	
+	</select>
+
+</mapper>

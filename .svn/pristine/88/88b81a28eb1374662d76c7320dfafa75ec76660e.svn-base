@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.portal.mapper.RlzyUserMapper">
+    
+	<sql id="rlzyUserColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.nick_name AS "nickName",
+		a.password AS "password",
+		a.sex AS "sex",
+		a.birthday AS "birthday",
+		a.age AS "age",
+		a.photo AS "photo",
+		a.ismatch AS "ismatch",
+		a.nativeplace AS "nativeplace",
+		a.liveplace AS "liveplace",
+		a.education AS "education",
+		a.workingage AS "workingage",
+		a.email AS "email",
+		a.qq AS "qq",
+		a.phone AS "phone",
+		a.webchat AS "webchat",
+		a.currentstate AS "currentstate",
+		a.worknature AS "worknature",
+		a.desiredindustry AS "desiredindustry",
+		a.desiredposition AS "desiredposition",
+		a.salary AS "salary",
+		a.selfdescription AS "selfdescription",
+		a.workplace AS "workplace",
+		a.ispublic AS "ispublic",
+		a.deliverytimes AS "deliverytimes",
+		a.resumedoc AS "resumedoc",
+		a.cpflag AS "cpflag",
+		a.del_flag AS "delFlag",
+		a.remarks AS "remarks",
+		a.major AS "major",
+		a.spe2 AS "spe2",
+		a.spe3 AS "spe3",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate"
+	</sql>
+	<sql id="rlzyUserJoins">
+		
+	</sql>
+	<select id="findListCount" resultType="int" >
+		SELECT 
+			count(*)
+		FROM rlzy_user a LEFT JOIN rlzy_relation b ON a.id = b.userid
+		<where>
+		b.companyid = #{companyid}
+		and
+		b.userid =#{userid}
+		and
+		b.companycollectstate='1'
+		</where>
+	</select>
+	
+	<select id="findListCounts" resultType="int" >
+		SELECT 
+		count(*)
+		FROM rlzy_user a LEFT JOIN rlzy_relation b ON a.id = b.userid
+		<where>
+		b.companyid = #{companyid}
+		and
+		b.userid =#{userid}
+		and
+		b.invite='1'
+		</where>
+	</select>
+	
+	
+	<select id="get" resultType="RlzyUser" >
+		SELECT 
+			<include refid="rlzyUserColumns"/>
+		FROM rlzy_user a
+		<include refid="rlzyUserJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RlzyUser" >
+		SELECT 
+			<include refid="rlzyUserColumns"/>
+		FROM rlzy_user a
+		<include refid="rlzyUserJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="workingage != null and workingage != ''">
+				AND a.workingage = #{workingage}
+			</if>
+			<if test="currentstate != null and currentstate != ''">
+				AND a.currentstate = #{currentstate}
+			</if>
+			<if test="worknature != null and worknature != ''">
+				AND a.worknature = #{worknature}
+			</if>
+			<if test="sex != null and sex != ''">
+				AND a.sex = #{sex}
+			</if>
+			<if test="education != null and education != ''">
+				AND a.education = #{education}
+			</if>
+			<if test="major != null and major != ''">
+				AND a.major = #{major}
+			</if>
+			<if test="salary != null and salary != ''">
+				AND a.salary = #{salary}
+			</if>
+			<if test="industry != null and industry != ''">
+				AND a.desiredindustry = #{industry}
+			</if>
+			<if test="phone != null and phone != ''">
+				AND a.phone = #{phone}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RlzyUser" >
+		SELECT 
+			<include refid="rlzyUserColumns"/>
+		FROM rlzy_user a
+		<include refid="rlzyUserJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rlzy_user(
+			id,
+			name,
+			nick_name,
+			password,
+			sex,
+			birthday,
+			age,
+			photo,
+			ismatch,
+			nativeplace,
+			liveplace,
+			education,
+			workingage,
+			email,
+			qq,
+			phone,
+			webchat,
+			currentstate,
+			worknature,
+			desiredindustry,
+			desiredposition,
+			salary,
+			selfdescription,
+			workplace,
+			ispublic,
+			deliverytimes,
+			resumedoc,
+			cpflag,
+			del_flag,
+			remarks,
+			major,
+			spe2,
+			spe3,
+			create_date,
+			update_date
+		) VALUES (
+			#{id},
+			#{name},
+			#{nickName},
+			#{password},
+			#{sex},
+			#{birthday},
+			#{age},
+			#{photo},
+			#{ismatch},
+			#{nativeplace},
+			#{liveplace},
+			#{education},
+			#{workingage},
+			#{email},
+			#{qq},
+			#{phone},
+			#{webchat},
+			#{currentstate},
+			#{worknature},
+			#{desiredindustry},
+			#{desiredposition},
+			#{salary},
+			#{selfdescription},
+			#{workplace},
+			#{ispublic},
+			#{deliverytimes},
+			#{resumedoc},
+			#{cpflag},
+			#{delFlag},
+			#{remarks},
+			#{major},
+			#{spe2},
+			#{spe3},
+			#{createDate},
+			#{updateDate}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rlzy_user SET 	
+			name = #{name},
+			nick_name=#{nickName},
+			password=#{password},
+			sex = #{sex},
+			birthday = #{birthday},
+			age = #{age},
+			photo = #{photo},
+			ismatch = #{ismatch},
+			nativeplace = #{nativeplace},
+			liveplace = #{liveplace},
+			education = #{education},
+			workingage = #{workingage},
+			email = #{email},
+			qq = #{qq},
+			phone = #{phone},
+			webchat = #{webchat},
+			currentstate = #{currentstate},
+			worknature = #{worknature},
+			desiredindustry = #{desiredindustry},
+			desiredposition = #{desiredposition},
+			salary = #{salary},
+			selfdescription = #{selfdescription},
+			workplace = #{workplace},
+			ispublic = #{ispublic},
+			deliverytimes = #{deliverytimes},
+			resumedoc = #{resumedoc},
+			cpflag = #{cpflag},
+			remarks = #{remarks},
+			major = #{major},
+			spe2 = #{spe2},
+			spe3 = #{spe3},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM rlzy_user
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE rlzy_user SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="RlzyUser" statementType="STATEMENT">
+		select * FROM rlzy_user  where ${propertyName} = '${value}'
+	</select>
+	
+	<!--loginPasswordCompare  -->
+	<select id="loginPasswordCompare" resultType="RlzyUser" >
+		SELECT 
+			<include refid="rlzyUserColumns"/>
+		FROM rlzy_user a
+			<include refid="rlzyUserJoins"/>
+		WHERE
+			a.password = #{password}
+			<if test="name != '' and name != null">
+			  AND a.name = #{name}
+			</if>
+			<if test="phone != '' and phone != null">
+			  AND a.phone = #{phone}
+			</if>
+	</select>
+	
+	<!-- <select id="findListBySelect" resultType="RlzyUser" parameter="RlzyUser">
+		select * 
+			from 
+		rlzy_user
+			where
+		1=1
+		<dynamic>
+			<isNotEmpty prepend="AND" property="salary">
+				salary  = #salary#
+		    </isNotEmpty>
+		</dynamic>
+		<dynamic>
+			<isNotEmpty prepend="AND" property="sex">
+				sex  = #sex#
+		    </isNotEmpty>
+		</dynamic>
+		<dynamic>
+			<isNotEmpty prepend="AND" property="worknature">
+				worknature  = #worknature#
+		    </isNotEmpty>
+		</dynamic>
+		<dynamic>
+			<isNotEmpty prepend="AND" property="education">
+				education  = #education#
+		    </isNotEmpty>
+		</dynamic>
+		<dynamic>
+			<isNotEmpty prepend="AND" property="workingage">
+				workingage  = #workingage#
+		    </isNotEmpty>
+		</dynamic>
+		<dynamic>
+			<isNotEmpty prepend="AND" property="salary">
+				salary  = #salary#
+		    </isNotEmpty>
+		</dynamic>
+	</select> -->
+	
+</mapper>

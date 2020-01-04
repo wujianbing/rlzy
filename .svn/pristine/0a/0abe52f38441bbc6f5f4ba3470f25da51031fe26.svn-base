@@ -1,0 +1,13 @@
+package com.jeeplus.modules.home.pay.wxpay;
+
+public class WxConfig {
+	
+	public final static String APPID="";
+	public final static String MCH_ID="";
+	public final static String KEY="";
+	public final static String TRADE_TYPE = "NATIVE"; 
+	public final static String spbill_create_ip = "127.0.0.1";
+	public final static String body="VIP_PAY";
+	public final static String notify_url="";
+	public final static String URL="https://api.mch.weixin.qq.com/pay/unifiedorder";
+}

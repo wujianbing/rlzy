@@ -1,0 +1,423 @@
+.humanbox {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+h5 {
+	width: 100%;
+	margin: 0;
+	text-align: center;
+	padding: 0;
+	font-size: 24px;
+	font-weight: bold;
+	height: 4rem;
+	line-height: 4rem;
+	color:#4b96cf;
+}
+.processReg {
+	width: 100%;
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0;
+	font-size: 30px;
+	font-weight: bold;
+	height: 8rem;
+	color:#999999;
+}
+.processReg span {
+	display: inline-block;
+}
+.ringnum{
+	width: 50px;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+	border:1px solid #cccc;
+	border-radius: 50%;
+}
+.activeRing{
+	background: #4b96cf;
+	color:#fff;
+	border: 1px solid #4b96cf;
+}
+.lineSpan{
+	width: 13.3rem;
+	border: 1px solid #cccccc;
+	margin: 0 20px;
+}
+/*中间注册流程*/
+.yuqbottom {
+	width: 1200px;
+	margin: 2rem auto;
+	padding: 2rem 0;
+	min-height: 66%;
+	background: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	/*position: absolute;   
+    top: 17%;   
+    left: 16%;   
+*/    z-index: 999;
+}
+
+.asp{
+	width: 100%;
+    height: auto;
+    
+}
+.yuqbottom:after{
+    content: "";
+    height: 0;
+    clear: both;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+}
+.formname{
+	width: 100%;
+	height: 5rem;
+	line-height:5rem;
+	font-size: 16px;
+}
+.leftnum{
+	display: inline-block;
+	width:10rem;
+	text-align: center;
+	white-space: nowrap;
+}
+.formname{
+	text-align: center;
+	color: #666666;
+}
+.formname input{
+	width: 28rem;
+	height: 3.5rem;
+	font-size: 16px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	text-indent: 2rem;
+	outline: none;
+	
+}
+.btnone{
+	width: 100%;
+	text-align: center;
+}
+.ljzc{
+	width: 28rem;
+	margin-top: 2rem;
+	margin-left: 10rem;
+	height: 3.5rem;
+	line-height: 3.5rem;
+	font-size: 16px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	outline: none;
+	background:#4b96cf;
+	border: 1px solid #4b96cf;
+	outline: none;
+	color: #fff;
+	margin-bottom: 1rem;
+}
+.worduser2{
+	text-decoration: underline;
+	text-align: center;
+	font-size: 14px;
+	color: #9999;
+	padding-left: 10rem;
+}
+#yzcode{
+	width: 16rem;
+}
+#yzm{
+	display: inline-block;
+	width: 10rem;
+	margin-left: 2rem;
+	text-align: center;
+	height: 3.5rem;
+	line-height: 3.5rem;
+	border-radius:5px ;
+	color:#4b96cf;
+	font-weight: normal;
+	border: 1px solid #4b96cf;
+	
+}
+.regnum2{
+	width: 100%;
+}
+.regnum3{
+	width: 100%;
+	text-align: center;
+	
+	padding: 1.5rem;
+}
+
+.biaot {
+    width: 85%;
+    margin: 2rem auto;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.name1 {
+    font-size: 20px;
+    color: #615f5f;
+    white-space: nowrap;
+    font-weight: 550;
+}
+.name2 {
+    width: 100%;
+    display: inline-block;
+    border-top: 1px #999 dotted;
+}
+.forminfo{
+	width: 100%;
+	padding: 0 3rem;
+	
+}
+.webLinkWork {
+	margin-top: 2rem;
+	width: 100%;
+	height: 7rem;
+	background: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 14px;
+	color: #666666;
+}
+
+.webLinkWork a {
+	cursor: pointer;
+	text-align: none;
+	font-size: 14px;
+	color: #666666;
+}
+
+.login {
+	cursor: pointer;
+	text-align: none;
+}
+
+.registered {
+	cursor: pointer;
+	text-align: none;
+}
+
+.banquan {
+	width: 100%;
+	padding: 5px 0;
+	text-align: center;
+	color: #666666;
+	background: #cccccc;
+	font-size: 12px;
+}
+
+.btn{
+	padding: 5px 20px;
+	color: #fff;
+	background:#4b96cf;
+	font-size: 14px;
+	
+}
+.m-top{
+	height: 3rem;
+}
+.userworda{
+	text-indent: 2em;
+	font-size: 12px;
+	
+}
+.input-group {
+    border: none;
+ /*   background: #fff;*/
+    padding: 0;
+    margin: 0;
+    width: 63%;
+    margin: 0 auto;
+    /* height: 4rem; */
+    padding: 1rem;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    height: 34px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: unset;
+  
+}
+input#fromProvince3 {
+	width: 49%;
+    border: none;
+    text-align: right;
+    outline: none;
+}
+input#fromProvince {
+    border: none;
+    width: 49%;
+    text-align: right;
+     outline: none;
+}
+input#fromCity {
+	width: 49%;
+    border: none;
+    text-align:left;
+     outline: none;
+}
+input#fromCity4 {
+	width: 49%;
+    border: none;
+    text-align: left;
+     outline: none;
+}
+.rowtj {
+    width: 100%;
+    height: 3rem;
+    text-align: center;
+    line-height: 3rem;
+    margin-top: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.active23 {
+    width: 18.2rem;
+    border: none;
+    border-radius: 7px;
+    height: 3rem;
+    background: #4b96cf;
+    color: #fff;
+    font-size: 16px;
+    outline: none;
+}
+span.iconfont.icon-zhengpinbaozhangduigou {
+    font-size: 65px;
+    color: #4b96cf;
+}
+.btnq {
+    font-size: 28px;
+    color: #4b96cf;
+    margin-bottom: 11px;
+}
+p.p1 {
+    font-size: 14px;
+    color: #666;
+}
+p.p2 {
+    font-size: 14px;
+    color: #999;
+}
+.input-key {
+    border-radius: 19px;
+    font-size: 13px;
+    padding: 0 10px 0 15px;
+    width: 220px;
+    background: #f1f1f1;
+}
+ul.nav.nav-tabs {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 0;
+    padding: 22px 0;
+}
+.topone {
+    display: flex;
+    width: 80%;
+    margin: 0 auto;
+    justify-content: space-between;
+}
+.topwe{
+	width: 80%;
+	margin: 0 auto;
+}
+
+.sign{
+	color: red;
+}
+.layui-form-label {
+    float: left;
+    display: block;
+    padding: 9px 15px;
+    width: 83px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: right;
+    font-size: 15px;
+    color: #666;
+}
+.layui-input-block {
+    margin-left: 117px;
+    min-height: 36px;
+    width: 300px;
+}
+.layui-btn {
+    display: inline-block;
+    height: 38px;
+    line-height: 38px;
+    padding: 0 18px;
+    background-color: #4b96cf;
+    color: #fff;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 16px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
+.layui-input, .layui-textarea {
+    display: block;
+    width: 100%;
+    padding-left: 10px;
+    font-size: 15px;
+    color: #666;
+}
+.biaot:nth-of-type(1){
+  margin-top: 0;	
+}
+.input-key {
+    border-radius: 19px;
+    font-size: 13px;
+    padding: 0 10px 0 15px;
+    width: 220px;
+    background: #f1f1f1;
+}
+.search-se {
+    position: absolute;
+    right: -33px;
+    top: 19px;
+    font-size: 23px;
+    color: #20a1e0;
+    cursor: pointer;
+}
+.layui-form-select dl dd.layui-this {
+    background-color: #4b96cf;
+    color: #fff;
+}
+.layui-form-radio * {
+    font-size: 14px;
+    color: #666;
+}
+.layui-form-item {
+    margin-bottom: 25px;
+    clear: both;
+    *zoom: 1;
+}
+._citys {background: #fff; width: 450px; display: inline-block; border: 2px solid #eee; padding: 5px; position: relative; }
+._citys span { color: #56b4f8; height: 15px; width: 15px; line-height: 15px; text-align: center; border-radius: 3px; position: absolute; right: 10px; top: 10px; border: 1px solid #56b4f8; cursor: pointer; }
+._citys0 { width: 100%; height: 34px; display: inline-block; border-bottom: 2px solid #56b4f8; padding: 0; margin: 0; }
+._citys0 li { display: inline-block; line-height: 34px; font-size: 15px; color: #888; width: 80px; text-align: center; cursor: pointer; }
+.citySel { background-color: #56b4f8; color: #fff !important; }
+._citys1 { width: 100%; display: inline-block; padding: 10px 0; }
+._citys1 a { width: 83px; height: 35px; display: inline-block; background-color: #f5f5f5; color: #666; margin-left: 6px; margin-top: 3px; line-height: 35px; text-align: center; cursor: pointer; font-size: 13px; overflow: hidden; }
+._citys1 a:hover { color: #fff; background-color: #56b4f8; }
+.AreaS { background-color: #56b4f8 !important; color: #fff !important; }

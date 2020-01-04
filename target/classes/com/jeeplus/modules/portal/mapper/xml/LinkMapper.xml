@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.portal.mapper.LinkMapper">
+    
+	<sql id="linkColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.url AS "url",
+		a.pic AS "pic",
+		a.sort AS "sort",
+		a.status AS "status",
+		a.create_date AS "createDate",
+		a.create_by AS "createBy.id",
+		a.update_date AS "updateDate",
+		a.update_by AS "updateBy.id",
+		a.remarks AS "remarks",
+		a.phone AS "phone",
+		a.emile AS "emile",
+		(SELECT u.name FROM sys_user u WHERE u.id = a.create_by) AS "createBy.name",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="linkJoins">
+		
+	</sql>
+	
+    
+	<select id="get" resultType="Link" >
+		SELECT 
+			<include refid="linkColumns"/>
+		FROM p_link a
+		<include refid="linkJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Link" >
+		SELECT 
+			<include refid="linkColumns"/>
+		FROM p_link a
+		<include refid="linkJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="url != null and url != ''">
+				AND a.url LIKE 
+					<if test="dbName == 'oracle'">'%'||#{url}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{url}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{url},'%')</if>
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Link" >
+		SELECT 
+			<include refid="linkColumns"/>
+		FROM p_link a
+		<include refid="linkJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO p_link(
+			id,
+			name,
+			url,
+			pic,
+			sort,
+			status,
+			create_date,
+			create_by,
+			update_date,
+			update_by,
+			remarks,
+			phone,
+			emile,
+			del_flag
+		) VALUES (
+			#{id},
+			#{name},
+			#{url},
+			#{pic},
+			#{sort},
+			#{status},
+			#{createDate},
+			#{createBy.id},
+			#{updateDate},
+			#{updateBy.id},
+			#{remarks},
+			#{phone},
+			#{emile},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE p_link SET 	
+			name = #{name},
+			url = #{url},
+			pic = #{pic},
+			sort = #{sort},
+			status = #{status},
+			update_date = #{updateDate},
+			update_by = #{updateBy.id},
+			remarks = #{remarks},
+			phone = #{phone},
+			emile = #{emile}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM p_link
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE p_link SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="Link" statementType="STATEMENT">
+		select * FROM p_link  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

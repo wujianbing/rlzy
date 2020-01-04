@@ -1,0 +1,221 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/webpage/include/taglib.jsp"%>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title>注册</title>
+		<link rel="shortcut icon" href="${ctxStatic }/rlzy/favicon.ico"/>
+		<link rel="bookmark" href="${ctxStatic }/rlzy/favicon.ico"/>
+		<link rel="stylesheet" href="${ctxStatic }/rlzy/css/common/layui-v2.5.5/layui/css/layui.css">
+		<link rel="stylesheet" href="${ctxStatic }/rlzy/css/iconfont2.css" />
+		<link rel="stylesheet" href="${ctxStatic }/rlzy/css/my-modal.css" />
+		<link rel="stylesheet" href="${ctxStatic }/rlzy/css/Registeredcomment.css" />
+		<style type="text/css">
+* {
+	padding: 0;
+	margin: 0;
+}
+
+.yuqbottom {
+	margin: 2rem auto 1rem;
+	display: block;
+}
+
+.
+h4 {
+	width: 100%;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	font-size: 24px;
+	color: #4b96cf;
+	font-weight: bold;
+}
+
+.roal {
+	margin-top: 2rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.roalOne {
+	width: 358px;
+	height: 448px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.roalOne:hover {
+	border-radius: 10px;
+	box-shadow: 0 0 10px #ccc;
+	border: 1px solid #4b96cf;
+}
+
+.logo2 {
+	margin: 2rem auto;
+	width: 160px;
+	height: 160px;
+	border: 2px solid #cccccc;
+	text-align: center;
+	line-height: 160px;
+	border-radius: 50%;
+}
+
+.titlelogo {
+	font-size: 80px;
+	color: #4b96cf;
+}
+
+i.iconfont.icon-qiye-A.titlelogo {
+	font-weight: 600;
+}
+
+i.iconfont.icon-shoucang1 {
+	font-size: 24px;
+	color: #ffe161;
+}
+
+h5 {
+	font-size: 24px;
+	color: #666;
+	font-weight: bold;
+	height: 40px;
+	margin-bottom: 20px;
+}
+
+.h6 {
+	height: 35px;
+	line-height: 35px;
+	color: #666666;
+	font-size: 16px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	vertical-align: middle;
+}
+</style>
+	</head>
+	<body>
+		<div class="yuqbottom">
+		<input type = 'hidden' id = 'url' name = 'url' value = '${rlzyPath}'></input>
+			<h4>请选择注册类型</h4>
+		<div class="roal">
+		<a href="${rlzyPath}/company/register">
+				<div class="roalOne" >
+				<!--上面的logo-->
+				<div class="logo2">
+					<i class="iconfont titlelogo icon-qiyegongchangjianzhu "></i>  
+				</div>
+				<h5>企业注册</h5>
+				<div  class="title" >
+					<div class="h6"><i class="iconfont icon-shoucang1"></i>&ensp;发布招聘信息</div>
+					<div class="h6"><i class="iconfont icon-shoucang1"></i>&ensp;收取简历投递</div>
+					<div class="h6"><i class="iconfont icon-shoucang1"></i>&ensp;多种职位分享</div>
+				</div>
+			</div>
+		</a>	
+		<a href="${rlzyPath}/user/register">
+			<div class="roalOne" >
+				<!--上面的logo-->
+				<div class="logo2">
+					<i class="iconfont  icon-geren titlelogo" ></i>  
+				</div>
+				<h5>个人注册</h5>
+				<div class="title">
+					<div class="h6"><i class="iconfont icon-shoucang1"></i>&ensp;免费创建简历</div>
+					<div class="h6"><i class="iconfont icon-shoucang1"></i>&ensp;海量职位选择</div>
+					<div class="h6"><i class="iconfont icon-shoucang1"></i>&ensp;快速反馈入职</div>
+				</div>
+			</div>
+		</a>
+		<a href="${rlzyPath}/company/register">
+			<div class="roalOne" >
+				<!--上面的logo-->
+				<div class="logo2">
+					<i class="iconfont icon-qiye-A titlelogo" ></i>   
+				</div>
+				<h5>服务企业注册</h5>
+				<div class="title">
+					<div class="h6"><i class="iconfont icon-shoucang1"></i>&ensp;法律服务支持</div>
+					<div class="h6"><i class="iconfont icon-shoucang1"></i>&ensp;财务服务支持</div>
+					<div class="h6"><i class="iconfont icon-shoucang1"></i>&ensp;其他服务支持</div>
+				</div>
+			</div>
+			
+		</div>
+		</a>
+		</div>
+		<!--下面的角色选择-->
+		<div class="m-modal" style="display: none;">
+			<div class="m-modal-dialog">
+				<div class="m-top">
+					<h4 class="m-modal-title">
+					 温馨提示
+				</h4>
+					<span class="m-modal-close">&times;</span>
+				</div>
+				<!--模态框的简历基本信息-->
+				<div class="m-middle">
+					<p class="zcnmae"><b>企业注册提示</b></p>
+				<div class="titlecontent">
+					<p class="zxnmae">1、填写企业基本信息</p>
+					<p class="pname">（1）企业名称</p>
+					企业名称项的填写长度为6～100个字。请将您企业营业执照上的公司名称填写在此处，以方便我们的审核，同时也利于求职者对企业资料的区分。 同时，每个企业名称均对应一个企业招聘会员账号，注册成功后，系统将默认您注册时填写的企业名称为发布职位信息时的名称，该名称原则上不允许修改，因此请您务必认真填写。 如确实因某些特殊原因需要修改发布职位时的企业名称，可与我们的客服部联系（0769-22882222），由我们的工作人员帮您处理。
+					<p class="pname">（1）营业执照的要求</p>
+					 1、提交的证件必须为彩色原件电子版（数码相机拍摄件），证件图片涂改后无效，证件需在有效期以内，营业执照需要带有齐全的年检记录。 2、营业执照不符合审核规定的原因有以下6种 1、证件无效、虚假 (发现将冻结账户) 2、证件不完整或不清晰 3、非国家认可的机构 4、有效期不足三个月 5、无年检章 6、无工商局的章
+					<p class="pname">（2）联系方式</p>
+					1、为便于我们合作的开展，请填写您企业内招聘工作的负责人员。 2、联系电话是我们与您进行合作联系的最基本的联系方式，请您按照区号-电话号码-分机的样式进行填写，如没有分机则可以不填写分机一项。 3、请您填写您企业用于招聘的、真实有效的电子邮箱（例如：Jobhr@163.com）。电子邮箱是您顺畅享受我们提供的各项服务的基础性工具（如接收服务讯息、收取应聘简历等），因此请您注意准确填写。 因为企业使用的邮箱系统在字体（中文繁简体）上的差异性和兼容性问题，为保障您的邮件正常显示，请您注意选择邮件格式为简体或繁体。
+					<p class="pname">（3）账号信息</p>
+					（1）用户名 用户名由英文字母、数字或下划线等字符组成的，长度为6~20个字符，英文字母不区分大小写。 为保障企业的使用权益，避免同名带来的不必要问题，因此，注册时同一用户名只允许对应一个企业会员账号。如果系统提示“”，证明该用户名已对应了其它成功注册的的企业招聘会员账号，请您更换填写其它用户名。 （2）密码 密码由密码和确认密码组成，两者必须一致才能成功注册。 密码由英文字母、数字或下划线等字符组成，长度为6～20个字符，英文字母不区分大小写。 密码是您企业招聘会员账号的权益保护屏障，会保护您的账号安全，因此建议您不要设置过于简单的密码，尽量组合使用英文字母、数字、下划线，并定期更新。
+					<p class="pname">入住信息</p>
+					信息填写完成后需缴纳1,000￥平台入驻费，点击注册跳转至支付流程，我们会在1-3个工作日内完成入驻审核， 若审核不通过会退还您的入驻费用。
+				</div>
+			<p class="zcnmae"><b>服务企业注册提示</b></p>
+				<div class="titlecontent">
+					<p class="zxnmae">1、填写基本信息</p>
+					<p class="pname">（1）姓名</p>
+					填写长度为6～100个字。请将您企业营业执照上的公司名称填写在此处
+					<p class="pname">（1）营业执照的要求</p>
+					<br/> 1、提交的证件必须为彩色原件电子版（数码相机拍摄件），证件图片涂改后无效，证件需在有效期以内，营业执照需要带有齐全的年检记录。 2、营业执照不符合审核规定的原因有以下6种 1、证件无效、虚假 (发现将冻结账户) 2、证件不完整或不清晰 3、非国家认可的机构 4、有效期不足三个月 5、无年检章 6、无工商局的章
+					<p class="pname">（2）联系方式</p>
+					1、为便于我们合作的开展，请填写您企业内招聘工作的负责人员。 2、联系电话是我们与您进行合作联系的最基本的联系方式，请您按照区号-电话号码-分机的样式进行填写，如没有分机则可以不填写分机一项。 3、请您填写您企业用于招聘的、真实有效的电子邮箱（例如：Jobhr@163.com）。电子邮箱是您顺畅享受我们提供的各项服务的基础性工具（如接收服务讯息、收取应聘简历等），因此请您注意准确填写。 因为企业使用的邮箱系统在字体（中文繁简体）上的差异性和兼容性问题，为保障您的邮件正常显示，请您注意选择邮件格式为简体或繁体。
+					<p class="pname">（3）账号信息</p>
+					（1）用户名 用户名由英文字母、数字或下划线等字符组成的，长度为6~20个字符，英文字母不区分大小写。 为保障企业的使用权益，避免同名带来的不必要问题，因此，注册时同一用户名只允许对应一个企业会员账号。如果系统提示“”，证明该用户名已对应了其它成功注册的的企业招聘会员账号，请您更换填写其它用户名。 （2）密码 密码由密码和确认密码组成，两者必须一致才能成功注册。 密码由英文字母、数字或下划线等字符组成，长度为6～20个字符，英文字母不区分大小写。 密码是您企业招聘会员账号的权益保护屏障，会保护您的账号安全，因此建议您不要设置过于简单的密码，尽量组合使用英文字母、数字、下划线，并定期更新。
+					<p class="pname">入住信息</p>
+					信息填写完成后需缴纳1,000￥平台入驻费，点击注册跳转至支付流程，我们会在1-3个工作日内完成入驻审核， 若审核不通过会退还您的入驻费用。
+				</div>
+				<p class="zcnmae"><b>个人注册提示</b></p>
+				<div class="titlecontent">
+					<p class="zxnmae">1、填写基本信息</p>
+					<p class="pname">（1）姓名</p>
+					填写长度为6～100个字。请将您企业营业执照上的公司名称填写在此处
+					<p class="pname">（1）营业执照的要求</p>
+					 1、提交的证件必须为彩色原件电子版（数码相机拍摄件），证件图片涂改后无效，证件需在有效期以内，营业执照需要带有齐全的年检记录。 2、营业执照不符合审核规定的原因有以下6种 1、证件无效、虚假 (发现将冻结账户) 2、证件不完整或不清晰 3、非国家认可的机构 4、有效期不足三个月 5、无年检章 6、无工商局的章
+					<p class="pname">（2）联系方式</p>
+					1、为便于我们合作的开展，请填写您企业内招聘工作的负责人员。 2、联系电话是我们与您进行合作联系的最基本的联系方式，请您按照区号-电话号码-分机的样式进行填写，如没有分机则可以不填写分机一项。 3、请您填写您企业用于招聘的、真实有效的电子邮箱（例如：Jobhr@163.com）。电子邮箱是您顺畅享受我们提供的各项服务的基础性工具（如接收服务讯息、收取应聘简历等），因此请您注意准确填写。 因为企业使用的邮箱系统在字体（中文繁简体）上的差异性和兼容性问题，为保障您的邮件正常显示，请您注意选择邮件格式为简体或繁体。
+					<p class="pname">（3）账号信息</p>
+					（1）用户名 用户名由英文字母、数字或下划线等字符组成的，长度为6~20个字符，英文字母不区分大小写。 为保障企业的使用权益，避免同名带来的不必要问题，因此，注册时同一用户名只允许对应一个企业会员账号。如果系统提示“”，证明该用户名已对应了其它成功注册的的企业招聘会员账号，请您更换填写其它用户名。 （2）密码 密码由密码和确认密码组成，两者必须一致才能成功注册。 密码由英文字母、数字或下划线等字符组成，长度为6～20个字符，英文字母不区分大小写。 密码是您企业招聘会员账号的权益保护屏障，会保护您的账号安全，因此建议您不要设置过于简单的密码，尽量组合使用英文字母、数字、下划线，并定期更新。
+					<p class="pname">入住信息</p>
+					信息填写完成后需缴纳1,000￥平台入驻费，点击注册跳转至支付流程，我们会在1-3个工作日内完成入驻审核， 若审核不通过会退还您的入驻费用。
+				</div>
+				</div>
+			</div>
+		</div>
+		
+	</body>
+</html>
+<script src="${ctxStatic }/rlzy/js/jquery.min.js"></script>
+<script src="${ctxStatic }/rlzy/js/pages/nav.js"></script>
+<script src="${ctxStatic }/rlzy/js/jquery.my-modal.1.1.js"></script>
+<script src="${ctxStatic }/rlzy/css/common/layui-v2.5.5/layui/layui.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	var m1 = new MyModal.modal(function() {
+	});
+	m1.show()
+});
+</script>

@@ -1,0 +1,72 @@
+package com.jeeplus.modules.home.web;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.jeeplus.modules.portal.entity.RlzyPosition;
+import com.jeeplus.modules.portal.entity.RlzyRelation;
+import com.jeeplus.modules.portal.service.RlzyCompanyService;
+import com.jeeplus.modules.portal.service.RlzyPositionService;
+import com.jeeplus.modules.portal.service.RlzyRelationService;
+
+/**
+ * SubResume投递简历控制层
+ * 
+ * @author 胡林斐
+ * @Date 2019-11-21 14:46:34    
+ */
+@Controller
+@RequestMapping("/position")
+public class PositionController {
+	
+	@Autowired
+	RlzyCompanyService rlzyCompanyService;
+	
+	@Autowired
+	RlzyPositionService rlzyPositionService;
+	
+	@Autowired
+	RlzyRelationService rlzyRelationService;
+	
+
+	/**
+	 * 职位展示页面
+	 * @param model
+	 * @param rlzyPosition
+	 * @param rlzyCompany
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/PositionList")
+	public String PositionList(Model model,RlzyPosition rlzyPosition) {
+		List<RlzyPosition> rlzyPositionList = rlzyPositionService.findNewList();
+		model.addAttribute("rlzyPositionList",rlzyPositionList);
+		return "modules/home/findInfo";
+	}
+
+	/**
+	 * 申请职位
+	 * @param rlzyRelation
+	 * @param rlzyUser  
+	 * @param rlzyCompany
+	 * @return
+	 */
+	@RequestMapping("/ApplicationPosition")
+	public String ApplicationPosition(String id,String userid,String companyid) {
+		RlzyRelation rlzyRelations = new RlzyRelation();
+		rlzyRelations.setUserid(id);
+		rlzyRelations.setUserid(userid);
+		rlzyRelations.setUserid(companyid);
+		rlzyRelationService.save(rlzyRelations);
+		return "";
+	}
+	
+	
+	
+	
+	
+}

@@ -1,0 +1,574 @@
+package com.jeeplus.modules.home.web;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.jeeplus.common.config.Global;
+import com.jeeplus.common.utils.MyBeanUtils;
+import com.jeeplus.common.utils.CookieUtils;
+import com.jeeplus.modules.portal.entity.News;
+import com.jeeplus.modules.portal.entity.NewsModel;
+import com.jeeplus.modules.portal.entity.RlzyCompany;
+import com.jeeplus.modules.portal.entity.RlzyPosition;
+import com.jeeplus.modules.portal.entity.RlzyRelation;
+import com.jeeplus.modules.portal.entity.RlzyUser;
+import com.jeeplus.modules.portal.service.NewsService;
+import com.jeeplus.modules.portal.service.RlzyCompanyService;
+import com.jeeplus.modules.portal.service.RlzyPositionService;
+import com.jeeplus.modules.portal.service.RlzyRelationService;
+import com.jeeplus.modules.portal.service.RlzyUserService;
+import com.jeeplus.modules.sys.entity.DictValue;
+import com.jeeplus.modules.sys.utils.DictUtils;
+
+/**
+ * @author：赵斌
+ * @date 2019-11-15
+ * 
+ * */
+
+@Controller
+@RequestMapping("/company")
+public class CompanyController {
+	
+	@Autowired
+	RlzyCompanyService rlzyCompanyService;
+	
+	@Autowired
+	NewsService newsService;
+	
+	@Autowired
+	RlzyUserService rlzyUserService;
+	
+	@Autowired
+	RlzyPositionService rlzyPositionService;
+	
+	@Autowired
+	RlzyRelationService rlzyRelationService;
+	/**
+	 * 保存企业注册信息
+	 * 
+	 * @param request
+	 * @param rlzyCompany
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="saveCompany")
+    public String saveCompany(RlzyCompany rlzyCompany,HttpServletRequest request){
+		rlzyCompany.setCpflag("2");
+		rlzyCompanyService.save(rlzyCompany);
+		return "1";
+	}
+	
+	/**
+	 * 企业注册页面
+	 * @param rlzycompany
+	 * @param model
+	 * 
+	 * */
+	@RequestMapping("/register")
+	public String register(Model model,RlzyCompany rlzyCompany,String flag) {
+		return "modules/home/companyRegister";
+	}
+	
+	/**
+	 * 图片上传
+	 * 
+	 * */
+	@RequestMapping("/upload")
+	@ResponseBody
+	public String upload(MultipartFile file,HttpSession session) {
+		/* String phone = (String)session.getAttribute("tel") */;
+		String phone = "17395131041";
+	    String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+	    // 当前app根目录
+	    String rootPath = Global.getAttachmentDir()+phone+"/";
+	    // 需要上传的相对地址（application.properties中获取）
+	    String relativePath = "/img/";
+	    // 文件夹是否存在，不存在就创建
+	    String path =  UUID.randomUUID() + suffix;
+	    String url = Global.getAttachmentUrl()+phone+relativePath+ path;
+	    File dir = new File(rootPath+File.separator+relativePath+path);
+	    if (!dir.exists())
+			dir.mkdirs();
+	    try {
+	        file.transferTo(dir);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "";
+	    }
+	    return url.toString();
+		}
+	
+	/**
+	 * 企业管理页面
+	 * @param rlzycompany
+	 * @param model
+	 * 
+	 * */
+	@RequestMapping("/management")
+	public String management(Model model,RlzyCompany rlzyCompany,String flag) {
+		return "modules/home/companyManagement";
+	}
+	
+	/**
+	 * 首次进入
+	 * @param model
+	 * @param rlzycompany
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/companydetail")
+	public String personal(Model model,RlzyCompany rlzyCompany,HttpServletRequest request) {
+		//String phone = (String)session.getAttribute("phone");
+		/*
+		 * String company=CookieUtils.getCookie(request, "user"); JSONObject jsonObject
+		 * = JSON.parseObject(company); System.out.println(jsonObject.get("id"));
+		 */
+		String phone = "17395131041";
+		rlzyCompany.setTelephone(phone);
+		List<RlzyCompany> rlzyCompanyList = rlzyCompanyService.findList(rlzyCompany);
+		if(rlzyCompanyList.size() > 0) {
+			model.addAttribute("rlzyCompany",rlzyCompanyList.get(0));
+		}
+		return "modules/home/companyManagement";
+	}
+	
+	/**
+	 * 职位管理
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="offerManage")
+	public String offerManage(String firmId,Model model,HttpSession session) {
+			model.addAttribute("firmId", firmId);
+		return "/modules/home/company/offerManage";
+	}
+	
+	/**
+	 * 职位管理-数据接口
+	 * @param firmId
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="offerManageData")
+	public String offerManageData(String firmId) {
+		RlzyPosition rlzyPosition = new RlzyPosition();
+		rlzyPosition.setCompanyid(firmId);
+		List<RlzyPosition> rlzyPositionList = rlzyPositionService.findList(rlzyPosition);
+		StringBuffer jsonStr = new StringBuffer();
+		jsonStr.append("{\"code\":\"0\",");
+		jsonStr.append("\"msg\":\"0\",");
+		jsonStr.append("\"count\":\""+rlzyPositionList.size()+"\",");
+		jsonStr.append("\"data\":[");
+		if(rlzyPositionList.size() > 0) {
+			for(int i=0;i<rlzyPositionList.size();i++) {
+				if(rlzyPositionList.size()-i==1) {
+					jsonStr.append("{\"id\":\""+i+"\",");
+					jsonStr.append("\"positionId\":\""+rlzyPositionList.get(i).getId()+"\",");
+					jsonStr.append("\"positionname\":\""+rlzyPositionList.get(i).getPositionname()+"\",");
+					jsonStr.append("\"salaryrange\":\""+DictUtils.getDictLabel(rlzyPositionList.get(i).getSalaryrange(), "salary","")+"\",");
+					jsonStr.append("\"recruitnumber\":\""+rlzyPositionList.get(i).getRecruitnumber()+"\",");
+					jsonStr.append("\"workingage\":\""+DictUtils.getDictLabel(rlzyPositionList.get(i).getWorkingage(), "working_age","")+"\",");
+					jsonStr.append("\"num\":\""+rlzyPositionList.get(i).getNum()+"\"");
+					jsonStr.append("}");
+				}else {
+					jsonStr.append("{\"id\":\""+i+"\",");
+					jsonStr.append("\"positionId\":\""+rlzyPositionList.get(i).getId()+"\",");
+					jsonStr.append("\"positionname\":\""+rlzyPositionList.get(i).getPositionname()+"\",");
+					jsonStr.append("\"salaryrange\":\""+DictUtils.getDictLabel(rlzyPositionList.get(i).getSalaryrange(), "salary","")+"\",");
+					jsonStr.append("\"recruitnumber\":\""+rlzyPositionList.get(i).getRecruitnumber()+"\",");
+					jsonStr.append("\"workingage\":\""+DictUtils.getDictLabel(rlzyPositionList.get(i).getWorkingage(), "working_age","")+"\",");
+					jsonStr.append("\"num\":\""+rlzyPositionList.get(i).getNum()+"\"");
+					jsonStr.append("},");
+				}
+			}
+		}
+		jsonStr.append("]}");
+		return jsonStr.toString();
+	}
+	
+	/**
+	 * 职位管理-删除按钮 逻辑删除
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="offerManageDataDel")
+	public String offerManageDataDel(String id) {
+		RlzyPosition rlzyPosition = rlzyPositionService.get(id);
+		List<RlzyPosition> list = new ArrayList<>();
+		list.add(rlzyPosition);
+		rlzyPositionService.deleteAllByLogic(list);
+		return "1";
+	} 
+	
+	/**
+	 * 发布职位
+	 * @param firmId
+	 * @param rlzyposition
+	 * @return
+	 */
+	@RequestMapping("/publishOffer")
+	public String publishOffer(String firmId,RlzyPosition rlzyPosition,Model model) {
+		List<DictValue> list = DictUtils.getDictList("company_welfare");
+		model.addAttribute("list", list);
+		model.addAttribute("firmId", firmId);
+		return "/modules/home/company/publishOffer";
+	}
+	
+	/**
+	 * 发布职位-修改发布职位
+	 * @param firmId
+	 * @param rlzyposition
+	 * @return
+	 */
+	@RequestMapping(value="publishOfferEdit")
+	public String publishOfferEdit(String id,Model model,String firmId) {
+		RlzyPosition rlzyPosition = rlzyPositionService.get(id);
+		List<DictValue> list = DictUtils.getDictList("company_welfare");
+		model.addAttribute("firmId", firmId);
+		model.addAttribute("list", list);
+		model.addAttribute("rlzyPosition", rlzyPosition);
+		return "/modules/home/company/editOffer";
+	}
+	
+	/**
+	 * 发布职位-修改发布职位-数据接口
+	 * @param firmId
+	 * @param rlzyposition
+	 * @return
+	 * @throws Exception 
+	 */
+	@ResponseBody
+	@RequestMapping(value="offerEditData")
+	public String offerEditData(String id,RlzyPosition rlzyPosition) throws Exception {
+		rlzyPosition.setId(id);
+		if(!rlzyPosition.getIsNewRecord()) {
+			RlzyPosition t = rlzyPositionService.get(id);
+			MyBeanUtils.copyBeanNotNull2Bean(rlzyPosition, t);
+			rlzyPositionService.save(t);
+		}
+		return "1";
+	}
+	
+	/**
+	 * 发布职位-数据接口
+	 * @param firmId
+	 * @param rlzyposition
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="publishData")
+	public String publishData(String firmId,RlzyPosition rlzyPosition) {
+		rlzyPosition.setCompanyid(firmId);
+		rlzyPosition.setNum("0");
+		rlzyPositionService.save(rlzyPosition);
+		return "1";
+	}
+	
+	/**
+	 * 判断手机号是否存在
+	 * @param model
+	 * @param session
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="check")
+	public String check(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+		String phone = request.getParameter("phone");
+		RlzyUser rlzyUser = new RlzyUser();
+		rlzyUser.setPhone(phone);
+		List<RlzyUser> list = rlzyUserService.findList(rlzyUser);
+		if(list.size() > 0) {
+			session.setAttribute("userId",list.get(0).getId());
+			return "2";
+		}else {
+			return "3";
+		}
+	}
+	
+	
+	/**
+	 * 收藏职位
+	 * @param firmId
+	 * @param rlzyposition 职位表
+	 * @return
+	 */
+	@RequestMapping(value="collectManage")
+	public String collectManage(Model model,String firmId, RlzyPosition rlzyPosition, HttpServletRequest httpServletRequest) {
+		model.addAttribute("firmId", firmId);
+		return "/modules/home/company/collectManage";
+	}
+	
+	/**
+	 * 收藏职位-数据接口
+	 * @param firmId
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="companyCollect")
+	public String companyCollect(String firmId) {
+		RlzyRelation rlzyRelation = new RlzyRelation();
+		rlzyRelation.setCompanyid(firmId);
+		rlzyRelation.setCollectionstate("1");
+		List<RlzyRelation> relationList = rlzyRelationService.companyCollectList(rlzyRelation);
+		StringBuffer jsonStr = new StringBuffer();
+		jsonStr.append("{\"code\":\"0\",");
+		jsonStr.append("\"msg\":\"0\",");
+		jsonStr.append("\"count\":\""+relationList.size()+"\",");
+		jsonStr.append("\"data\":[");
+		if(relationList.size() > 0) {
+			for(int i=0;i<relationList.size();i++) {
+				if(relationList.size()-i==1) {
+					jsonStr.append("{\"id\":\""+i+"\",");
+					jsonStr.append("\"relationId\":\""+relationList.get(i).getId()+"\",");
+					jsonStr.append("\"username\":\""+relationList.get(i).getUsername()+"\",");
+					jsonStr.append("\"age\":\""+relationList.get(i).getAge()+"\",");
+					jsonStr.append("\"sex\":\""+DictUtils.getDictLabel(relationList.get(i).getSex(), "sex","")+"\",");
+					jsonStr.append("\"positionname\":\""+relationList.get(i).getPositionname()+"\",");
+					jsonStr.append("\"workingage\":\""+DictUtils.getDictLabel(relationList.get(i).getWorkingage(), "working_age","")+"\",");
+					jsonStr.append("\"currentstate\":\""+DictUtils.getDictLabel(relationList.get(i).getCurrentstate(), "current_state","")+"\",");
+					jsonStr.append("\"invite\":\""+DictUtils.getDictLabel(relationList.get(i).getInvite(), "invite","")+"\"");
+					jsonStr.append("}");
+				}else {
+					jsonStr.append("{\"id\":\""+i+"\",");
+					jsonStr.append("\"relationId\":\""+relationList.get(i).getId()+"\",");
+					jsonStr.append("\"username\":\""+relationList.get(i).getUsername()+"\",");
+					jsonStr.append("\"age\":\""+relationList.get(i).getAge()+"\",");
+					jsonStr.append("\"sex\":\""+DictUtils.getDictLabel(relationList.get(i).getSex(), "sex","")+"\",");
+					jsonStr.append("\"positionname\":\""+relationList.get(i).getPositionname()+"\",");
+					jsonStr.append("\"workingage\":\""+DictUtils.getDictLabel(relationList.get(i).getWorkingage(), "working_age","")+"\",");
+					jsonStr.append("\"currentstate\":\""+DictUtils.getDictLabel(relationList.get(i).getCurrentstate(), "current_state","")+"\",");
+					jsonStr.append("\"invite\":\""+DictUtils.getDictLabel(relationList.get(i).getInvite(), "invite","")+"\"");
+					jsonStr.append("},");
+				}
+			}
+		}
+		jsonStr.append("]}");
+		return jsonStr.toString();
+	}
+	
+	/**
+	 * 收藏职位-邀请按钮
+	 * @param id
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="collectManageYq")
+	public String collectManageYq(String id) {
+		RlzyRelation rlzyRelation = rlzyRelationService.get(id);
+		rlzyRelation.setInvite("1");
+		rlzyRelationService.save(rlzyRelation);
+		return "1";
+	}
+	
+	/**
+	 * 收藏职位-取消收藏按钮
+	 * @param id
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="collectManageC")
+	public String collectManageC(String id) {
+		RlzyRelation rlzyRelation = rlzyRelationService.get(id);
+		rlzyRelation.setCollectionstate("2");
+		rlzyRelationService.save(rlzyRelation);
+		return "1";
+	}
+	
+	/**
+	 * 收藏职位-删除按钮  逻辑删除
+	 * @param id
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="collectManageDel")
+	public String collectManageDel(String id) {
+		RlzyRelation rlzyRelation = rlzyRelationService.get(id);
+		List<RlzyRelation> list = new ArrayList<>();
+		list.add(rlzyRelation);
+		rlzyRelationService.deleteAllByLogic(list);
+		return "1";
+	}
+	
+	/**
+	 * 收到简历
+	 * @param firmId
+	 * @param rlzyposition
+	 * @return
+	 */
+	@RequestMapping(value="receiveResume")
+	public String receiveResume(Model model,String firmId, RlzyPosition rlzyPosition) {
+		model.addAttribute("firmId", firmId);
+		return "/modules/home/company/receiveResume";
+	}
+	
+	/**
+	 * 收到简历-数据查询
+	 * @param firmId
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="receiveResumeData")
+	public String receiveResumeData(String firmId) {
+		RlzyRelation rlzyRelation = new RlzyRelation();
+		rlzyRelation.setCompanyid(firmId);
+		rlzyRelation.setDeliverystate("1");
+		List<RlzyRelation> relationLists = rlzyRelationService.companyList(rlzyRelation);
+		StringBuffer jsonStr = new StringBuffer();
+		jsonStr.append("{\"code\":\"0\",");
+		jsonStr.append("\"msg\":\"0\",");
+		jsonStr.append("\"count\":\""+relationLists.size()+"\",");
+		jsonStr.append("\"data\":[");
+		if(relationLists.size() > 0) {
+			for(int i=0;i<relationLists.size();i++) {
+				if(relationLists.size()-i==1) {
+					jsonStr.append("{\"id\":\""+i+"\",");
+					jsonStr.append("\"relationId\":\""+relationLists.get(i).getId()+"\",");
+					jsonStr.append("\"positionname\":\""+relationLists.get(i).getPositionname()+"\",");
+					jsonStr.append("\"username\":\""+relationLists.get(i).getUsername()+"\",");
+					jsonStr.append("\"age\":\""+relationLists.get(i).getAge()+"\",");
+					jsonStr.append("\"sex\":\""+DictUtils.getDictLabel(relationLists.get(i).getSex(), "sex","")+"\",");
+					jsonStr.append("\"workingage\":\""+DictUtils.getDictLabel(relationLists.get(i).getWorkingage(), "working_age","")+"\",");
+					jsonStr.append("\"currentstate\":\""+DictUtils.getDictLabel(relationLists.get(i).getCurrentstate(), "current_state","")+"\",");
+					jsonStr.append("\"invite\":\""+DictUtils.getDictLabel(relationLists.get(i).getInvite(), "invite","")+"\"");
+					jsonStr.append("}");
+				}else {
+					jsonStr.append("{\"id\":\""+i+"\",");
+					jsonStr.append("\"relationId\":\""+relationLists.get(i).getId()+"\",");
+					jsonStr.append("\"positionname\":\""+relationLists.get(i).getPositionname()+"\",");
+					jsonStr.append("\"username\":\""+relationLists.get(i).getUsername()+"\",");
+					jsonStr.append("\"age\":\""+relationLists.get(i).getAge()+"\",");
+					jsonStr.append("\"sex\":\""+DictUtils.getDictLabel(relationLists.get(i).getSex(), "sex","")+"\",");
+					jsonStr.append("\"workingage\":\""+DictUtils.getDictLabel(relationLists.get(i).getWorkingage(), "working_age","")+"\",");
+					jsonStr.append("\"currentstate\":\""+DictUtils.getDictLabel(relationLists.get(i).getCurrentstate(), "current_state","")+"\",");
+					jsonStr.append("\"invite\":\""+DictUtils.getDictLabel(relationLists.get(i).getInvite(), "invite","")+"\"");
+					jsonStr.append("},");
+				}
+			}
+		}
+		jsonStr.append("]}");
+		return jsonStr.toString();
+	}
+	
+	
+	/**
+	 * 收到简历-删除按钮  逻辑删除
+	 * @param id
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="receiveResumeDataDel")
+	public String receiveResumeDataDel(String id) {
+		RlzyRelation rlzyRelation = rlzyRelationService.get(id);
+		List<RlzyRelation> list = new ArrayList<>();
+		list.add(rlzyRelation);
+		rlzyRelationService.deleteAllByLogic(list);
+		return "1";
+	}
+	
+	/**
+	 * 收到简历-邀请按钮
+	 * @param id
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="receiveResumeDataYQ")
+	public String receiveResumeDataYQ(String id) {
+		RlzyRelation rlzyRelation = rlzyRelationService.get(id);
+		rlzyRelation.setInvite("1");
+		rlzyRelationService.save(rlzyRelation);
+		return "1";
+	}
+	
+	/**
+	 * 企业信息
+	 * @param firmId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="companyInfo")
+	public String companyInfo(String firmId,Model model) {
+		RlzyCompany rlzyCompany = rlzyCompanyService.get(firmId);
+		model.addAttribute("rlzyCompany",rlzyCompany);
+		model.addAttribute("firmId",firmId);
+		return "/modules/home/company/companyInfo";
+	}
+	
+	/**
+	 * 企业信息-修改保存
+	 * @param firmId
+	 * @param model
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="companyInfoData")
+	public String companyInfoData(RlzyCompany rlzyCompany,String id) {
+		rlzyCompany.setId(id);
+		rlzyCompanyService.save(rlzyCompany);
+		return "1";
+	}
+	
+	/**
+	 * 企业账号管理
+	 * @param firmId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="companyAccount")
+	public String companyAccount(String firmId,Model model) {
+		RlzyCompany rlzyCompany = rlzyCompanyService.get(firmId);
+		model.addAttribute("rlzyCompany",rlzyCompany);
+		model.addAttribute("firmId",firmId);
+		return "/modules/home/company/companyAccount";
+	}
+	
+	/**
+	 * 企业账号管理-手机号更改
+	 * @param id
+	 * @param phone
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="accountPhone")
+	public String accountPhone(String id,String phone) {
+		RlzyCompany rlzyCompany = rlzyCompanyService.get(id);
+		rlzyCompany.setTelephone(phone);
+		rlzyCompanyService.save(rlzyCompany);
+		return "1";
+	}
+	
+	/**
+	 * 企业账号管理-密码修改
+	 * @param id
+	 * @param pw
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="accountPassword")
+	public String accountPassword(String id,String pw) {
+		RlzyCompany rlzyCompany = rlzyCompanyService.get(id);
+		rlzyCompany.setPassword(pw);
+		rlzyCompanyService.save(rlzyCompany);
+		return "1";
+	}
+}

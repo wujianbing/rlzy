@@ -1,0 +1,25 @@
+/**
+ * Copyright &copy; 2015-2020 <a href="http://www.jeeplus.org/">JeePlus</a> All rights reserved.
+ */
+package com.jeeplus.modules.portal.mapper;
+
+import com.jeeplus.core.persistence.BaseMapper;
+import com.jeeplus.core.persistence.annotation.MyBatisMapper;
+import com.jeeplus.modules.portal.entity.RlzyPosition;
+
+/**
+ * 职位表MAPPER接口
+ * @author yukk
+ * @version 2019-11-13
+ */
+@MyBatisMapper
+public interface RlzyPositionMapper extends BaseMapper<RlzyPosition> {
+	
+	/**
+	 * 查询用户下是否有相应的职位信息
+	 * @param companyid
+	 * @return
+	 */
+	int getCount(String companyid);
+	
+}

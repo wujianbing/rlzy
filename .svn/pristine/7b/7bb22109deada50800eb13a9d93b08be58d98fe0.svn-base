@@ -1,0 +1,344 @@
+.carousel img {
+	width: 100%;
+	height: 100%;
+}
+.cont{
+	background: #fff;
+    padding: 4px 20px;
+}
+.service-f {
+	display: flex;
+	align-items: center;
+	margin: 0 -20px;
+	padding: 5px 0;
+}
+/* .service-f a{
+	display: block;
+} */
+.service-f a {
+	flex: 1;
+	font-size: 22px;
+	font-weight: 600;
+	text-align: center;
+	padding: 50px 30px;
+	border-radius: 10px;
+	cursor: pointer;
+	user-select: none;
+	margin: 10px 20px;
+	transition: all 0.5s;
+}
+
+.bg1 {
+	background: -webkit-linear-gradient(bottom, #47b1c3 0%, #e4fcff 100%);
+	background: -o-linear-gradient(bottom, #47b1c3 0%, #e4fcff 100%);
+	background: -ms-linear-gradient(bottom, #47b1c3 0%, #e4fcff 100%);
+	background: -moz-linear-gradient(bottom, #47b1c3 0%, #e4fcff 100%);
+	color: #33A5B5;
+}
+
+.bg2 {
+	background: -webkit-linear-gradient(bottom, #e69287 0%, #f9e4e1 100%);
+	background: -o-linear-gradient(bottom, #e69287 0%, #f9e4e1 100%);
+	background: -ms-linear-gradient(bottom, #e69287 0%, #f9e4e1 100%);
+	background: -moz-linear-gradient(bottom, #e69287 0%, #f9e4e1 100%);
+	color: #D65842;
+}
+
+.bg3 {
+	background: -webkit-linear-gradient(bottom, #deb978 0%, #fbecd0 100%);
+	background: -o-linear-gradient(bottom, #deb978 0%, #fbecd0 100%);
+	background: -ms-linear-gradient(bottom, #deb978 0%, #fbecd0 100%);
+	background: -moz-linear-gradient(bottom, #deb978 0%, #fbecd0 100%);
+	color: #BA9148;
+}
+
+.bg4 {
+	background: -webkit-linear-gradient(bottom, #8eac5d 0%, #f0ffd9 100%);
+	background: -o-linear-gradient(bottom, #8eac5d 0%, #f0ffd9 100%);
+	background: -ms-linear-gradient(bottom, #8eac5d 0%, #f0ffd9 100%);
+	background: -moz-linear-gradient(bottom, #8eac5d 0%, #f0ffd9 100%);
+	color: #628233;
+}
+
+.bg1:hover,
+.bg1-h {
+	color: #1e6e79;
+	border-color: #1e6e79 !important;
+}
+
+.bg2:hover,
+.bg2-h {
+	color: #ab402d;
+	border-color: #ab402d !important;
+}
+
+.bg3:hover,
+.bg3-h {
+	color: #98712a;
+	border-color: #98712a !important;
+}
+
+.bg4:hover,
+.bg4-h {
+	color: #476121;
+	border-color: #476121 !important;
+}
+
+
+.tit {
+	font-size: 18px;
+	font-weight: 600;
+	padding: 5px;
+margin: 13px 0 12px;
+	color: #1787fb;
+	border-bottom: 1px dotted #1787fb;
+	display: flex;
+}
+.tit>div:nth-child(1){
+	flex: 1;
+}
+.more{
+	font-size: 12px;
+	color: #282828;
+	font-weight: 300;
+}
+.index-va{
+	margin-bottom: 20px;
+}
+
+.index-ul>li {
+	padding: 16px 5px;
+    width: 48%;
+	display: inline-block;
+}
+.index-ul>li:nth-child(2n){
+	margin-left: 1%;
+}
+.index-lst-tit {
+	font-size: 15px;
+	color: #444444;
+	display: flex;
+}
+
+.tit-o {
+	width: 20px;
+	color: #1787fb;
+}
+
+
+.tit-txt {
+ flex: 8;
+ display: inline-block;
+ cursor: pointer;
+ width: 400px;
+ overflow: hidden;
+ white-space: nowrap;
+ text-overflow: ellipsis;
+ transition: all 0.3s;
+}
+
+.tit-txt:hover {
+	color: #1787fb;
+}
+
+.tit-data {
+	flex: 2;
+	text-align: right;
+	padding-right: 10px;
+	color: #696969;
+	white-space: nowrap;
+}
+
+.top {
+	background: #0059E2;
+	display: inline-block;
+	padding: 2px 4px;
+	color: #ffffff;
+	font-size: 12px;
+	border-radius: 3px;
+	margin-right: 5px;
+}
+
+.index-lst-cont {
+	color: #666666;
+    margin: 5px 0 20px;
+	text-align: justify;
+	display: inline-block;
+	 white-space: nowrap; 
+	 width: 100%; 
+	 overflow: hidden;
+	 max-width: 450px;
+	 text-overflow:ellipsis;
+	 height: initial;
+}
+.news-dt-v .index-lst-cont{
+	 display: inline-block;
+	  white-space: nowrap; 
+	  width: 100%; 
+	  overflow: hidden;
+	  text-overflow:ellipsis;
+	  height: initial;
+	  text-indent: initial;
+}
+.plate-tit{
+	font-size: 16px;
+	font-weight: 600;
+	margin-bottom: 10px;
+	color: #4A95CF;
+	    padding-left: 7px;
+}
+.plate-lst{
+	display: inline-block;
+	width: 48%;
+}
+.plate-lst:nth-child(2n){
+	margin-left: 3%;
+}
+.plate-lst-v{
+    padding: 10px;
+    margin-bottom: 26px;
+    border: 1px solid #ddf1ff;
+    border-radius: 5px;
+	color: #323232;
+	box-shadow: 2px 6px 5px #cadeed;
+	transition: all 0.4s;
+}
+.plate-lst-v:hover{
+	    border: 1px solid #c9e8ff;
+	box-shadow: 2px 6px 5px #aadafd;
+}
+.plate-lst-v>div{
+	margin-bottom: 8px;
+}
+.platetit{
+	font-size: 16px;
+}
+.shu{
+	padding: 0 5px;
+}
+.zw{
+	flex: 1;
+	font-weight: 600;
+	color: #4A95CF;
+	cursor: pointer;
+}
+.price{
+	flex: 1;
+	text-align: right;
+	color: #4A95CF;
+}
+.ji{
+	padding: 2px 6px;
+    border-radius: 9px;
+    background: #FF9C00;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 300;
+    position: relative;
+    top: -2px;
+    margin-left: 6px;
+    letter-spacing: 2px;
+}
+.xin{
+	background: red;
+	padding: 2px 6px 2px 8px;
+}
+.addres{
+	font-size: 15px;
+}
+.col-add{
+	color: #4A95CF;
+}
+.news-dt-v{
+	margin-left: 0 !important;
+	border: 1px solid #ddd;
+	border-radius: 6px;
+	max-height: 496px;
+	    overflow: hidden;
+		    padding: 15px;
+			height: 496px;
+	overflow: auto;
+}
+.ji-info-v{
+	max-height: 556px;
+	overflow: hidden;
+}
+.video-v{
+	padding: 15px 5px;
+}
+.video-v>li{
+	display: inline-block;
+    width: 46%;
+margin-top: 2px;
+}
+.video-v>li:nth-child(n+1) {
+    margin-left: 2.5%;
+}
+.video{
+	width: 100%;
+}
+.video-tit{
+	text-align: center;
+	font-size: 13px;
+	color: #202020;
+}
+
+.ruzhu-v>li{
+    width: 24.8%;
+    margin: 0 !important;
+    padding: 0 !important;
+    float: left;
+    text-align: center;
+    border-left: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+}
+.ruzhu-v>li:nth-child(4n){
+	 border-right: 1px solid #ddd;
+}
+.ruzhu-v>li:last-child{
+	 border-right: 1px solid #ddd;
+}
+.ruzhu-v>li:nth-child(1),.ruzhu-v>li:nth-child(2),.ruzhu-v>li:nth-child(3),.ruzhu-v>li:nth-child(4){
+	 border-top: 1px solid #ddd;
+}
+.ruzhu-v:after{
+	 content:"."; clear: both; height: 0; overflow: hidden; visibility: hidden; 
+	 display: block;
+}
+.ruzhu-v img{
+	width: 100%;
+	height: 100%;
+}
+.rz-btn-v{
+    text-align: center;
+    margin: 30px 0 0;
+}
+.rz-btn{
+	width: 200px;
+}
+
+.pad-left0{
+	padding-left: 0 !important;
+}
+.mar-left0{
+	margin-left: 0 !important;
+}
+.mar-left2{
+	margin-left: 2% !important;
+}
+.text-right{
+	text-align: right;
+}
+.d-flex{
+	display: flex;
+}
+.d-flex-c{
+	display: flex;
+	align-items: center;
+}
+.flex-1{
+ flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

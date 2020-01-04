@@ -1,0 +1,29 @@
+
+  $(function(){
+
+         $(".fuli ul li").click(function(){
+             if($(this).hasClass("liact")){
+            	 $(this).removeClass("liact") ;
+              $(this).find(".correct").remove()
+              
+             }else{
+             
+             	
+                $(this).addClass("liact");
+           		$(this).append("<span class='correct'></span>");
+             
+                
+             }
+         });
+     })
+  $(function(){
+       
+         $(".lastfuli").click(function(){
+            $(".fuli").toggle()
+            
+         $(".shouq").click(function(){
+            $(".fuli").hide()
+            
+     })
+     })
+     })

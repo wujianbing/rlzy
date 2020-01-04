@@ -1,0 +1,639 @@
+function LookFor(){
+	this.valObj = {};
+}
+LookFor.prototype = {
+	
+	init: function(){
+		lookFor.bind();
+	},
+	bind: function(){
+		let self = this;
+		//增加选项
+		$('.sxl ul li').bind('click',self.inputVal_fuc);
+		//删除选项
+		$('.lsp .layui-icon-close').bind('click',self.delVal_fuc);
+	},
+	inputVal_fuc: function(){
+		let self = this;
+		//console.log(this);
+		let text = $(this).find('a').attr('data-value');
+		let id = $(this).parent().prev().attr('data-id');
+		//console.log(text,id);
+		let key='';
+		if(id == 1){
+			key = 'salaryrange';
+			lookFor.valObj[key] = text;
+		}else if(id == 2){
+			key = 'industry';
+			lookFor.valObj[key] = text;
+		}else if(id == 3){
+			key = 'companyscale';
+			lookFor.valObj[key] = text;
+		}else if(id == 4){
+			key = 'positiontype';
+			lookFor.valObj[key] = text;
+		}else if(id == 5){
+			key = 'education';
+			lookFor.valObj[key] = text;
+		}else if(id == 6){
+			key = 'utime';
+			lookFor.valObj[key] = text;
+		}
+		var postflag=$('#postflag').val();
+		reload (lookFor.valObj,postflag);
+	},
+	delVal_fuc: function(){
+		var postflag=$('#postflag').val();
+		$(this).parent().css("display", "none");
+		let id = $(this).parent().attr('data-id');
+		if(id == 1){
+			delete(lookFor.valObj['salaryrange']);
+		}else if(id == 2){
+			delete(lookFor.valObj['industry']);
+		}else if(id == 3){
+			delete(lookFor.valObj['companyscale']);
+		}else if(id == 4){
+			delete(lookFor.valObj['positiontype']);
+		}else if(id == 5){
+			delete(lookFor.valObj['education']);
+		}else if(id == 6){
+			delete(lookFor.valObj['utime']);
+		}
+		reload (lookFor.valObj,postflag);
+	}
+}
+var lookFor = new LookFor();
+lookFor.init();
+var rlzyPosition = {};
+var postflag = 1;
+var count=0;
+
+function reload (rlzyPosition,postflag){
+	if(postflag=='1'){
+		$.ajax({
+			type: 'post',
+			data : JSON.stringify(rlzyPosition),
+			url: "/rlzy/position/positionListBySelectPt?page=1&&pageSize=10",
+			contentType: "application/json;charset=utf-8",
+			success:function(data){
+				let arr = new Array();
+				for(var i=0;i<data.length;i++){
+	 				var time = new Date(data[i].createDate).format("yyyy-MM-dd")
+	 				arr.push('<li>');
+	 				arr.push('<div class="infoname">');
+	 				arr.push('<h5><span class="lefth5"><span class="nameb" onclick="javascript:window.open(/rlzy/position/positionDetails?id='+data[i].id+'&companyid='+data[i].companyid+')">'+data[i].positionname+'</span></span>');
+	 				arr.push('<span class="lefth5">');
+	 				arr.push('<span onclick="javascript:window.open('+data[i].companywebsite+')">'+data[i].companyname+'</span>&emsp;&emsp;');
+	 				arr.push('<span>'+data[i].salaryrange+'</span>');
+	 				arr.push('</span>');
+	 				arr.push('<span class="lefth5 righth5">');
+	 				arr.push('发布时间：<span>'+time+'</span></span></h5>');
+	 				arr.push('<div class="bot">');
+	 				arr.push('<div class="letbot">');
+	 				arr.push('<p class="infopname1">');
+	 				arr.push('<span class="sitename tpo">学历：<span>'+data[i].education+'</span></span>');
+	 				arr.push('<span class="sitename tpo">经验：<span>'+data[i].workingage+'</span></span>');
+	 				arr.push('<span class="sitename tpo">职位性质：<span>'+data[i].positiontype+'</span></span>');
+	 				arr.push('<span class="sitename tpo">地点：<span>'+data[i].workingplace+'</span></span>');
+	 				arr.push('</p>');
+				    arr.push('<div class="infopname1 wordpj">');
+				    arr.push('<div class="namei">');
+				    arr.push('企业福利：');
+				    arr.push('</div>');
+				    arr.push('<div class="namei2">'+data[i].welfaretype+'</div>');
+				    arr.push('</div>');
+	 				arr.push('</div>');
+	 				arr.push('<div class="rightbot">');
+	 				arr.push('<span data-id="'+data[i].id+'" data-cid="'+data[i].companyid+'" class="btnlock tdjl tdzw1" onclick="td3(this)">投递简历</span>');
+	 				arr.push('<span data-id="'+data[i].id+'" data-cid="'+data[i].companyid+'" class="btnlock sqzw sczw1" onclick="sc3(this)"><span class="layui-icon layui-icon-rate-solid"></span>&ensp;<span>收藏职位</span></span>');
+	 				arr.push('</div>');
+	 				arr.push('</div>');
+	 				arr.push('</div>');
+	 				arr.push('</li>');
+	 			} 
+				let html = arr.join('');
+				$("#ul1>li").remove();
+	 			$("#ul1").html(html); 
+				$(this).addClass('btnactive').siblings().removeClass('btnactive');
+				$('.alljob').css("display", "block");
+				$('.fastjob').css("display", "none")
+				$('#test1').css("display", "block");
+				$('#test2').css("display", "none");
+				var count1="0";
+				if(data.length>0){
+					count1 = data[0].spe3;
+	 			}
+				pages(count1,postflag);
+			}
+		});	
+	}else if(postflag=='2'){
+		$.ajax({
+			type: 'post',
+			data : JSON.stringify(rlzyPosition),
+			url: "/rlzy/position/positionListBySelectJp?page=1&&pageSize=10",
+			contentType: "application/json;charset=utf-8",
+			success:function(data){
+				let arr = new Array();
+	 			for(var i=0;i<data.length;i++){
+	 				var time = new Date(data[i].createDate).format("yyyy-MM-dd")
+	 				arr.push('<li>');
+	 				arr.push('<div class="infoname">');
+	 				arr.push('<h5><span class="lefth5"><span class="nameb" onclick="javascript:window.open(/rlzy/position/positionDetails?id='+data[i].id+'&companyid='+data[i].companyid+')">'+data[i].positionname+'</span> <sup>急聘</sup></span>');
+	 				arr.push('<span class="lefth5">');
+	 				arr.push('<span onclick="javascript:window.open('+data[i].companywebsite+')">'+data[i].companyname+'</span>&emsp;&emsp;');
+	 				arr.push('<span>'+data[i].salaryrange+'</span>');
+	 				arr.push('</span>');
+	 				arr.push('<span class="lefth5 righth5">');
+	 				arr.push('发布时间：<span>'+time+'</span></span></h5>');
+	 				arr.push('<div class="bot">');
+	 				arr.push('<div class="letbot">');
+	 				arr.push('<p class="infopname1">');
+	 				arr.push('<span class="sitename tpo">学历：<span>'+data[i].education+'</span></span>');
+	 				arr.push('<span class="sitename tpo">经验：<span>'+data[i].workingage+'</span></span>');
+	 				arr.push('<span class="sitename tpo">职位性质：<span>'+data[i].positiontype+'</span></span>');
+	 				arr.push('<span class="sitename tpo">地点：<span>'+data[i].workingplace+'</span></span>');
+	 				arr.push('</p>');
+				    arr.push('<div class="infopname1 wordpj">');
+				    arr.push('<div class="namei">');
+				    arr.push('企业福利：');
+				    arr.push('</div>');
+				    arr.push('<div class="namei2">'+data[i].welfaretype+'</div>');
+				    arr.push('</div>');
+	 				arr.push('</div>');
+	 				arr.push('<div class="rightbot">');
+	 				arr.push('<span data-id="'+data[i].id+'" data-cid="'+data[i].companyid+'" class="btnlock tdjl tdzw2" onclick="td4(this)">投递简历</span>');
+	 				arr.push('<span data-id="'+data[i].id+'" data-cid="'+data[i].companyid+'" class="btnlock sqzw sczw2" onclick="sc4(this)"><span class="layui-icon layui-icon-rate-solid"></span>&ensp;<span>收藏职位</span></span>');
+	 				arr.push('</div>');
+	 				arr.push('</div>');
+	 				arr.push('</div>');
+	 				arr.push('</li>');
+	 			} 
+	 			let html = arr.join('');
+	 			$("#ul2>li").remove();
+	 			$("#ul2").html(html); 
+	 			$(this).addClass('btnactive').siblings().removeClass('btnactive');
+	 			$('.alljob').css("display", "none");
+	 			$('.fastjob').css("display", "block")
+	 			$('#test1').css("display", "none");
+	 			$('#test2').css("display", "block");
+	 			var count="0";
+				if(data.length>0){
+					count = data[0].spe3;
+	 			}
+				pages(count,postflag);
+			}
+		});
+	}
+}
+function pages(count,postflag){
+	  layui.use(['laypage', 'layer'], function(){
+		  var laypage = layui.laypage
+		  ,layer = layui.layer;
+		  //完整功能
+		  laypage.render({
+		    elem: 'paging'
+		    ,count: count
+		    ,theme:'#1787fb'
+		    ,layout: ['count', 'prev', 'page', 'next', 'limit']
+		    ,jump: function(obj,first){
+		      console.log(obj)
+		      var page = "1";
+	      if(obj.curr != undefined){
+	      	page = obj.curr;
+	      }
+	      if(first){
+	      	return false;
+	      }
+	  	if(postflag=='1'){
+	  		$.ajax({
+	  			type: 'post',
+	  			data : JSON.stringify(rlzyPosition),
+	  			url: "/rlzy/position/positionListBySelectPt?page=1&&pageSize=10",
+	  			contentType: "application/json;charset=utf-8",
+	  			success:function(data){
+	  				let arr = new Array();
+	  				for(var i=0;i<data.length;i++){
+	  	 				var time = new Date(data[i].createDate).format("yyyy-MM-dd")
+	  	 				arr.push('<li>');
+	  	 				arr.push('<div class="infoname">');
+	  	 				arr.push('<h5><span class="lefth5"><span class="nameb" onclick="javascript:window.open(/rlzy/position/positionDetails?id='+data[i].id+'&companyid='+data[i].companyid+')">'+data[i].positionname+'</span></span>');
+	  	 				arr.push('<span class="lefth5">');
+	  	 				arr.push('<span onclick="javascript:window.open('+data[i].companywebsite+')">'+data[i].companyname+'</span>&emsp;&emsp;');
+	  	 				arr.push('<span>'+data[i].salaryrange+'</span>');
+	  	 				arr.push('</span>');
+	  	 				arr.push('<span class="lefth5 righth5">');
+	  	 				arr.push('发布时间：<span>'+time+'</span></span></h5>');
+	  	 				arr.push('<div class="bot">');
+	  	 				arr.push('<div class="letbot">');
+	  	 				arr.push('<p class="infopname1">');
+	  	 				arr.push('<span class="sitename tpo">学历：<span>'+data[i].education+'</span></span>');
+	  	 				arr.push('<span class="sitename tpo">经验：<span>'+data[i].workingage+'</span></span>');
+	  	 				arr.push('<span class="sitename tpo">职位性质：<span>'+data[i].positiontype+'</span></span>');
+	  	 				arr.push('<span class="sitename tpo">地点：<span>'+data[i].workingplace+'</span></span>');
+	  	 				arr.push('</p>');
+	  				    arr.push('<div class="infopname1 wordpj">');
+	  				    arr.push('<div class="namei">');
+	  				    arr.push('企业福利：');
+					    arr.push('</div>');
+					    arr.push('<div class="namei2">'+data[i].welfaretype+'</div>');
+	  				    arr.push('</div>');
+	  	 				arr.push('</div>');
+	  	 				arr.push('<div class="rightbot">');
+	  	 				arr.push('<span data-id="'+data[i].id+'" data-cid="'+data[i].companyid+'" class="btnlock tdjl tdzw1" onclick="td3(this)">投递简历</span>');
+	  	 				arr.push('<span data-id="'+data[i].id+'" data-cid="'+data[i].companyid+'" class="btnlock sqzw sczw1" onclick="sc3(this)"><span class="layui-icon layui-icon-rate-solid"></span>&ensp;<span>收藏职位</span></span>');
+	  	 				arr.push('</div>');
+	  	 				arr.push('</div>');
+	  	 				arr.push('</div>');
+	  	 				arr.push('</li>');
+	  	 			} 
+	  				let html = arr.join('');
+	  				$("#ul1>li").remove();
+	  	 			$("#ul1").html(html); 
+	  			}
+	  		});	
+	  	}else if(postflag=='2'){
+	  		$.ajax({
+	  			type: 'post',
+	  			data : JSON.stringify(rlzyPosition),
+	  			url: "/rlzy/position/positionListBySelectJp?page=1&&pageSize=10",
+	  			contentType: "application/json;charset=utf-8",
+	  			success:function(data){
+	  				let arr = new Array();
+	  	 			for(var i=0;i<data.length;i++){
+	  	 				var time = new Date(data[i].createDate).format("yyyy-MM-dd")
+	  	 				arr.push('<li>');
+	  	 				arr.push('<div class="infoname">');
+	  	 				arr.push('<h5><span class="lefth5"><span class="nameb" onclick="javascript:window.open(/rlzy/position/positionDetails?id='+data[i].id+'&companyid='+data[i].companyid+')">'+data[i].positionname+'</span> <sup>急聘</sup></span>');
+	  	 				arr.push('<span class="lefth5">');
+	  	 				arr.push('<span onclick="javascript:window.open('+data[i].companywebsite+')">'+data[i].companyname+'</span>&emsp;&emsp;');
+	  	 				arr.push('<span>'+data[i].salaryrange+'</span>');
+	  	 				arr.push('</span>');
+	  	 				arr.push('<span class="lefth5 righth5">');
+	  	 				arr.push('发布时间：<span>'+time+'</span></span></h5>');
+	  	 				arr.push('<div class="bot">');
+	  	 				arr.push('<div class="letbot">');
+	  	 				arr.push('<p class="infopname1">');
+	  	 				arr.push('<span class="sitename tpo">学历：<span>'+data[i].education+'</span></span>');
+	  	 				arr.push('<span class="sitename tpo">经验：<span>'+data[i].workingage+'</span></span>');
+	  	 				arr.push('<span class="sitename tpo">职位性质：<span>'+data[i].positiontype+'</span></span>');
+	  	 				arr.push('<span class="sitename tpo">地点：<span>'+data[i].workingplace+'</span></span>');
+	  	 				arr.push('</p>');
+	  				    arr.push('<div class="infopname1 wordpj">');
+	  				    arr.push('<div class="namei">');
+	  				    arr.push('企业福利：');
+					    arr.push('</div>');
+					    arr.push('<div class="namei2">'+data[i].welfaretype+'</div>');
+	  				    arr.push('</div>');
+	  	 				arr.push('</div>');
+	  	 				arr.push('<div class="rightbot">');
+	  	 				arr.push('<span data-id="'+data[i].id+'" data-cid="'+data[i].companyid+'" class="btnlock tdjl tdzw2" onclick="td4(this)">投递简历</span>');
+	  	 				arr.push('<span data-id="'+data[i].id+'" data-cid="'+data[i].companyid+'" class="btnlock sqzw sczw2" onclick="sc4(this)"><span class="layui-icon layui-icon-rate-solid"></span>&ensp;<span>收藏职位</span></span>');
+	  	 				arr.push('</div>');
+	  	 				arr.push('</div>');
+	  	 				arr.push('</div>');
+	  	 				arr.push('</li>');
+	  	 			} 
+	  	 			let html = arr.join('');
+	  	 			$("#ul2>li").remove();
+	  	 			$("#ul2").html(html); 
+	  			}
+	  		});
+	  	}
+  }
+});
+});
+
+}
+//点击下拉选择框的时候，对应下面的标签框内容出现，当成功选择后，标签内容改变
+$('.gz li').on("click", function() {
+	var s = $(this).text();
+	$(".appendt1").css("display", "block");
+	$('#yxgz1').html(s);
+});
+
+$('.gz1 li').on("click", function() {
+	var s = $(this).text();
+	$(".appendt2").css("display", "block");
+	$('#yxgz2').html(s);
+});
+
+$('.gz2 li').on("click", function() {
+	var s = $(this).text();
+	$(".appendt3").css("display", "block");
+	$('#yxgz3').html(s);
+});
+
+$('.gz3 li').on("click", function() {
+	var s = $(this).text();
+	$(".appendt4").css("display", "block");
+	$('#yxgz4').html(s);
+});
+
+$('.gz4 li').on("click", function() {
+	var s = $(this).text();
+	$(".appendt5").css("display", "block");
+	$('#yxgz5').html(s);
+});
+$('.gz5 li').on("click", function() {
+	var s = $(this).text();
+	$(".appendt6").css("display", "block");
+	$('#yxgz6').html(s);
+});
+
+//选项卡样式切换
+$('.all').on("click", function() {
+	$(this).addClass('btnactive').siblings().removeClass('btnactive');
+	$('.alljob').css("display", "block");
+	$('.fastjob').css("display", "none")
+	$('#test1').css("display", "block");
+	$('#test2').css("display", "none");
+	$('#postflag').val('1');
+});
+$('.fast').on("click", function() {
+	$(this).addClass('btnactive').siblings().removeClass('btnactive');
+	$('.alljob').css("display", "none");
+	$('.fastjob').css("display", "block")
+	$('#test1').css("display", "none");
+	$('#test2').css("display", "block");
+	$('#postflag').val('2');
+});
+
+//点击关闭当前标签条件
+$('.layui-icon-close').on("click", function() {
+	$(this).parent().css("display", "none");
+});
+
+//收藏简历
+function sc3(obj) {
+	let that = $(obj);
+	var companyId = that.attr('data-cid');
+	var positionId  = that.attr('data-id');
+	if(user != null || user != undefined){
+		let type=user.type;
+		if(type==='1'){
+			$.post("/rlzy/position/keepPosition?companyid=" + companyId + "&positionid=" + positionId, function(data) {
+				if(data == 1){
+					layer.open({
+						  type: 1
+						  ,offset: 'auto' //具体配置参考：offset参数项
+						  ,content: '<div style="padding: 20px 80px;">收藏成功!</div>'
+						  ,btn: '关闭'
+						  ,btnAlign: 'c' //按钮居中
+						  ,shade: 0 //不显示遮罩
+						  ,yes: function(){
+						    layer.closeAll();
+						  }
+					});
+				}else{
+					layer.open({
+						  type: 1
+						  ,offset: 'auto' //具体配置参考：offset参数项
+						  ,content: '<div style="padding: 20px 80px;">您已收藏!</div>'
+						  ,btn: '关闭'
+						  ,btnAlign: 'c' //按钮居中
+						  ,shade: 0 //不显示遮罩
+						  ,yes: function(){
+						    layer.closeAll();
+						  }
+					});
+				}
+			});
+		}else if(type==='2'){
+			layer.open({
+				  type: 1
+				  ,offset: 'auto' //具体配置参考：offset参数项
+				  ,content: '<div style="padding: 20px 80px;">您是企业账号不能收藏职位!</div>'
+				  ,btn: '关闭'
+				  ,btnAlign: 'c' //按钮居中
+				  ,shade: 0 //不显示遮罩
+				  ,yes: function(){
+				    layer.closeAll();
+				  }
+			});
+		}
+	}else {
+		layer.open({
+			  type: 1
+			  ,offset: 'auto' //具体配置参考：offset参数项
+			  ,content: '<div style="padding: 20px 80px;">您还未登陆!</div>'
+			  ,btn: '关闭'
+			  ,btnAlign: 'c' //按钮居中
+			  ,shade: 0 //不显示遮罩
+			  ,yes: function(){
+			    layer.closeAll();
+			    window.location.href = url + "/login/tologin";
+			  }
+		});
+	}
+}
+function sc4(obj) {
+	let that = $(obj);
+	var companyId = that.attr('data-cid');
+	var positionId  = that.attr('data-id');
+	if(user != null || user != undefined){
+		let type=user.type;
+		if(type==='1'){
+			$.post("/rlzy/position/keepPosition?companyid=" + companyId + "&positionid=" + positionId, function(data) {
+				if(data == 1){
+					layer.open({
+						  type: 1
+						  ,offset: 'auto' //具体配置参考：offset参数项
+						  ,content: '<div style="padding: 20px 80px;">收藏成功!</div>'
+						  ,btn: '关闭'
+						  ,btnAlign: 'c' //按钮居中
+						  ,shade: 0 //不显示遮罩
+						  ,yes: function(){
+						    layer.closeAll();
+						  }
+					});
+				}else{
+					layer.open({
+						  type: 1
+						  ,offset: 'auto' //具体配置参考：offset参数项
+						  ,content: '<div style="padding: 20px 80px;">您已收藏!</div>'
+						  ,btn: '关闭'
+						  ,btnAlign: 'c' //按钮居中
+						  ,shade: 0 //不显示遮罩
+						  ,yes: function(){
+						    layer.closeAll();
+						  }
+					});
+				}
+			});
+		}else if(type==='2'){
+			layer.open({
+				  type: 1
+				  ,offset: 'auto' //具体配置参考：offset参数项
+				  ,content: '<div style="padding: 20px 80px;">您是企业账号不能收藏职位!</div>'
+				  ,btn: '关闭'
+				  ,btnAlign: 'c' //按钮居中
+				  ,shade: 0 //不显示遮罩
+				  ,yes: function(){
+				    layer.closeAll();
+				  }
+			});
+		}
+	}else {
+		layer.open({
+			  type: 1
+			  ,offset: 'auto' //具体配置参考：offset参数项
+			  ,content: '<div style="padding: 20px 80px;">您还未登陆!</div>'
+			  ,btn: '关闭'
+			  ,btnAlign: 'c' //按钮居中
+			  ,shade: 0 //不显示遮罩
+			  ,yes: function(){
+			    layer.closeAll();
+			    window.location.href = url + "/login/tologin";
+			  }
+		});
+	}
+}
+
+//投递简历
+function td3(obj) {
+	let that = $(obj);
+	var companyId = that.attr('data-cid');
+	var positionId  = that.attr('data-id');
+	if(user != null || user != undefined){
+		let type=user.type;
+		if(type==='1'){
+			$.post("/rlzy/position/applyPosition?positionid=" + positionId + "&companyid=" + companyId, function(data) {
+				if(data == 1){
+					layer.open({
+						  skin: 'demo-class',
+						  type: 1
+						  ,offset: 'auto' //具体配置参考：offset参数项
+						  ,content: '<div style="padding: 20px 80px;">投递成功!</div>'
+						  ,btn: '关闭'
+						  ,btnAlign: 'c' //按钮居中
+						  ,shade: 0 //不显示遮罩
+						  ,yes: function(){
+						    layer.closeAll();
+						  }
+					});
+				}else{
+					layer.open({
+						  type: 1
+						  ,offset: 'auto' //具体配置参考：offset参数项
+						  ,content: '<div style="padding: 20px 80px;">您已投递!</div>'
+						  ,btn: '关闭'
+						  ,btnAlign: 'c' //按钮居中
+						  ,shade: 0 //不显示遮罩
+						  ,yes: function(){
+						    layer.closeAll();
+						  }
+					});
+				}
+			});
+		}else if(type==='2'){
+			layer.open({
+				  type: 1
+				  ,offset: 'auto' //具体配置参考：offset参数项
+				  ,content: '<div style="padding: 20px 80px;">您是企业账号，不能投递简历!</div>'
+				  ,btn: '关闭'
+				  ,btnAlign: 'c' //按钮居中
+				  ,shade: 0 //不显示遮罩
+				  ,yes: function(){
+				    layer.closeAll();
+				  }
+			});
+		}
+	}else {
+		layer.open({
+			  type: 1
+			  ,offset: 'auto' //具体配置参考：offset参数项
+			  ,content: '<div style="padding: 20px 80px;">您还未登陆!</div>'
+			  ,btn: '关闭'
+			  ,btnAlign: 'c' //按钮居中
+			  ,shade: 0 //不显示遮罩
+			  ,yes: function(){
+			    layer.closeAll();
+			    window.location.href = url + "/login/tologin";
+			  }
+		});
+	}
+}
+function td4(obj) {
+	let that = $(obj);
+	var companyId = that.attr('data-cid');
+	var positionId  = that.attr('data-id');
+	if(user != null || user != undefined){
+		let type=user.type;
+		if(type==='1'){
+			$.post("/rlzy/position/applyPosition?positionid=" + positionId + "&companyid=" + companyId, function(data) {
+				if(data == 1){
+					layer.open({
+						  skin: 'demo-class',
+						  type: 1
+						  ,offset: 'auto' //具体配置参考：offset参数项
+						  ,content: '<div style="padding: 20px 80px;">投递成功!</div>'
+						  ,btn: '关闭'
+						  ,btnAlign: 'c' //按钮居中
+						  ,shade: 0 //不显示遮罩
+						  ,yes: function(){
+						    layer.closeAll();
+						  }
+					});
+				}else{
+					layer.open({
+						  type: 1
+						  ,offset: 'auto' //具体配置参考：offset参数项
+						  ,content: '<div style="padding: 20px 80px;">您已投递!</div>'
+						  ,btn: '关闭'
+						  ,btnAlign: 'c' //按钮居中
+						  ,shade: 0 //不显示遮罩
+						  ,yes: function(){
+						    layer.closeAll();
+						  }
+					});
+				}
+			});
+		}else if(type==='2'){
+			layer.open({
+				  type: 1
+				  ,offset: 'auto' //具体配置参考：offset参数项
+				  ,content: '<div style="padding: 20px 80px;">您是企业账号，不能投递简历!</div>'
+				  ,btn: '关闭'
+				  ,btnAlign: 'c' //按钮居中
+				  ,shade: 0 //不显示遮罩
+				  ,yes: function(){
+				    layer.closeAll();
+				  }
+			});
+		}
+	}else {
+		layer.open({
+			  type: 1
+			  ,offset: 'auto' //具体配置参考：offset参数项
+			  ,content: '<div style="padding: 20px 80px;">您还未登陆!</div>'
+			  ,btn: '关闭'
+			  ,btnAlign: 'c' //按钮居中
+			  ,shade: 0 //不显示遮罩
+			  ,yes: function(){
+			    layer.closeAll();
+			    window.location.href = url + "/login/tologin";
+			  }
+		});
+	}
+}
+
+Date.prototype.format = function(fmt) { 
+	   var o = { 
+	      "M+" : this.getMonth()+1,                 //月份 
+	      "d+" : this.getDate(),                    //日 
+	      "h+" : this.getHours(),                   //小时 
+	      "m+" : this.getMinutes(),                 //分 
+	      "s+" : this.getSeconds(),                 //秒 
+	      "q+" : Math.floor((this.getMonth()+3)/3), //季度 
+	      "S"  : this.getMilliseconds()             //毫秒 
+	  }; 
+	  if(/(y+)/.test(fmt)) {
+	          fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+	  }
+	   for(var k in o) {
+	      if(new RegExp("("+ k +")").test(fmt)){
+	           fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+	       }
+	   }
+	  return fmt; 
+	}

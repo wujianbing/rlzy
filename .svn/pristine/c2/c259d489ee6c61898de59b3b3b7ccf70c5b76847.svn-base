@@ -1,0 +1,301 @@
+function LookFor(){
+	this.valObj = {};
+}
+LookFor.prototype = {
+	
+	init: function(){
+		lookFor.bind();
+	},
+	bind: function(){
+		let self = this;
+		//增加选项
+		$('.sxl ul li').bind('click',self.inputVal_fuc);
+		//删除选项
+		$('.lsp .layui-icon-close').bind('click',self.delVal_fuc);
+	},
+	inputVal_fuc: function(){
+		let self = this;
+		//console.log(this);
+		let text = $(this).find('a').attr('data-value');
+		let id = $(this).parent().prev().attr('data-id');
+		//console.log(text,id);
+		let key='';
+		if(id == 1){
+			key = 'salaryrange';
+			lookFor.valObj[key] = text;
+		}else if(id == 2){
+			key = 'industry';
+			lookFor.valObj[key] = text;
+		}else if(id == 3){
+			key = 'companyscale';
+			lookFor.valObj[key] = text;
+		}else if(id == 4){
+			key = 'positiontype';
+			lookFor.valObj[key] = text;
+		}else if(id == 5){
+			key = 'education';
+			lookFor.valObj[key] = text;
+		}else if(id == 6){
+			key = 'updatetime';
+			lookFor.valObj[key] = text;
+		}
+		console.log(lookFor.valObj);
+		reload (lookFor.valObj);
+	},
+	delVal_fuc: function(){
+		$(this).parent().css("display", "none");
+		let id = $(this).parent().attr('data-id');
+		if(id == 1){
+			delete(lookFor.valObj['salaryrange']);
+		}else if(id == 2){
+			delete(lookFor.valObj['industry']);
+		}else if(id == 3){
+			delete(lookFor.valObj['companyscale']);
+		}else if(id == 4){
+			delete(lookFor.valObj['positiontype']);
+		}else if(id == 5){
+			delete(lookFor.valObj['education']);
+		}else if(id == 6){
+			delete(lookFor.valObj['updatetime']);
+		}
+		console.log(lookFor.valObj);
+		reload (lookFor.valObj);
+	}
+}
+var lookFor = new LookFor();
+lookFor.init();
+var rlzyPosition = {};
+function reload (rlzyPosition){
+	//console.log(rlzyUser);
+	$.ajax({
+		type: 'post',
+		data : JSON.stringify(rlzyPosition),
+		url: url+"/position/positionListBySelect0?page=1&&pageSize=10",
+		contentType: "application/json;charset=utf-8",
+		success:function(data){
+			let arr = new Array();
+			arr.push('<div class="yuleft">');
+			arr.push('<ul class="alljob" id="ul1">');
+			for(var i=0;i<data.length;i++){
+				var time = new Date(data[i].createDate).format("yyyy-MM-dd");
+				arr.push('<li>');
+ 				arr.push('<input value="'+data[i].id+'" hidden="hidden" name="positionid" id="positionId">');
+ 				arr.push('<input value="'+data[i].companyid+'" hidden="hidden" name="companyid" id="companyId">');
+ 				arr.push('<div class="infoname">');
+ 				arr.push('<h5><span class="lefth5"><span class="nameb" onclick="javascript:window.open('+url+'/position/positionDetails?id='+data[i].id+'&companyid='+data[i].companyid+')">'+data[i].positionname+'</span></span>');
+ 				arr.push('<span class="lefth5">');
+ 				arr.push('<span onclick="javascript:window.open('+data[i].companywebsite+')">'+data[i].companyname+'</span>&emsp;&emsp;');
+ 				arr.push('<span>'+data[i].salaryrange+'</span>');
+ 				arr.push('</span>');
+ 				arr.push('<span class="lefth5 righth5">');
+ 				arr.push('发布时间：<span>'+time+'</span></span></h5>');
+ 				arr.push('<div class="bot">');
+ 				arr.push('<div class="letbot">');
+ 				arr.push('<p class="infopname1">');
+ 				arr.push('<span class="sitename tpo">学历：<span>'+data[i].education+'</span></span>');
+ 				arr.push('<span class="sitename tpo">经验：<span>'+data[i].workingage+'</span></span>');
+ 				arr.push('<span class="sitename tpo">职位性质：<span>'+data[i].positiontype+'</span></span>');
+ 				arr.push('<span class="sitename tpo">地点：<span>'+data[i].workingplace+'</span></span>');
+ 				arr.push('</p>');
+			    arr.push('<div class="infopname1 wordpj">');
+			    arr.push('<div class="namei">');
+			    arr.push('职位描述：');
+			    arr.push('</div>');
+			    arr.push('<div class="namei2">'+data[i].positiondescription+'</div>');
+			    arr.push('</div>');
+ 				arr.push('</div>');
+ 				arr.push('<div class="rightbot">');
+ 				arr.push('<span data-id="'+data[i].id+'" class="btnlock tdjl tdzw1">投递简历</span>');
+ 				arr.push('<span data-id="'+data[i].id+'" class="btnlock sqzw sczw1"><span class="layui-icon layui-icon-rate-solid"></span>&ensp;<span>收藏职位</span></span>');
+ 				arr.push('</div>');
+ 				arr.push('</div>');
+ 				arr.push('</div>');
+ 				arr.push('</li>');
+ 			}
+			arr.push('</ul>');
+			arr.push('<ul class="fastjob" id="ul2">');
+			arr.push('</ul>');
+			arr.push('<div class="fy">');
+			arr.push('<div id="test1" class="test1"></div>');
+			arr.push('<div id="test2" class="test2" style="display: none;"></div>');
+			arr.push('</div>');
+ 			let html = arr.join('');
+ 			$(".yuqbottom2").children().remove();
+ 			$(".yuqbottom2").html(html);
+ 			if(data.length==0){
+ 				var count = 0;
+ 			}else{
+ 				var count = data[0].spe3;
+ 			}
+ 			pages_pt(count);
+		}
+	});
+}
+//点击下拉选择框的时候，对应下面的标签框内容出现，当成功选择后，标签内容改变
+$('.gz li').on("click", function() {
+	var s = $(this).text();
+	$(".appendt1").css("display", "block");
+	$('#yxgz1').html(s);
+});
+
+$('.gz1 li').on("click", function() {
+	var s = $(this).text();
+	$(".appendt2").css("display", "block");
+	$('#yxgz2').html(s);
+});
+
+$('.gz2 li').on("click", function() {
+	var s = $(this).text();
+	$(".appendt3").css("display", "block");
+	$('#yxgz3').html(s);
+});
+
+$('.gz3 li').on("click", function() {
+	var s = $(this).text();
+	$(".appendt4").css("display", "block");
+	$('#yxgz4').html(s);
+});
+
+$('.gz4 li').on("click", function() {
+	var s = $(this).text();
+	$(".appendt5").css("display", "block");
+	$('#yxgz5').html(s);
+});
+$('.gz5 li').on("click", function() {
+	var s = $(this).text();
+	$(".appendt6").css("display", "block");
+	$('#yxgz6').html(s);
+});
+
+//选项卡样式切换
+$('.all').on("click", function() {
+	$(this).addClass('btnactive').siblings().removeClass('btnactive');
+	$('.alljob').css("display", "block");
+	$('.fastjob').css("display", "none")
+	$('#test1').css("display", "block");
+	$('#test2').css("display", "none");
+});
+$('.fast').on("click", function() {
+	$(this).addClass('btnactive').siblings().removeClass('btnactive');
+	$('.alljob').css("display", "none");
+	$('.fastjob').css("display", "block")
+	$('#test1').css("display", "none");
+	$('#test2').css("display", "block");
+});
+
+//收藏按钮
+$(function() {
+	$(".sczw1").click(function() {
+		let that = $(this);
+		var companyId = $("#companyId").val();
+		var positionId  = that.attr('data-id');
+		if(user != null || user != undefined){
+			let type=user.type;
+			if(type==='1'){
+				$.post(url+"/position/keepPosition?companyid=" + companyId + "&positionid=" + positionId, function(data) {
+					if(data == 1){
+						alert('收藏成功！');
+					}else{
+						alert('您已收藏！');
+					}
+				});
+			}else if(type==='2'){
+				
+			}
+		}else {
+			alert('请先登录！');
+		}
+	});
+	$(".sczw2").click(function() {
+		let that = $(this);
+		var companyId = $("#companyId").val();
+		var positionId  = that.attr('data-id');
+		if(user != null || user != undefined){
+			let type=user.type;
+			if(type==='1'){
+				$.post(url+"/position/keepPosition?companyid=" + companyId + "&positionid=" + positionId, function(data) {
+					if(data == 1){
+						alert('收藏成功！');
+					}else{
+						alert('您已收藏！');
+					}
+				});
+			}else if(type==='2'){
+				
+			}
+		}else {
+			alert('请先登录！');
+		}
+	});
+});
+
+//点击关闭当前标签条件
+$('.layui-icon-close').on("click", function() {
+	$(this).parent().css("display", "none");
+});
+
+//点击投递简按钮所要处理的事件
+$(function() {
+	$(".tdzw1").click(function() {
+		let that = $(this);
+		var companyId = $("#companyId").val();
+		var positionId  = that.attr('data-id');
+		if(user != null || user != undefined){
+			let type=user.type;
+			if(type==='1'){
+				$.post(url+"/position/applyPosition?positionid=" + positionId + "&companyid=" + companyId, function(data) {
+					if(data == 1){
+						alert('投递成功!');
+					}else{
+						alert('您已投递！');
+					}
+				});
+			}else if(type==='2'){
+				
+			}
+		}else {
+			alert('请先登录！');
+		}
+	});
+	$(".tdzw2").click(function() {
+		let that = $(this);
+		var companyId = $("#companyId").val();
+		var positionId  = that.attr('data-id');
+		if(user != null || user != undefined){
+			let type=user.type;
+			if(type==='1'){
+				$.post(url+"/position/applyPosition?positionid=" + positionId + "&companyid=" + companyId, function(data) {
+					if(data == 1){
+						alert('投递成功!');
+					}else{
+						alert('您已投递！');
+					}
+				});
+			}else if(type==='2'){
+				
+			}
+		}else {
+			alert('请先登录！');
+		}
+	});
+});
+Date.prototype.format = function(fmt) { 
+	   var o = { 
+	      "M+" : this.getMonth()+1,                 //月份 
+	      "d+" : this.getDate(),                    //日 
+	      "h+" : this.getHours(),                   //小时 
+	      "m+" : this.getMinutes(),                 //分 
+	      "s+" : this.getSeconds(),                 //秒 
+	      "q+" : Math.floor((this.getMonth()+3)/3), //季度 
+	      "S"  : this.getMilliseconds()             //毫秒 
+	  }; 
+	  if(/(y+)/.test(fmt)) {
+	          fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+	  }
+	   for(var k in o) {
+	      if(new RegExp("("+ k +")").test(fmt)){
+	           fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+	       }
+	   }
+	  return fmt; 
+	}

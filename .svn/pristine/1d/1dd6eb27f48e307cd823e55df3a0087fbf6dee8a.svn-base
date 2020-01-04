@@ -1,0 +1,101 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/webpage/include/taglib.jsp"%>
+<html>
+<head>
+	<title>关联信息管理</title>
+	<meta name="decorator" content="ani"/>
+	<script type="text/javascript">
+
+		$(document).ready(function() {
+
+		});
+		function save() {
+            var isValidate = jp.validateForm('#inputForm');//校验表单
+            if(!isValidate){
+                return false;
+			}else{
+                jp.loading();
+                jp.post("${ctx}/portal/rlzyRelation/save",$('#inputForm').serialize(),function(data){
+                    if(data.success){
+                        jp.getParent().refresh();
+                        var dialogIndex = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+                        parent.layer.close(dialogIndex);
+                        jp.success(data.msg)
+
+                    }else{
+                        jp.error(data.msg);
+                    }
+                })
+			}
+
+        }
+	</script>
+</head>
+<body class="bg-white">
+		<form:form id="inputForm" modelAttribute="rlzyRelation" class="form-horizontal">
+		<form:hidden path="id"/>	
+		<table class="table table-bordered">
+		   <tbody>
+				<tr>
+					<td class="width-15 active"><label class="pull-right">求职者名称：</label></td>
+					<td class="width-35">
+						<form:input path="username" htmlEscape="false"    class="form-control "/>
+					</td>
+					<td class="width-15 active"><label class="pull-right">企业名称：</label></td>
+					<td class="width-35">
+						<form:input path="companyname" htmlEscape="false"    class="form-control "/>
+					</td>
+				</tr>
+				<tr>
+					<td class="width-15 active"><label class="pull-right">职位名称：</label></td>
+					<td class="width-35">
+						<form:input path="positionname" htmlEscape="false"    class="form-control "/>
+					</td>
+					<td class="width-15 active"><label class="pull-right">出生年月：</label></td>
+					<td class="width-35">
+						<form:input path="age" htmlEscape="false"    class="form-control "/>
+					</td>
+				</tr>
+				<tr>
+					<td class="width-15 active"><label class="pull-right">性别：</label></td>
+					<td class="width-35">
+						<form:input path="sex" htmlEscape="false"    class="form-control "/>
+					</td>
+					<td class="width-15 active"><label class="pull-right">工作状态：</label></td>
+					<td class="width-35">
+						<form:input path="currentstate" htmlEscape="false"    class="form-control "/>
+					</td>
+				</tr>
+				<tr>
+					<td class="width-15 active"><label class="pull-right">工作年龄：</label></td>
+					<td class="width-35">
+						<form:input path="workingage" htmlEscape="false"    class="form-control "/>
+					</td>
+					<td class="width-15 active"><label class="pull-right">面试时间：</label></td>
+					<td class="width-35">
+						<form:input path="interviewdate" htmlEscape="false"    class="form-control "/>
+					</td>
+				</tr>
+				<tr>
+					<td class="width-15 active"><label class="pull-right">投递状态（主动投递/邀请面试）：</label></td>
+					<td class="width-35">
+						<form:input path="deliverystate" htmlEscape="false"    class="form-control "/>
+					</td>
+					<td class="width-15 active"><label class="pull-right">处理状态：</label></td>
+					<td class="width-35">
+						<form:input path="dealstate" htmlEscape="false"    class="form-control "/>
+					</td>
+				</tr>
+				<tr>
+					<td class="width-15 active"><label class="pull-right">收藏状态：</label></td>
+					<td class="width-35">
+						<form:input path="collectionstate" htmlEscape="false"    class="form-control "/>
+					</td>
+					<td class="width-15 active"></td>
+		   			<td class="width-35" ></td>
+		  		</tr>
+		 	</tbody>
+		</table>
+	</form:form>
+</body>
+</html>

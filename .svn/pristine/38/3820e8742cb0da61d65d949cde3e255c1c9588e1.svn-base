@@ -1,0 +1,350 @@
+/**
+ * Copyright &copy; 2015-2020 <a href="http://www.jeeplus.org/">JeePlus</a> All rights reserved.
+ */
+package com.jeeplus.modules.portal.entity;
+
+import java.util.List;
+import com.google.common.collect.Lists;
+
+import com.jeeplus.core.persistence.DataEntity;
+import com.jeeplus.common.utils.excel.annotation.ExcelField;
+
+/**
+ * 企业信息表Entity
+ * @author 喻昆昆
+ * @version 2019-11-15
+ */
+public class RlzyCompany extends DataEntity<RlzyCompany> {
+	
+	private static final long serialVersionUID = 1L;
+	private String companyname;		// 企业名称
+	private String nickName;	//昵称
+	private String password;	//密码
+	private String logo;		// 企业图片
+	private String companyscale;		// 企业规模
+	private String companynature;		// 企业性质
+	private String registeredcapital;		// 注册资金
+	private String localplace;		  //所在地区
+	private String companywebsite;		// 企业网址
+	private String industry;		// 所属行业
+	private String companyprofile;		// 企业简
+	private String businesslicense;		// 营业执照
+	private String contacts;		// 联系人
+	private String phone;			//座机
+	private String telephone;		// 联系电话
+	private String email;		// 邮箱
+	private String qq;		// QQ
+	private String webchat;		// 微信
+	private String address;		// 联系地址
+	private String companytype;		// 企业类型
+	private String servicerange;		// 服务范围
+	private String casepic;		// 案例图片
+	private String paystatus;		// 支付状态
+	private String reviewstate;		// 审核状态
+	private String trystate;		// 试用状态
+	private String cpflag;          //个人和企业标识
+	private String serviceType;		// 服务类型
+	private String spe2;		// 预留2
+	private String spe3;		// 预留字段3
+	private String creditcode;  //企业信用统一编码
+	private List<RlzyPosition> rlzyPositionList = Lists.newArrayList();		// 子表列表
+	private String lnglat;
+	private int count;
+	private String date;
+	
+	public RlzyCompany() {
+		super();
+	}
+
+	public RlzyCompany(String id){
+		super(id);
+	}
+
+	@ExcelField(title="企业名称", align=2, sort=1)
+	public String getCompanyname() {
+		return companyname;
+	}
+
+	public void setCompanyname(String companyname) {
+		this.companyname = companyname;
+	}
+	
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+	
+	@ExcelField(title="企业规模", align=2, sort=3,dictType="company_scale")
+	public String getCompanyscale() {
+		return companyscale;
+	}
+
+	public void setCompanyscale(String companyscale) {
+		this.companyscale = companyscale;
+	}
+	
+	@ExcelField(title="企业性质", align=2, sort=4,dictType="company_nature")
+	public String getCompanynature() {
+		return companynature;
+	}
+
+	public void setCompanynature(String companynature) {
+		this.companynature = companynature;
+	}
+	
+	@ExcelField(title="注册资金", align=2, sort=5)
+	public String getRegisteredcapital() {
+		return registeredcapital;
+	}
+
+	public void setRegisteredcapital(String registeredcapital) {
+		this.registeredcapital = registeredcapital;
+	}
+	
+	@ExcelField(title="所在地区", align=2, sort=6)
+	public String getLocalplace() {
+		return localplace;
+	}
+
+	public void setLocalplace(String localplace) {
+		this.localplace = localplace;
+	}
+
+	@ExcelField(title="企业网址", align=2, sort=7)
+	public String getCompanywebsite() {
+		return companywebsite;
+	}
+
+	public void setCompanywebsite(String companywebsite) {
+		this.companywebsite = companywebsite;
+	}
+	
+	@ExcelField(title="所属行业", align=2, sort=8,dictType="desired_industry")
+	public String getIndustry() {
+		return industry;
+	}
+
+	public void setIndustry(String industry) {
+		this.industry = industry;
+	}
+	
+	@ExcelField(title="企业简介", align=2, sort=9)
+	public String getCompanyprofile() {
+		return companyprofile;
+	}
+
+	public void setCompanyprofile(String companyprofile) {
+		this.companyprofile = companyprofile;
+	}
+	@ExcelField(title="企业统一编码", align=2, sort=10)
+	public String getCreditcode() {
+		return creditcode;
+	}
+
+	public void setCreditcode(String creditcode) {
+		this.creditcode = creditcode;
+	}
+	public String getBusinesslicense() {
+		return businesslicense;
+	}
+
+	public void setBusinesslicense(String businesslicense) {
+		this.businesslicense = businesslicense;
+	}
+	
+	@ExcelField(title="联系人", align=2, sort=12)
+	public String getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(String contacts) {
+		this.contacts = contacts;
+	}
+	@ExcelField(title="座机", align=2, sort=13)
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	@ExcelField(title="联系电话", align=2, sort=14)
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+	
+	@ExcelField(title="邮箱", align=2, sort=15)
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public String getQq() {
+		return qq;
+	}
+
+	public void setQq(String qq) {
+		this.qq = qq;
+	}
+	
+	public String getWebchat() {
+		return webchat;
+	}
+
+	public void setWebchat(String webchat) {
+		this.webchat = webchat;
+	}
+	
+	@ExcelField(title="联系地址", align=2, sort=16)
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
+	@ExcelField(title="企业类型", align=2, sort=17,dictType="company_type")
+	public String getCompanytype() {
+		return companytype;
+	}
+
+	public void setCompanytype(String companytype) {
+		this.companytype = companytype;
+	}
+	@ExcelField(title="服务类型", align=2, sort=18,dictType="service_type")
+	public String getServiceType() {
+		return serviceType;
+	}
+
+	public void setServiceType(String serviceType) {
+		this.serviceType = serviceType;
+	}
+	@ExcelField(title="服务范围", align=2, sort=19)
+	public String getServicerange() {
+		return servicerange;
+	}
+
+	public void setServicerange(String servicerange) {
+		this.servicerange = servicerange;
+	}
+	
+	public String getCasepic() {
+		return casepic;
+	}
+
+	public void setCasepic(String casepic) {
+		this.casepic = casepic;
+	}
+	
+	@ExcelField(title="支付状态", align=2, sort=21,dictType="paystatus")
+	public String getPaystatus() {
+		return paystatus;
+	}
+
+	public void setPaystatus(String paystatus) {
+		this.paystatus = paystatus;
+	}
+
+	public String getCpflag() {
+		return cpflag;
+	}
+
+	public void setCpflag(String cpflag) {
+		this.cpflag = cpflag;
+	}
+
+	@ExcelField(title="审核状态", align=2, sort=21,dictType="review_state")
+	public String getReviewstate() {
+		return reviewstate;
+	}
+
+	public void setReviewstate(String reviewstate) {
+		this.reviewstate = reviewstate;
+	}
+	
+	@ExcelField(title="试用状态", align=2, sort=22,dictType="try_state")
+	public String getTrystate() {
+		return trystate;
+	}
+
+	public void setTrystate(String trystate) {
+		this.trystate = trystate;
+	}
+	
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+	public String getSpe2() {
+		return spe2;
+	}
+	public void setSpe2(String spe2) {
+		this.spe2 = spe2;
+	}
+	
+	public String getSpe3() {
+		return spe3;
+	}
+
+	public void setSpe3(String spe3) {
+		this.spe3 = spe3;
+	}
+	
+	public List<RlzyPosition> getRlzyPositionList() {
+		return rlzyPositionList;
+	}
+
+	public void setRlzyPositionList(List<RlzyPosition> rlzyPositionList) {
+		this.rlzyPositionList = rlzyPositionList;
+	}
+
+	public String getLnglat() {
+		return lnglat;
+	}
+
+	public void setLnglat(String lnglat) {
+		this.lnglat = lnglat;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+	
+}

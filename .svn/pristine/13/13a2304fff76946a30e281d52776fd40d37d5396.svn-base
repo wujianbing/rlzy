@@ -1,0 +1,29 @@
+function ParkService(){
+	
+}
+ParkService.prototype = {
+	init: function(){
+		parkService.bind();
+	},
+	bind: function(){
+		let self = this;
+		$('.service-tab>div').bind('click',self.service_tab);
+		$('.service-ul').bind('click','li',self.service_data);
+	},
+	service_tab: function(){
+		let i = $(this).index();
+		let text = $(this).text();
+		$('#service_tit').attr('class','bg'+(i+1)+'-h');
+		$('#service_tit').text(text);
+		$('.service-c-v').show();
+		$('.iframe').hide();
+		$('.iframe').attr('src','');
+	},
+	service_data: function(){
+		$(this).parent().hide();
+		$('.iframe').show();
+		$('.iframe').attr('src',url+'/home/parkSeverDate');
+	},
+}
+var parkService = new ParkService();
+parkService.init();

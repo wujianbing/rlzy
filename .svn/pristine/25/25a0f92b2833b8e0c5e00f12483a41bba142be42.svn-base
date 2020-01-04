@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.portal.mapper.RlzyPositionMapper">
+    
+	<sql id="rlzyPositionColumns">
+		a.id AS "id",
+		a.companyid AS "companyid",
+		a.positiontype AS "positiontype",
+		a.positionname AS "positionname",
+		a.workingplace AS "workingplace",
+		a.salaryrange AS "salaryrange",
+		a.education AS "education",
+		a.workingage AS "workingage",
+		a.recruitnumber AS "recruitnumber",
+		a.welfaretype AS "welfaretype",
+		a.contacts AS "contacts",
+		a.phone AS "phone",
+		a.positiondescription AS "positiondescription",
+		a.ispost AS "ispost",
+		a.remarks AS "remarks",
+		a.spe1 AS "spe1",
+		a.spe2 AS "spe2",
+		a.spe3 AS "spe3",
+		a.del_flag AS "delFlag",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate"
+	</sql>
+	
+	<sql id="rlzyPositionJoins">
+		
+	</sql>
+	
+    
+	<select id="get" resultType="RlzyPosition" >
+		SELECT 
+			<include refid="rlzyPositionColumns"/>
+		FROM rlzy_position a
+		<include refid="rlzyPositionJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RlzyPosition" >
+		SELECT 
+			<include refid="rlzyPositionColumns"/>
+		FROM rlzy_position a
+		<include refid="rlzyPositionJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="companyid != null and companyid != ''">
+				AND a.companyid = #{companyid}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RlzyPosition" >
+		SELECT 
+			<include refid="rlzyPositionColumns"/>
+		FROM rlzy_position a
+		<include refid="rlzyPositionJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rlzy_position(
+			id,
+			companyid,
+			positiontype,
+			positionname,
+			workingplace,
+			salaryrange,
+			education,
+			workingage,
+			recruitnumber,
+			welfaretype,
+			contacts,
+			phone,
+			positiondescription,
+			ispost,
+			remarks,
+			spe1,
+			spe2,
+			spe3,
+			del_flag,
+			create_date,
+			update_date
+		) VALUES (
+			#{id},
+			#{companyid},
+			#{positiontype},
+			#{positionname},
+			#{workingplace},
+			#{salaryrange},
+			#{education},
+			#{workingage},
+			#{recruitnumber},
+			#{welfaretype},
+			#{contacts},
+			#{phone},
+			#{positiondescription},
+			#{ispost},
+			#{remarks},
+			#{spe1},
+			#{spe2},
+			#{spe3},
+			#{delFlag},
+			#{createDate},
+			#{updateDate}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rlzy_position SET 	
+			companyid = #{companyid},
+			positiontype = #{positiontype},
+			positionname = #{positionname},
+			workingplace = #{workingplace},
+			salaryrange = #{salaryrange},
+			education = #{education},
+			workingage = #{workingage},
+			recruitnumber = #{recruitnumber},
+			welfaretype = #{welfaretype},
+			contacts = #{contacts},
+			phone = #{phone},
+			positiondescription = #{positiondescription},
+			ispost = #{ispost},
+			remarks = #{remarks},
+			spe1 = #{spe1},
+			spe2 = #{spe2},
+			spe3 = #{spe3},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM rlzy_position
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE rlzy_position SET 
+			del_flag = #{DEL_FLAG_DELETE}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="RlzyPosition" statementType="STATEMENT">
+		select * FROM rlzy_position  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

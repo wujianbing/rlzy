@@ -1,0 +1,62 @@
+function Index(){
+	
+}
+
+Index.prototype = {
+	init: function(){
+		index.get();//自执行
+		index.bind();//点击事件
+	},
+	get: function(){
+		let self = this;
+		//banner轮播
+		self.carousel();
+		//获取localStorage
+		index.user = JSON.parse(localStorage.getItem('user'));
+	},
+	bind: function(){
+		let self = this;
+		//招
+		$('#recruit').bind('click',self.jobWant_fuc);
+		//投
+		$('#throw').bind('click',self.jobWant_fuc)
+	},
+	jobWant_fuc: function(){
+		let dataId = $(this).attr('data-id');
+		let dom = $('#'+$(this).attr('id'));
+		if(index.user != null || index.user != undefined){
+			let type=index.user.type;
+			if(dataId === '1' && type==='2'){
+				dom.attr('href',url+'/talent/talentList');
+			}else if(dataId === '1' && type==='1'){
+				alert("您好，个人不能查看他人简历信息");
+			}
+		}else{
+			if(dataId === '1'){
+				//招
+				dom.attr('href',url+'/login/tologin');
+			}else{
+				//投
+				dom.attr('href',url+'/talent/talentList');
+			}
+		}
+	},
+	//轮播
+	carousel: function(){
+		layui.use(['carousel', 'form'], function(){
+		  var carousel = layui.carousel
+		  ,form = layui.form;
+		  //常规轮播
+		  carousel.render({
+		    elem: '#carousel',
+		    arrow: 'always',
+			width:'100%',
+			height:'350px',
+			interval:'5000'
+		  });
+		});
+	}
+	
+}
+var index = new Index();
+index.init();
