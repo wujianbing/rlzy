@@ -48,47 +48,41 @@ public class RlzyRelationService extends CrudService<RlzyRelationMapper, RlzyRel
 	}
 	
 	/**
-	 * 求职管理
-	 * @param rlzyRelation
+	 * 个人收藏职位
 	 * @return
 	 */
-	public List<RlzyRelation> deliverList(RlzyRelation rlzyRelation){
-		return rlzyRelationMapper.deliverList(rlzyRelation);
+	public Integer personalCollect(RlzyRelation rlzyRelation){
+		return rlzyRelationMapper.personalCollect(rlzyRelation);
 	}
 	
 	/**
-	 * 收藏管理
-	 * @param rlzyRelation
+	 * 个人邀请面试
 	 * @return
 	 */
-	public List<RlzyRelation> collectList(RlzyRelation rlzyRelation){
-		return rlzyRelationMapper.collectList(rlzyRelation);
+	public Integer personalInvite(RlzyRelation rlzyRelation){
+		return rlzyRelationMapper.personalInvite(rlzyRelation);
 	}
 	
 	/**
-	 * 企业查询收到的简历
-	 * @param rlzyRelation
+	 * 个人投递简历
 	 * @return
 	 */
-	public List<RlzyRelation> companyList(RlzyRelation rlzyRelation){
-		return rlzyRelationMapper.companyList(rlzyRelation);
+	public Integer personalResume(RlzyRelation rlzyRelation){
+		return rlzyRelationMapper.personalResume(rlzyRelation);
 	}
 	
 	/**
-	 * 企业查询收藏的候选人
-	 * @param rlzyRelation
+	 * 企业收到简历
 	 * @return
 	 */
-	public List<RlzyRelation> companyCollectList(RlzyRelation rlzyRelation){
-		return rlzyRelationMapper.companyCollectList(rlzyRelation);
+	public Integer companyResume(RlzyRelation rlzyRelation){
+		return rlzyRelationMapper.companyResume(rlzyRelation);
 	}
-	
 	/**
-	 * 申请记录
-	 * @param rlzyRelation
+	 * 企业邀请面试
 	 * @return
 	 */
-	public List<RlzyRelation> applyList(RlzyRelation rlzyRelation){
-		return rlzyRelationMapper.applyList(rlzyRelation);
+	public Integer companyInvite(RlzyRelation rlzyRelation){
+		return rlzyRelationMapper.companyInvite(rlzyRelation);
 	}
 }

@@ -244,6 +244,72 @@ MyFind.prototype = {
 				  }
 			  });
 		});
+	},
+	add1table: function(res){
+		layer.open({
+			  type: 2,
+			  skin: 'layui-layer-lan', //加上边框
+			  title: "添加合作公司", //不显示标题
+			  area: ['900px', '700px'], //宽高
+			  content:url+"/company/publishCooperation?id="+firmId,
+		});
+	},
+	tab16Submint: function(res){
+		layer.open({
+			  type: 2,
+			  skin: 'layui-layer-molv', //加上边框
+			  title: "查看详情", //不显示标题
+			  area: ['900px', '800px'], //宽高
+			   offset: '100px',
+			 content:url+"/company/lookDetail?id="+res.cooperationId,
+		});
+	},
+	tab17Decline: function(res){
+		console.log(res);
+		layer.confirm('真的删除此条公司信息？', {
+		  btn: ['确定','取消'] //按钮
+		}, function(){
+			$.get(url+"/company/editCooperationDel?id="+res.cooperationId,function(data){
+				  if("1" == data){
+					  layer.msg('删除成功!', {icon: 1});
+					  let dom = $('#iframe');
+					  dom.attr('src',url+'/company/cooperationPage?firmId='+firmId);
+				  }
+			  });
+		});
+	},
+	add2table: function(res){
+		layer.open({
+			  type: 2,
+			  skin: 'layui-layer-lan', //加上边框
+			  title: "添加合作人员", //不显示标题
+			  area: ['900px', '700px'], //宽高
+			  content:url+"/company/publishWorker?id="+firmId,
+		});
+	},
+	tab18Submint: function(res){
+		layer.open({
+			  type: 2,
+			  skin: 'layui-layer-molv', //加上边框
+			  title: "查看详情", //不显示标题
+			  area: ['900px', '800px'], //宽高
+			   offset: '100px',
+			 content:url+"/company/workerDetail?id="+res.workerId,
+		});
+	},
+	tab19Decline: function(res){
+		console.log(res);
+		layer.confirm('真的删除此条人员信息？', {
+		  btn: ['确定','取消'] //按钮
+		}, function(){
+			$.get(url+"/company/editWorkerDel?id="+res.workerId,function(data){
+				  if("1" == data){
+					  layer.msg('删除成功!', {icon: 1});
+					  let dom = $('#iframe');
+					  dom.attr('src',url+'/company/workerPage?firmId='+firmId);
+				  }
+			  });
+		});
 	}
 };
 let myFind = new MyFind();
@@ -288,6 +354,12 @@ $(function(){
 			dom.css({'height':'600px'});
 		}else if(id == 7){
 			dom.attr('src',url+'/company/productPage?firmId='+firmId);
+			dom.css({'height':'600px'});
+		}else if(id == 8){
+			dom.attr('src',url+'/company/cooperationPage?firmId='+firmId);
+			dom.css({'height':'600px'});
+		}else if(id == 9){
+			dom.attr('src',url+'/company/workerPage?firmId='+firmId);
 			dom.css({'height':'600px'});
 		}
 		$(this).addClass('navbar-active');

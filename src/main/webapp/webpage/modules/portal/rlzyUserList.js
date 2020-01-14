@@ -189,13 +189,13 @@ $(document).ready(function() {
 		        }
 		       
 		    }
-			,{
+			/*,{
 		        field: 'deliverytimes',
 		        title: '投递次数',
 		        sortable: true,
 		        sortName: 'deliverytimes'
 		       
-		    }
+		    }*/
 			,{
 		        field: 'remarks',
 		        title: '备注',

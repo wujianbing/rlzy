@@ -3,6 +3,7 @@
  */
 package com.jeeplus.modules.portal.web;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +33,7 @@ import com.jeeplus.core.persistence.Page;
 import com.jeeplus.core.web.BaseController;
 import com.jeeplus.modules.portal.entity.RlzyCompany;
 import com.jeeplus.modules.portal.service.RlzyCompanyService;
+import com.jeeplus.modules.sys.utils.DictUtils;
 
 /**
  * 企业信息表Controller
@@ -62,8 +64,17 @@ public class RlzyCompanyController extends BaseController {
 	 */
 	@RequiresPermissions("portal:rlzyCompany:list")
 	@RequestMapping(value = {"list", ""})
-	public String list(RlzyCompany rlzyCompany, Model model) {
-		model.addAttribute("rlzyCompany", rlzyCompany);
+	public String list(RlzyCompany rlzyCompany, Model model,String flag) {
+		if("1".equals(flag)) {
+			model.addAttribute("rlzyCompany", rlzyCompany);
+			model.addAttribute("reviewstate","1");
+		}else if("2".equals(flag)){
+			model.addAttribute("rlzyCompany", rlzyCompany);
+			model.addAttribute("reviewstate","2");
+		}else{
+			model.addAttribute("rlzyCompany", rlzyCompany);
+			model.addAttribute("reviewstate","0");
+		}
 		return "modules/portal/rlzyCompanyList";
 	}
 	
@@ -74,6 +85,10 @@ public class RlzyCompanyController extends BaseController {
 	@RequiresPermissions("portal:rlzyCompany:list")
 	@RequestMapping(value = "data")
 	public Map<String, Object> data(RlzyCompany rlzyCompany, HttpServletRequest request, HttpServletResponse response, Model model) {
+		String reviewstate = request.getParameter("reviewstate");
+		if(StringUtils.isNotBlank(reviewstate)) {
+			rlzyCompany.setReviewstate(reviewstate);
+		}
 		Page<RlzyCompany> page = rlzyCompanyService.findPage(new Page<RlzyCompany>(request, response), rlzyCompany); 
 		return getBootstrapData(page);
 	}
@@ -227,5 +242,44 @@ public class RlzyCompanyController extends BaseController {
 		return j;
     }
 	
+	/**
+	 * 审核页面
+	 */
+	@RequestMapping(value = "check")
+	public String check(RlzyCompany rlzyCompany, Model model) {
+		model.addAttribute("rlzyCompany",rlzyCompany);
+		return "modules/portal/checkCompanyForm";
+	}
+
+	/**
+	 * 审核结果
+	 * 
+	 * @param check
+	 * @param checkVal
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "updateCheck")
+	public AjaxJson updateCheck(@RequestParam String check, @RequestParam String checkVal, @RequestParam String id,@RequestParam String options,@RequestParam String ispublic,@RequestParam String rank) {
+		RlzyCompany rlzyCompany = rlzyCompanyService.get(id);
+		AjaxJson j = new AjaxJson();
+		if ("2".equals(check)) {
+			rlzyCompany.setReviewstate("2");
+			rlzyCompany.setCheckval(checkVal);
+			rlzyCompanyService.save(rlzyCompany);
+		} else {
+			rlzyCompany.setReviewstate("0");
+			rlzyCompany.setCheckval(checkVal);
+			rlzyCompany.setIstop(options);
+			if("2".equals(rlzyCompany.getCompanytype())) {
+				rlzyCompany.setIspublic(ispublic);
+				rlzyCompany.setRank(rank);
+			}
+			rlzyCompanyService.save(rlzyCompany);
+		}
+		j.setSuccess(true);
+		j.setMsg("审核成功！");
+		return j;
+	}
 
 }

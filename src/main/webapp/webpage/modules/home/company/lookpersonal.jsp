@@ -20,6 +20,21 @@
  .lay3{
  	color:#ff6501;
  }
+ .infopname1 .sitename:nth-of-type(2n) {
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    /* padding-right: 2px; */
+    text-overflow: ellipsis;
+}
+.infopname1 .sitename {
+    display: inline-block;
+    flex: 1;
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 		</style>
 	</head>
 
@@ -63,7 +78,7 @@
 					<div class="infoname">
 						<h5><i class="layui-icon  layui-icon-note lay2 " style=""></i> 求职意向</h5>
 						<p class="infopname1">
-							<span class="sitename">期望职位：<span>${fns:getDictLabel(rlzyUser.desiredposition,"desired_position",defaultValue)}</span></span>
+							<span class="sitename">期望职位：<span>${rlzyUser.desiredposition}</span></span>
 						<span class="sitename">期望行业：<span>${fns:getDictLabel(rlzyUser.desiredindustry,"desired_industry",defaultValue)}</span></span>
 						<span class="sitename">期望薪资：<span>${fns:getDictLabel(rlzyUser.salary,"salary",defaultValue)}</span></span>
 						</p>
@@ -104,7 +119,7 @@
 											class="studyTime2"><fmt:formatDate
 													value="${rlzyResume.enddate }" pattern="yyyy-MM" /></span>【${fns:getComparePrecise(rlzyResume.startdate,rlzyResume.enddate)}】</span>
 										<span
-											class="layui-timeline-title rev-teach2 layui-timeline-mar tety">学历：<span>${fns:getDictLabel(rlzyResume.education,"education",defaultValue) }</span></span>
+											class="layui-timeline-title rev-teach2 layui-timeline-mar tety" style='overflow: visible;'>学历：<span >${fns:getDictLabel(rlzyResume.education,"education",defaultValue) }</span></span>
 										<span
 											class="layui-timeline-title rev-teach3 tety layui-timeline-mar">学校名称：<span
 											title="${rlzyResume.name }">${rlzyResume.name }</span></span> <span

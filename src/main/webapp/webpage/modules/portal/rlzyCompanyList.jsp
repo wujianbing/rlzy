@@ -27,11 +27,38 @@
 			</div>
 			 <div class="col-xs-12 col-sm-6 col-md-4">
 				<label class="label-item single-overflow pull-left" title="企业规模：">企业规模：</label>
-				<form:input path="companyscale" htmlEscape="false" maxlength="2"  class=" form-control"/>
+				<form:select class="form-control" path="companyscale">
+					<form:option value="" label="请选择" />
+					<form:options items="${fns:getDictList('company_scale')}" itemLabel="label" itemValue="value" htmlEscape="false" />
+				</form:select>
 			</div>
 			 <div class="col-xs-12 col-sm-6 col-md-4">
 				<label class="label-item single-overflow pull-left" title="企业性质：">企业性质：</label>
-				<form:input path="companynature" htmlEscape="false" maxlength="2"  class=" form-control"/>
+				<form:select class="form-control" path="companynature">
+					<form:option value="" label="请选择" />
+					<form:options items="${fns:getDictList('company_nature')}" itemLabel="label" itemValue="value" htmlEscape="false" />
+				</form:select>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4">
+				<label class="label-item single-overflow pull-left" title="是否置顶：">是否置顶：</label>
+				<form:select class="form-control" path="istop">
+					<form:option value="" label="请选择" />
+					<form:options items="${fns:getDictList('is_top')}" itemLabel="label" itemValue="value" htmlEscape="false" />
+				</form:select>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4">
+				<label class="label-item single-overflow pull-left" title="入驻类型：">入驻类型：</label>
+				<form:select class="form-control" path="companytype">
+					<form:option value="" label="请选择" />
+					<form:options items="${fns:getDictList('company_type')}" itemLabel="label" itemValue="value" htmlEscape="false" />
+				</form:select>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4">
+				<label class="label-item single-overflow pull-left" title="所属行业：">所属行业：</label>
+				<form:select class="form-control" path="industry">
+					<form:option value="" label="请选择" />
+					<form:options items="${fns:getDictList('desired_industry')}" itemLabel="label" itemValue="value" htmlEscape="false" />
+				</form:select>
 			</div>
 		 <div class="col-xs-12 col-sm-6 col-md-4">
 			<div style="margin-top:26px">
@@ -40,11 +67,13 @@
 			 </div>
 	    </div>	
 	</form:form>
+	<input id="reviewstate" hidden="hidden" value="${reviewstate}"/>
 	</div>
 	</div>
 	
 	<!-- 工具栏 -->
 	<div id="toolbar">
+			<c:if test="${reviewstate == 0}">
 			<shiro:hasPermission name="portal:rlzyCompany:add">
 				<button id="add" class="btn btn-primary" onclick="add()">
 					<i class="glyphicon glyphicon-plus"></i> 新建
@@ -68,11 +97,19 @@
 					<i class="fa fa-file-excel-o"></i> 导出
 				</button>
 			 </shiro:hasPermission>
+			 </c:if>
+			 <c:if test="${reviewstate != 1}">
 	                 <shiro:hasPermission name="portal:rlzyCompany:view">
 				<button id="view" class="btn btn-default" disabled onclick="view()">
 					<i class="fa fa-search-plus"></i> 查看
 				</button>
 			</shiro:hasPermission>
+			</c:if>
+			<c:if test="${reviewstate == 1}">
+				<button id="check" class="btn btn-danger">
+					<i class="fa fa-file-excel-o"></i> 审核
+				</button>
+			</c:if>
 		    </div>
 		
 	<!-- 表格 -->

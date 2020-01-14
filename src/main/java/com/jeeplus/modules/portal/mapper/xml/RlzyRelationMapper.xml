@@ -111,76 +111,74 @@
 		</choose>
 	</select>
 	
-	<!--面试邀请查询-->
-	<!-- <select id="deliverList" resultType="RlzyRelation">
+	<!--个人收藏职位数-->
+	<select id="personalCollect" resultType="int">
 		SELECT 
-			<include refid="rlzyRelationColumns"/>
+			count(*)
 		FROM rlzy_relation a
-			<include refid="rlzyRelationJoins"/>
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
-			AND a.invite = #{invite}
-			AND a.userid = #{userid}
-			AND a.companydealstate = #{companydealstate}
+			a.userid = #{userid}
+			AND
+			a.collectionstate = #{collectionstate}
 		</where>
 			ORDER BY a.update_date DESC 
-	</select> -->
+	</select>
 	
-	<!--申请查询-->
-	<!-- <select id="applyList" resultType="RlzyRelation">
+	<!--个人投递简历数-->
+	<select id="personalResume" resultType="int">
 		SELECT 
-			<include refid="rlzyRelationColumns"/>
+			count(*)
 		FROM rlzy_relation a
-			<include refid="rlzyRelationJoins"/>
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
-			AND a.deliverystate = #{deliverystate}
-			AND a.userid = #{userid}
+			a.userid = #{userid}
+			AND 
+			a.deliverystate = #{deliverystate}
 		</where>
 			ORDER BY a.update_date DESC 
-	</select> -->
+	</select>
 	
-	<!--收藏查询-->
-	<!-- <select id="collectList" resultType="RlzyRelation">
+	<!--企业收到简历数-->
+	<select id="companyResume" resultType="int">
 		SELECT 
-			<include refid="rlzyRelationColumns"/>
+			count(*)
 		FROM rlzy_relation a
-			<include refid="rlzyRelationJoins"/>
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
-			AND a.collectionstate = #{collectionstate}
-			AND a.userid = #{userid}
+			a.companyid = #{companyid}
+			AND 
+			a.deliverystate = #{deliverystate}
 		</where>
 			ORDER BY a.update_date DESC 
-	</select> -->
+	</select>
 	
-	<!--企业查询申请的简历-->
-	<!-- <select id="companyList" resultType="RlzyRelation">
+	<!--企业邀请面试-->
+	<select id="companyInvite" resultType="int">
 		SELECT 
-			<include refid="rlzyRelationColumns"/>
+			count(*)
 		FROM rlzy_relation a
-			<include refid="rlzyRelationJoins"/>
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
-			AND a.deliverystate = #{deliverystate}
-			AND a.companyid = #{companyid}
+			a.companyid = #{companyid}
+			AND 
+			a.invite = #{invite}
+			AND
+			a.companydealstate = #{companydealstate}
 		</where>
 			ORDER BY a.update_date DESC 
-	</select> -->
+	</select>
 	
-	<!--企业查询收藏的候选人-->
-	<!-- <select id="companyCollectList" resultType="RlzyRelation">
+	<!--个人邀请面试-->
+	<select id="personalInvite" resultType="int">
 		SELECT 
-			<include refid="rlzyRelationColumns"/>
+			count(*)
 		FROM rlzy_relation a
-			<include refid="rlzyRelationJoins"/>
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
-			AND a.companycollectstate = #{companycollectstate}
-			AND a.companyid = #{companyid}
+			a.userid = #{userid}
+			AND 
+			a.invite = #{invite}
+			AND
+			a.companydealstate = #{companydealstate}
 		</where>
 			ORDER BY a.update_date DESC 
-	</select> -->
+	</select>
 	
 	<insert id="insert">
 		INSERT INTO rlzy_relation(

@@ -1,5 +1,6 @@
 package com.jeeplus.modules.home.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -71,7 +72,7 @@ public class HomeController {
 	 */
 	@RequestMapping("/index")
 	public String getList(Model model,News news,HttpServletRequest request,RlzyPosition rlzyPosition) {
-		
+		String users = CookieUtils.getCookie(request, "user");
 		Page<News> page = new Page<>();
 		page.setPageNo(1);
 		page.setPageSize(10);
@@ -81,19 +82,18 @@ public class HomeController {
 		news.setNewsModel(newsModel);
 		List<News> bannerList = newsService.findList(news);
 		//首页飘窗
-	    NewsModel newsModels = new NewsModel();  
-	    newsModels.setId("98b0c7274b404103937b6072392db651");
-	    news.setNewsModel(newsModels);
+	    newsModel.setId("98b0c7274b404103937b6072392db651");
+	    news.setNewsModel(newsModel);
 	    List<News> bannerLists = newsService.findList(news);
 		//园区动态
-		newsModel.setId("7d4fecb7a48b487cab1e6fd1ab61129d");
-		news.setNewsModel(newsModel);
-		Page<News> yqdtpage = newsService.findPage(page, news);
-
-		//行业动态
 		newsModel.setId("5ad717509e9b4cd6b10b608d6d17e709");
 		news.setNewsModel(newsModel);
-		Page<News> hypage = newsService.findPage(page, news);
+		List<News> yqdtlist= newsService.findPage(page, news).getList();
+
+		//政策导读
+		newsModel.setId("7d4fecb7a48b487cab1e6fd1ab61129d");
+		news.setNewsModel(newsModel);
+		List<News> zcddlist= newsService.findPage(page, news).getList();
 
 		//视频
 		Video video =new Video();
@@ -102,29 +102,56 @@ public class HomeController {
 		videopage.setPageSize(10);
 		videopage = videoService.findPage(videopage, video);
 		
-		//入驻企业
+		/*//入驻企业
 		RlzyCompany rlzyCompany =new RlzyCompany();
 		Page<RlzyCompany> companypage = new Page<RlzyCompany>();
 		companypage.setPageNo(1);
 		companypage.setPageSize(8);
-		companypage =rlzyCompanyService.findPage(companypage, rlzyCompany);
+		companypage =rlzyCompanyService.findPage(companypage, rlzyCompany);*/
+		//入驻企业
+	    RlzyCompany rlzyCompany =new RlzyCompany();
+	    rlzyCompany.setIstop("1");
+	    rlzyCompany.setReviewstate("0");
+	    Page<RlzyCompany> companypage = new Page<RlzyCompany>();
+	    companypage.setPageNo(1);
+	    companypage.setPageSize(8);
+	    companypage =rlzyCompanyService.findPage(companypage, rlzyCompany);
 		
-		//急聘模块
+		//急聘岗位
 		rlzyPosition.setPostflag("1");
 		rlzyPosition.setLine("1");
-		List<RlzyPosition> findListHome = rlzyPositionService.findListHome(rlzyPosition);
-		
-		//最新模块
-		List<RlzyPosition> findDescsList = rlzyPositionService.findDescsList(rlzyPosition);
+		List<RlzyPosition> findList = rlzyPositionService.findListHome(rlzyPosition);
+		List<RlzyPosition> findListHome = new ArrayList<RlzyPosition>();
+		for (RlzyPosition position : findList) {
+			if(StringUtils.isBlank(users)) {
+				position.setStatus("0");
+			}
+			findListHome.add(position);
+		}
+		//最新岗位
+		List<RlzyPosition> findDescsnewList = rlzyPositionService.findDescsList(rlzyPosition);
+		List<RlzyPosition> findDescsList = new ArrayList<RlzyPosition>();
+		for (RlzyPosition position : findDescsnewList) {
+			if(StringUtils.isBlank(users)) {
+				position.setStatus("0");
+			}
+			findDescsList.add(position);
+		}
+		//招聘会
+		newsModel.setId("100f08b3c8ac4455a7950d12d409e65c");
+		news.setNewsModel(newsModel);
+		news.setIsTop("1");
+		List<News> zphlist = newsService.findPage(page, news).getList();
 		
 		model.addAttribute("bannerList", bannerList);
 		model.addAttribute("bannerLists", bannerLists);
-		model.addAttribute("yqdtlist", yqdtpage.getList());
-		model.addAttribute("hylist", hypage.getList());
+		model.addAttribute("yqdtlist", yqdtlist);
+		model.addAttribute("zcddlist", zcddlist);
 		model.addAttribute("videolist", videopage.getList());
 		model.addAttribute("companylist", companypage.getList());
 		model.addAttribute("findListHome",findListHome);
 		model.addAttribute("findDescsList",findDescsList);
+		model.addAttribute("zphlist",zphlist);
 		return "modules/home/index";
 		
 	}
@@ -137,11 +164,11 @@ public class HomeController {
 	 */
 	@RequestMapping("/register")
 	 public String register(Model model,News news) {
-	  NewsModel newsModel = new NewsModel();  
-	  newsModel.setId("eb552e9a00294d01a3c27514601c96e4");
-	  news.setNewsModel(newsModel);
-	  List<News> parkSurveyList = newsService.findList(news);
-	  model.addAttribute("news", parkSurveyList.get(0));
+//	  NewsModel newsModel = new NewsModel();  
+//	  newsModel.setId("eb552e9a00294d01a3c27514601c96e4");
+//	  news.setNewsModel(newsModel);
+//	  List<News> parkSurveyList = newsService.findList(news);
+//	  model.addAttribute("news", parkSurveyList.get(0));
 	  return "modules/home/register";
 	 }
 	/**
@@ -207,63 +234,69 @@ public class HomeController {
 	}
 	
 	/**
-	 * 园区服务
-	 * @return
-	 */
-	@RequestMapping("/parkServer")
-	public String parkServer(Model model,RlzyCompany rlzyCompany) {
-		rlzyCompany.setServiceType("1");
-		Page<RlzyCompany> companypage = new Page<RlzyCompany>();
-		companypage.setPageNo(1);
-		companypage.setPageSize(10);
-		companypage =rlzyCompanyService.findPage(companypage, rlzyCompany);
-		for(RlzyCompany RlzyCompany:companypage.getList()){
-			String pic = RlzyCompany.getCasepic();
-			if(pic != null && pic != ""){
-			String[] arr = StringUtils.split(pic, "\\|");
-			if(arr.length >= 2){
-				RlzyCompany.setCasepic(arr[0]);
-				RlzyCompany.setSpe3(arr[1]);
-			}else if(arr.length == 1){
-				RlzyCompany.setCasepic(arr[0]);
-				RlzyCompany.setSpe3("");
-			}else{
-				RlzyCompany.setCasepic("");
-				RlzyCompany.setSpe3("");
-			}
-			}
-		}
-		model.addAttribute("companypage",companypage);
-		return "modules/home/parkServer";
-	}
-	
-	@ResponseBody
-	@RequestMapping("/parkList")
-	public Page<RlzyCompany> parkList(String id,String page,String pageSize){
-		RlzyCompany rlzyCompany = new RlzyCompany();
-		rlzyCompany.setServiceType(id);
-		Page<RlzyCompany> companypage = new Page<RlzyCompany>();
-		companypage.setPageNo(1);
-		companypage.setPageSize(10);
-		companypage =rlzyCompanyService.findPage(companypage, rlzyCompany);
-		for(RlzyCompany RlzyCompany:companypage.getList()){
-			String pic = RlzyCompany.getCasepic();
-			if(pic != null && pic != ""){
-			String[] arr = StringUtils.split(pic, "\\|");
-			if(arr.length >= 2){
-				RlzyCompany.setCasepic(arr[0]);
-				RlzyCompany.setSpe3(arr[1]);
-			}else if(arr.length == 1){
-				RlzyCompany.setCasepic(arr[0]);
-				RlzyCompany.setSpe3("");
-			}else{
-				RlzyCompany.setCasepic("");
-				RlzyCompany.setSpe3("");
-			}
-			}
-		}
-		return companypage;
-	}
+	  * 园区服务
+	  * @return
+	  */
+	 @RequestMapping("/parkServer")
+	 public String parkServer(Model model,RlzyCompany rlzyCompany) {
+	  rlzyCompany.setReviewstate("0");
+	  rlzyCompany.setServiceType("1");
+	  rlzyCompany.setCompanytype("2");
+	  rlzyCompany.setIspublic("1");
+	  Page<RlzyCompany> companypage = new Page<RlzyCompany>();
+	  companypage.setPageNo(1);
+	  companypage.setPageSize(10);
+	  companypage =rlzyCompanyService.findPage(companypage, rlzyCompany);
+	  for(RlzyCompany RlzyCompany:companypage.getList()){
+	   String pic = RlzyCompany.getCasepic();
+	   if(pic != null && pic != ""){
+	   String[] arr = StringUtils.split(pic, "\\|");
+	   if(arr.length >= 2){
+	    RlzyCompany.setCasepic(arr[0]);
+	    RlzyCompany.setSpe3(arr[1]);
+	   }else if(arr.length == 1){
+	    RlzyCompany.setCasepic(arr[0]);
+	    RlzyCompany.setSpe3("");
+	   }else{
+	    RlzyCompany.setCasepic("");
+	    RlzyCompany.setSpe3("");
+	   }
+	   }
+	  }
+	  model.addAttribute("companypage",companypage);
+	  return "modules/home/parkServer";
+	 }
+	 
+	 @ResponseBody
+	 @RequestMapping("/parkList")
+	 public Page<RlzyCompany> parkList(String id,String page,String pageSize){
+	  RlzyCompany rlzyCompany = new RlzyCompany();
+	  rlzyCompany.setServiceType(id);
+	  rlzyCompany.setReviewstate("0");
+	  rlzyCompany.setCompanytype("2");
+	  rlzyCompany.setIspublic("1");
+	  Page<RlzyCompany> companypage = new Page<RlzyCompany>();
+	  companypage.setPageNo(1);
+	  companypage.setPageSize(10);
+	  companypage =rlzyCompanyService.findPage(companypage, rlzyCompany);
+	  for(RlzyCompany RlzyCompany:companypage.getList()){
+	   String pic = RlzyCompany.getCasepic();
+	   if(pic != null && pic != ""){
+	   String[] arr = StringUtils.split(pic, "\\|");
+	   if(arr.length >= 2){
+	    RlzyCompany.setCasepic(arr[0]);
+	    RlzyCompany.setSpe3(arr[1]);
+	   }else if(arr.length == 1){
+	    RlzyCompany.setCasepic(arr[0]);
+	    RlzyCompany.setSpe3("");
+	   }else{
+	    RlzyCompany.setCasepic("");
+	    RlzyCompany.setSpe3("");
+	   }
+	   }
+	  }
+	  return companypage;
+	 }
 	
 	
 	/**
@@ -316,6 +349,13 @@ public class HomeController {
 			session.setAttribute("userId",list.get(0).getId());
 			return "2";
 		}else {
+			RlzyCompany rlzyCompany =new RlzyCompany();
+			rlzyCompany.setTelephone(phone);
+			List<RlzyCompany> rlzyCompanyList = rlzyCompanyService.findList(rlzyCompany);
+			if(rlzyCompanyList.size()>0) {
+				session.setAttribute("companyId",rlzyCompanyList.get(0).getId());
+				return "2";
+			}
 			return "3";
 		}
 	}
@@ -523,5 +563,63 @@ public class HomeController {
 			Page<News> serviceList = newsService.findPage(pages, news);
 			return serviceList;
 		}
+		/**
+		   * 企业风采
+		   * @return
+		   */
+		  @RequestMapping(value="companyFeatures")
+		  public String companyFeatures(Model model,HttpServletRequest request,HttpServletResponse response,RlzyCompany rlzyCompany){
+		   Page<RlzyCompany> pages = new Page<RlzyCompany>();
+		   pages.setPageNo(1);
+		   pages.setPageSize(10);
+		   Page<RlzyCompany> rlzyCompanyList = rlzyCompanyService.findPage(pages, rlzyCompany);
+		   model.addAttribute("rlzyCompanyList", rlzyCompanyList.getList());
+		   model.addAttribute("count", rlzyCompanyList.getCount());
+		   return "modules/home/companyFeatures";
+		  }
+		  
+		  /**
+		   * 根据页码显示企业风采
+		   * @param id
+		   * @param page
+		   * @param pageSize
+		   * @return
+		   */
+		  @ResponseBody
+		  @RequestMapping("rlzycompanypage")
+		  public List<RlzyCompany> rlzycompanypage(String page,String pageSize){
+		   RlzyCompany rlzyCompany = new RlzyCompany();
+		   Page<RlzyCompany> pages = new Page<>();
+		   pages.setPageNo(Integer.parseInt(page));
+		   pages.setPageSize(Integer.parseInt(pageSize));
+		   Page<RlzyCompany> companyList = rlzyCompanyService.findPage(pages, rlzyCompany);
+		   return companyList.getList();
+		  }
+		  
+		  
+		  
+		  /**
+		   * 根据页码显示企业风采
+		   * @param name
+		   * @param page
+		   * @param pageSize
+		   * @return
+		   */
+		  @ResponseBody
+		  @RequestMapping("rlzyCompanyListBySelect")
+		  public List<RlzyCompany> rlzyCompanyListBySelect(String name,String page,String pageSize){
+		   RlzyCompany rlzyCompany = new RlzyCompany();
+		   rlzyCompany.setCompanyname(name);
+		   Page<RlzyCompany> pages = new Page<>();
+		   pages.setPageNo(Integer.parseInt(page));
+		   pages.setPageSize(Integer.parseInt(pageSize));
+		   Page<RlzyCompany> companyList = rlzyCompanyService.findPage(pages, rlzyCompany);
+		   List<RlzyCompany> list = new ArrayList<RlzyCompany>();
+		   for(RlzyCompany rlzyCompanys : companyList.getList()){
+		    rlzyCompanys.setSpe3(String.valueOf(companyList.getCount()));
+		    list.add(rlzyCompanys);
+		   }
+		   return list;
+		  }
 	
 }

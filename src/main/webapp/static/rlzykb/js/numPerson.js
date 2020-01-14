@@ -6,6 +6,10 @@ var date =[];
 var delCount =[];
 var companyCount =[];
 var userCount = [];
+var salary ='';
+var education ='';
+var workingage ='';
+var userage ='';
 
 	$.ajax({
 		url :'/rlzy/data/userCurve' , // 请求路径
@@ -17,7 +21,6 @@ var userCount = [];
 						var user = res[i];
 						var users = user[j];
 						date.push(users.date);
-						console.log(date);
 						userCount.push(users.count);
 					}else if(i == 1){
 						var del= res[i];
@@ -42,6 +45,11 @@ NumPerson.prototype = {
 			contentType: "application/json;charset=utf-8",
 			success:function(data){
 				map = data;
+				salary = data.salarys;
+				education = data.education;
+				workingage = data.workingage;
+				userage = data.userage;
+				console.log(salary);
 				numPerson.get();
 			}
 		});
@@ -58,110 +66,22 @@ NumPerson.prototype = {
 				name: '女'
 			}
 		];
-		_self.pie_s("pie1", "人员性别占比", dataLevelPieLeg, datalevelPieSer, "pie");
+		_self.pie_s("pie1", "注册人员人员性别占比", dataLevelPieLeg, datalevelPieSer, "pie");
 		
 		let dataLevelPieLeg4 = [];
-		let datalevelPieSer4= [{
-					value: map.salary,
-					name: '1-1.5K/月'
-				},
-				{
-					value: map.salary1,
-					name: '1.5-2K/月'
-				},
-				{
-					value: map.salary2,
-					name: '2-3K/月'
-				},
-				{
-					value: map.salary3,
-					name: '3-5K/月'
-				},
-				{
-					value: map.salary4,
-					name: '5-10K/月'
-				},
-				{
-					value: map.salary5,
-					name: '10K以上/月'
-				}
-		];
-		_self.pie_s("pie4", "期望薪资分布", dataLevelPieLeg4, datalevelPieSer4, "pie");
+		let datalevelPieSer4= salary;
+		_self.pie_s("pie4", "注册人员期望薪资分布", dataLevelPieLeg4, datalevelPieSer4, "pie");
 		
 		let dataDomainPieLeg = [];
-		let dataDomainPieSer = [{
-				value: 234,
-				name: '18-25岁'
-			},
-			{
-				value: 310,
-				name: '25-35岁'
-			},
-			{
-				value: 648,
-				name: '35-45岁'
-			},
-			{
-				value: 335,
-				name: '45-55岁'
-			},
-			{
-				value: 185,
-				name: '55岁以上'
-			}
-		];
+		let dataDomainPieSer = userage;
 		_self.pie_h("pie2", "注册人员年龄分布", dataDomainPieLeg, dataDomainPieSer, "pie",'55%');
 		
-		let dataDomainPieLeg1 = [];
-		let dataDomainPieSer1 = [{
-			value: map.education,
-			name: '初中'
-			},
-			{
-				value: map.education1,
-				name: '高中'
-			},
-			{
-				value: map.education2,
-				name: '专科'
-			},
-			{
-				value: map.education3,
-				name: '本科'
-			},
-			{
-				value: map.education4,
-				name: '硕士'
-			},
-			{
-				value: map.education5,
-				name: '博士'
-			}
-		];
+		let dataDomainPieLeg1 = ['PLC故障', 'CNC故障', '加工程序出错', '单元出错', '搜索出错'];
+		let dataDomainPieSer1 = education;
 		_self.pie_h("pie3", "注册人员学历分布", dataDomainPieLeg1, dataDomainPieSer1, "pie",'55%');
-		let dataDomainPieLeg2 = ['1年以下', '1-3年', '3-5年', '5-10年', '10年以上'];
-		let dataDomainPieSer2 = [{
-				value: 234,
-				name: '1年以下'
-			},
-			{
-				value: 310,
-				name: '1-3年'
-			},
-			{
-				value: 648,
-				name: '3-5年'
-			},
-			{
-				value: 335,
-				name: '5-10年'
-			},
-			{
-				value: 185,
-				name: '10年以上'
-			}
-		];
-		_self.pie_h("pie5", "工作经验分布", dataDomainPieLeg2, dataDomainPieSer2, "pie",'45%');
+		let dataDomainPieLeg2 = [];
+		let dataDomainPieSer2 = workingage;
+		_self.pie_h("pie5", "注册人员工作经验分布", dataDomainPieLeg2, dataDomainPieSer2, "pie",'45%');
 		_self.bar('bar1');
 		_self.line('line1');
 	},
@@ -198,13 +118,11 @@ NumPerson.prototype = {
 				}
 			},
 			series: [{
-				name: '求职者分布',
+				name: '求职者信息',
 				type: 'pie',
 				radius: '80%',
 				center: ['50%', '55%'],
-				data: dataSer.sort(function(a, b) {
-					return a.value - b.value;
-				}),
+				data: dataSer,
 				roseType: 'radius',
 				label: {
 					normal: {
@@ -322,15 +240,14 @@ NumPerson.prototype = {
 	// 柱状图
 			bar: function(id) {
 				$.ajax({
-					url:'/rlzy/data/desiredPosition',
+					url:'/rlzy/data/industry',
 					type:'post',
 					success:function(data){
-						console.log(data);
 						var name =[];
 						var count=[];
-						for(i=0;i<data.length;i++){
-							name.push(data[i].desiredposition)
-							count.push(data[i].count)
+						for(var key in data){
+							name.push(key)
+							count.push(data[key])
 						}
 						let option = {
 								title: {

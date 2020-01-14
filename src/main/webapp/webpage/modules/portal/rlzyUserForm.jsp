@@ -97,7 +97,7 @@
 					</td>
 					<td class="width-10 active"><label class="pull-right">密码：</label></td>
 					<td class="width-15">
-						<form:input path="password" type="password" htmlEscape="false"    class="form-control required"/>
+						<form:input path="password"  htmlEscape="false"    class="form-control required"/>
 					</td>
 					<td class="width-10 active"><label class="pull-right">性别：</label></td>
 					<td class="width-15">
@@ -189,12 +189,16 @@
 							<form:options items="${fns:getDictList('desired_industry')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 						</form:select>					
 					</td>
-					<td class="width-10 active"><label class="pull-right">期望职位：</label></td>
+					<%-- <td class="width-10 active"><label class="pull-right">期望职位：</label></td>
 					<td class="width-15">
 					<form:select path="desiredposition" class="form-control ">
 							<form:option value="" label="请选择"/>
 							<form:options items="${fns:getDictList('desired_position')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 						</form:select>
+					</td> --%>
+					<td class="width-10 active"><label class="pull-right">投递次数：</label></td>
+					<td class="width-15">
+						<form:input path="deliverytimes" htmlEscape="false"    class="form-control "/>
 					</td>
 					<td class="width-10 active"><label class="pull-right">期望薪资：</label></td>
 					<td class="width-15">
@@ -215,10 +219,6 @@
 							<form:option value="" label="请选择"/>
 							<form:options items="${fns:getDictList('is_public')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 						</form:select>					
-					</td>
-					<td class="width-10 active"><label class="pull-right">投递次数：</label></td>
-					<td class="width-15">
-						<form:input path="deliverytimes" htmlEscape="false"    class="form-control "/>
 					</td>
 					<td class="width-10 active"><label class="pull-right">自我描述：</label></td>
 					<td class="width-15" colspan="3" >

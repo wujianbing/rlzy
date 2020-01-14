@@ -62,7 +62,15 @@ public class PositionController {
 	 * @return
 	 */
 	@RequestMapping("/positionList")
-	public String PositionList(Model model, RlzyUser rlzyUser, RlzyPosition rlzyPosition) {
+	public String PositionList(HttpServletRequest request,Model model, RlzyUser rlzyUser, RlzyPosition rlzyPosition) {
+		String user = CookieUtils.getCookie(request, "user");
+		String id="";
+		String type="";
+		if(StringUtils.isNotBlank(user)) {
+			JSONObject object = (JSONObject) JSONObject.parse(user);
+			id = object.getString("id");
+			type = object.getString("type");
+		}
 		// 分页显示查询首页10条
 		Page<RlzyPosition> page = new Page<>();
 		page.setPageNo(1);
@@ -74,6 +82,12 @@ public class PositionController {
 		List<RlzyPosition> positionList = new ArrayList<>();
 		for(RlzyPosition postion : rlzyPositionListJp.getList()){
 			String wType = postion.getWelfaretype();
+			if(StringUtils.isBlank(user)) {
+				postion.setStatus("0");
+			}
+			if(!id.equals(postion.getCompanyid())) {
+				postion.setFlag("3");
+			}
 			if(wType != null){
 				String[] arr = StringUtils.split(wType, "\\,");
 				StringBuilder builder = new StringBuilder();
@@ -99,8 +113,14 @@ public class PositionController {
 		rlzyPosition.setLine("1");
 		Page<RlzyPosition> rlzyPositionListPt = rlzyPositionService.findPages(page, rlzyPosition);
 		List<RlzyPosition> positionListFast = new ArrayList<>();
-		for(RlzyPosition postion : rlzyPositionListJp.getList()){
+		for(RlzyPosition postion : rlzyPositionListPt.getList()){
 			String wType = postion.getWelfaretype();
+			if(StringUtils.isBlank(user)) {
+				postion.setStatus("0");;
+			}
+			if(!id.equals(postion.getCompanyid())) {
+				postion.setFlag("3");
+			}
 			if(wType != null){
 				String[] arr = StringUtils.split(wType, "\\,");
 				StringBuilder builder = new StringBuilder();
@@ -121,7 +141,17 @@ public class PositionController {
 		model.addAttribute("rlzyPositionListPt", positionListFast);
 		model.addAttribute("count1", rlzyPositionListPt.getCount());
 		// 查询急聘职位并按照发布时间降序排列
-		List<RlzyPosition> findDescList = rlzyPositionService.findDescList(rlzyPosition);
+		List<RlzyPosition> findDescListnew = rlzyPositionService.findDescList(rlzyPosition);
+		List<RlzyPosition> findDescList = new ArrayList<>();
+		for(RlzyPosition postion : findDescListnew){
+			if(StringUtils.isBlank(user)) {
+				postion.setStatus("0");
+			}
+			if(!id.equals(postion.getCompanyid())) {
+				postion.setFlag("3");
+			}
+			findDescList.add(postion);
+		}
 		model.addAttribute("findDescList", findDescList);
 		// 字典查询筛选的条件 下拉框
 		List<DictValue> salarys = DictUtils.getDictList("salary");
@@ -136,6 +166,7 @@ public class PositionController {
 		model.addAttribute("nature", nature);
 		model.addAttribute("education", education);
 		model.addAttribute("uTime", uTime);
+		model.addAttribute("type", type);
 		return "modules/home/findInfo";
 	}
 
@@ -149,7 +180,16 @@ public class PositionController {
 	 */
 	@ResponseBody
 	@RequestMapping("pageListJp")
-	public List<RlzyPosition> pageListJp(String id, String page, String pageSize) {
+	public List<RlzyPosition> pageListJp(HttpServletRequest request,String page, String pageSize) {
+		String user = CookieUtils.getCookie(request, "user");
+		List<RlzyPosition> list = new ArrayList<RlzyPosition>();
+		String id="";
+		String type="";
+		if(StringUtils.isNotBlank(user)) {
+			JSONObject object = (JSONObject) JSONObject.parse(user);
+			id = object.getString("id");
+			type = object.getString("type");
+		}
 		RlzyPosition rlzyPosition = new RlzyPosition();
 		Page<RlzyPosition> pages = new Page<>();
 		pages.setPageNo(Integer.parseInt(page));
@@ -158,12 +198,18 @@ public class PositionController {
 		rlzyPosition.setPostflag("1");
 		rlzyPosition.setLine("1");
 		Page<RlzyPosition> positionList = rlzyPositionService.findPages(pages, rlzyPosition);
-		List<RlzyPosition> list = new ArrayList<RlzyPosition>();
 		for (RlzyPosition position : positionList.getList()) {
 			position.setSalaryrange(DictUtils.getDictLabel(position.getSalaryrange(), "salary", ""));
 			position.setEducation(DictUtils.getDictLabel(position.getEducation(), "education", ""));
 			position.setWorkingage(DictUtils.getDictLabel(position.getWorkingage(), "working_age", ""));
 			position.setPositiontype(DictUtils.getDictLabel(position.getPositiontype(), "work_nature", ""));
+			if(StringUtils.isBlank(user)) {
+				position.setStatus("0");
+			}
+			if(!id.equals(position.getCompanyid())) {
+				position.setFlag("3");
+			}
+			position.setSpe3(type);
 			String wType = position.getWelfaretype();
 			if(wType != null){
 				String[] arr = StringUtils.split(wType, "\\,");
@@ -196,7 +242,16 @@ public class PositionController {
 	 */
 	@ResponseBody
 	@RequestMapping("pageListPt")
-	public List<RlzyPosition> pageListPt(String id, String page, String pageSize) {
+	public List<RlzyPosition> pageListPt(HttpServletRequest request, String page, String pageSize) {
+		String user = CookieUtils.getCookie(request, "user");
+		List<RlzyPosition> list = new ArrayList<RlzyPosition>();
+		String  id="";
+		String  type="";
+		if(StringUtils.isNotBlank(user)) {
+			JSONObject object = (JSONObject) JSONObject.parse(user);
+			id = object.getString("id");
+			type = object.getString("type");
+		}
 		RlzyPosition rlzyPosition = new RlzyPosition();
 		Page<RlzyPosition> pages = new Page<>();
 		pages.setPageNo(Integer.parseInt(page));
@@ -205,12 +260,18 @@ public class PositionController {
 		rlzyPosition.setPostflag("0");
 		rlzyPosition.setLine("1");
 		Page<RlzyPosition> positionList = rlzyPositionService.findPages(pages, rlzyPosition);
-		List<RlzyPosition> list = new ArrayList<RlzyPosition>();
 		for (RlzyPosition position : positionList.getList()) {
 			position.setSalaryrange(DictUtils.getDictLabel(position.getSalaryrange(), "salary", ""));
 			position.setEducation(DictUtils.getDictLabel(position.getEducation(), "education", ""));
 			position.setWorkingage(DictUtils.getDictLabel(position.getWorkingage(), "working_age", ""));
 			position.setPositiontype(DictUtils.getDictLabel(position.getPositiontype(), "work_nature", ""));
+			if(StringUtils.isBlank(user)) {
+				position.setStatus("0");
+			}
+			if(!id.equals(position.getCompanyid())) {
+				position.setFlag("3");
+			}
+			position.setSpe3(type);
 			String wType = position.getWelfaretype();
 			if(wType != null){
 				String[] arr = StringUtils.split(wType, "\\,");
@@ -253,6 +314,7 @@ public class PositionController {
 		model.addAttribute("rlzyPosition", rlzyPositions);
 		model.addAttribute("rlzyCompany", rlzyCompanys);
 		return "modules/home/findHuman";
+		
 	}
 
 	/**
@@ -267,7 +329,7 @@ public class PositionController {
 	@RequestMapping("/applyPosition")
 	public String applyPosition(String companyid, String positionid,HttpServletRequest request) {
 		String user = CookieUtils.getCookie(request, "user");
-		if (!user.equals("")) {
+		if (StringUtils.isNotBlank(user)) {
 			JSONObject jsonObject = JSON.parseObject(user);
 			System.out.println(jsonObject.get("id"));
 			String userid = (String) jsonObject.get("id");
@@ -281,7 +343,7 @@ public class PositionController {
 			RlzyPosition rlzyPosition1 = rlzyPositionService.get(positionid);
 			int count = rlzyPositionService.findListCounts(rlzyPosition);
 			if (count == 0) {
-				int i = Integer.parseInt(rlzyPositionService.get(positionid).getNum());
+				int i = Integer.parseInt(rlzyPosition1.getNum());
 				rlzyRelation.setUserid(userid);
 				rlzyRelation.setPositionid(positionid);
 				rlzyRelation.setCompanyid(companyid);
@@ -302,7 +364,8 @@ public class PositionController {
 				//真实薪资
 				rlzyRelation.setSalary(rlzyPosition1.getSalaryrange());
 				i = i + 1;
-				rlzyPositionService.get(positionid).setNum("i");
+				rlzyPosition1.setNum(String.valueOf(i));
+				rlzyPositionService.save(rlzyPosition1);
 				rlzyRelationService.save(rlzyRelation);
 				return "1";
 			}
@@ -323,7 +386,7 @@ public class PositionController {
 	@RequestMapping("/keepPosition")
 	public String keepPosition(String companyid, String positionid,HttpServletRequest request, HttpServletResponse response) {
 		String user = CookieUtils.getCookie(request, "user");
-		if (!user.equals("")) {
+		if (StringUtils.isNotBlank(user)) {
 			JSONObject jsonObject = JSON.parseObject(user);
 			System.out.println(jsonObject.get("id"));
 			String userid = (String) jsonObject.get("id");
@@ -348,6 +411,7 @@ public class PositionController {
 				rlzyRelation.setApply("2");
 				// 收藏状态
 				rlzyRelation.setCollectionstate("1");
+				rlzyRelation.setDeliverystate("2");
 				rlzyRelation.setUsername(rlzyUser.getName());
 				rlzyRelation.setAge(rlzyUser.getAge());
 				rlzyRelation.setSex(rlzyUser.getSex());
@@ -380,6 +444,15 @@ public class PositionController {
 	@ResponseBody
 	@RequestMapping("positionListBySelectJp")
 	public List<RlzyPosition> positionListBySelectJp(@RequestBody RlzyPosition rlzyPosition, Model model,HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "page") String page,@RequestParam(value = "pageSize") String pageSize) {
+		String user = CookieUtils.getCookie(request, "user");
+		List<RlzyPosition> list = new ArrayList<RlzyPosition>();
+		String id="";
+		String type="";
+		if(StringUtils.isNotBlank(user)) {
+			JSONObject jsonObject = JSON.parseObject(user);
+			id = (String) jsonObject.get("id");
+			type = (String) jsonObject.get("type");
+		}
 		Page<RlzyPosition> pages = new Page<RlzyPosition>();
 		pages.setPageNo(Integer.parseInt(page));
 		pages.setPageSize(Integer.parseInt(pageSize));
@@ -387,7 +460,6 @@ public class PositionController {
 		rlzyPosition.setPostflag("1");
 		rlzyPosition.setLine("1");
 		Page<RlzyPosition> List = rlzyPositionService.findPositionPages(pages, rlzyPosition);
-		List<RlzyPosition> list = new ArrayList<RlzyPosition>();
 		for (RlzyPosition position : List.getList()) {
 			position.setSpe3(String.valueOf(List.getCount()));
 			position.setSalaryrange(DictUtils.getDictLabel(position.getSalaryrange(), "salary", ""));
@@ -396,6 +468,13 @@ public class PositionController {
 			position.setPositiontype(DictUtils.getDictLabel(position.getPositiontype(), "work_nature", ""));
 			position.setEducation(DictUtils.getDictLabel(position.getEducation(), "education", ""));
 			position.setWorkingage(DictUtils.getDictLabel(position.getWorkingage(), "working_age", ""));
+			if(StringUtils.isBlank(user)) {
+				position.setStatus("0");
+			}
+			if(!id.equals(position.getCompanyid())) {
+				position.setFlag("3");
+			}
+			position.setSpe3(type);
 			String wType = position.getWelfaretype();
 			if(wType != null){
 				String[] arr = StringUtils.split(wType, "\\,");
@@ -432,6 +511,15 @@ public class PositionController {
 	@ResponseBody
 	@RequestMapping("positionListBySelectPt")
 	public List<RlzyPosition> positionListBySelectPt(@RequestBody RlzyPosition rlzyPosition, Model model,HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "page") String page,@RequestParam(value = "pageSize") String pageSize) {
+		String user = CookieUtils.getCookie(request, "user");
+		List<RlzyPosition> list = new ArrayList<RlzyPosition>();
+		String type="";
+		String id="";
+		if(StringUtils.isNotBlank(user)) {
+			JSONObject jsonObject = JSON.parseObject(user);
+			id = (String) jsonObject.get("id");
+			type = (String) jsonObject.get("type");
+		}
 		Page<RlzyPosition> pages = new Page<RlzyPosition>();
 		pages.setPageNo(Integer.parseInt(page));
 		pages.setPageSize(Integer.parseInt(pageSize));
@@ -439,7 +527,6 @@ public class PositionController {
 		rlzyPosition.setPostflag("0");
 		rlzyPosition.setLine("1");
 		Page<RlzyPosition> List = rlzyPositionService.findPositionPages(pages, rlzyPosition);
-		List<RlzyPosition> list = new ArrayList<RlzyPosition>();
 		for (RlzyPosition position : List.getList()) {
 			position.setSpe3(String.valueOf(List.getCount()));
 			position.setSalaryrange(DictUtils.getDictLabel(position.getSalaryrange(), "salary", ""));
@@ -448,6 +535,13 @@ public class PositionController {
 			position.setPositiontype(DictUtils.getDictLabel(position.getPositiontype(), "work_nature", ""));
 			position.setEducation(DictUtils.getDictLabel(position.getEducation(), "education", ""));
 			position.setWorkingage(DictUtils.getDictLabel(position.getWorkingage(), "working_age", ""));
+			if(StringUtils.isBlank(user)) {
+				position.setStatus("0");
+			}
+			if(!id.equals(position.getCompanyid())) {
+				position.setFlag("3");
+			}
+			position.setSpe3(type);
 			String wType = position.getWelfaretype();
 			if(wType != null){
 				String[] arr = StringUtils.split(wType, "\\,");

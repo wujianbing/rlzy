@@ -27,10 +27,12 @@ News.prototype = {
 	},
 	//新闻详情
 	newsDeta: function(obj){
-		console.log(obj);
+		//console.log(obj);
 		let contTxt = $(obj).find('.newsli-cont').text();
 		let time =$(obj).find('.news-time').text();
 		console.log(contTxt);
+		let newId = $(obj).find('a').attr('data-id');
+		//console.log(newId);
 		$('.news-cont-bot').hide();
 		$('.newsdeta-cont').show();
 		//$('.newsdeta-cont').show();

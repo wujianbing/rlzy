@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.portal.mapper.IsystemMapper">
+    
+	<sql id="isystemColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.count As "count",
+		a.companyCount As "companyCount",
+		a.userCount As "userCount",
+		a.createDate AS "createDate"
+	</sql>
+	
+	<sql id="isystemJoins">
+		
+	</sql>
+	<select id="get" resultType="Isystem" >
+		SELECT 
+			<include refid="isystemColumns"/>
+		FROM isystem a
+		<include refid="isystemJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="getIsystem" resultType="Isystem" >
+		SELECT 
+			<include refid="isystemColumns"/>
+		FROM isystem a
+		<include refid="isystemJoins"/>
+		WHERE a.createDate = #{createDate}
+	</select>
+	
+	<select id="findList" resultType="Isystem" >
+		SELECT 
+			<include refid="isystemColumns"/>
+		FROM isystem a group by a.createDate 
+		<include refid="isystemJoins"/>
+		<where>
+			<if test="createDate != null and createDate != ''">
+				AND a.createDate = #{createDate}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.createDate DESC
+			</otherwise>
+		</choose>
+	</select>
+	<insert id="insert">
+		INSERT INTO isystem(
+			id,
+			name,
+			count,
+			companyCount,
+			userCount,
+			createDate
+		) VALUES (
+			#{id},
+			#{name},
+			#{count},
+			#{companyCount},
+			#{userCount},
+			#{createDate}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE isystem SET 	
+			name = #{name},
+			count = #{count},
+			companyCount = #{companyCount},
+			userCount = #{userCount},
+			createDate = #{createDate}
+		WHERE id = #{id}
+	</update>
+</mapper>

@@ -69,21 +69,10 @@ Nav.prototype = {
 		}
 		let self = this;
 		let nav = '';
-		nav += "<div id='nav' class='nav'>";
-		nav += "<div class='titleTop'>";
-		nav += "<div class='rowTop'>";
-		nav += "<span><img class='logo' src='/rlzy/static/rlzy/img/logo.png'></span>";
-		nav += "<div class='title'>";
-		nav += "<h3>吴忠市人力资源服务产业园</h3>";
-		nav += "<h6>Wu Zhong Shi Human Resources Services Industrial Park</h6>";
-		nav += "</div>";
+		nav += "<div class='leftonw' id='topbase'>";
+		nav += "<div class='navleft'>";
+		nav += "<span class='tipnav' style='color:#3e3535;font-size: 17px;white-space: nowrap;'>欢迎来到吴忠人力资源网</span>";
 		nav += "<iframe width='300' id='tianqi' scrolling='no' height='25' frameborder='0' allowtransparency='true' src='https://i.tianqi.com/index.php?c=code&id=10&icon=5&py=wuzhong&site=15'></iframe>";
-		nav += "<div class='searchBar'>";
-		nav += "<div class='searchBar-left'>";
-		nav += "<div class='input-group input-key-v'>";
-		nav += "<input type='text' placeholder='在此输入关键字..' class='layui-input input-key'>";
-		nav += "<i class='layui-icon layui-icon-search search-se'></i>";
-		nav += "</div>";
 		nav += "</div>";
 		nav += "<div class='searchBar-right'>";
 		if (user == null || user == undefined || user == "") {
@@ -104,15 +93,36 @@ Nav.prototype = {
 						+ user.name
 						+ "</a><a onclick='nav.quit()' class='land registered'>退出</a>";
 			}
+			var bottom =document.getElementById("bottom");
+			if(bottom!=null){
+				document.getElementById("bottom").style.display="none";
+			}
 		}
+		nav += "</div>";
+		
+		nav += "<div class='searchBar'  style='display:none'>";
+		nav += "<div class='searchBar-left'>";
+		nav += "<div class='input-group input-key-v'>";
+		nav += "<input type='text' placeholder='在此输入关键字..' class='layui-input input-key'>";
+		nav += "<i class='layui-icon layui-icon-search search-se'></i>";
+		nav += "</div>";
+		nav += "</div>";
 		nav += "</div>";
 		nav += "</div>";
 		nav += "</div>";
 		nav += "</div>";
 		nav += "<div class='bar'>";
 		nav += "<div class='row rowBar'>";
+		nav += "<div class='titleTop'>";
+		nav += "<div class='rowTop'>";
+		nav += "<a href='"+ url +"/home/index'";
+		nav += "<span><img class='logo' src='/rlzy/static/rlzy/img/logo.png'></span>";
+		nav += "<div class='title'>";
+		nav += "<h3>吴忠市人力资源服务产业园</h3>";
+		nav += "<h6>Wu Zhong Shi Human Resources Services Industrial Park</h6>";
+		nav += "</a>";
+		nav += "</div>";
 		nav += "<ul class='nav nav-tabs'>";
-
 		for (let i = 0; i < self.navArr.length; i++) {
 			nav += "<li class='presentation'>";
 			if (self.lastUrl().split('.')[0] === self.navArr[i].url.split('/')[self.navArr[i].url
@@ -148,6 +158,36 @@ Nav.prototype = {
 		tail += '</div>';
 		tail += '</div>';
 		$('body').append(tail);
+		    let rightbar='';
+		    rightbar+=" <ol class='zp-sidebar' >";
+		    rightbar+="<li class='zp-sidebar__li'>";
+		    rightbar+="<a class='zp-sidebar__link' href='#tail'>";
+		    rightbar+="<i class='layui-icon layui-icon-down layhover'></i>";
+		    rightbar+="<span class='zp-sidebar__span zp-sidebar__span layui-icon layui-icon-down'></span></a>";
+		    rightbar+="</li>";
+		    rightbar+="<li class='zp-sidebar__li'>";
+		    rightbar+="<a class='zp-sidebar__link' herf= '/rlzy/login/tologin'>";
+		    rightbar+="<i class='layui-icon layui-icon-username layhover'></i>";
+		    rightbar+="<span class='zp-sidebar__span'>个人</span></a>";
+		    rightbar+="</li>";
+		    rightbar+="<li class='zp-sidebar__li'>";
+		    rightbar+="<a class='zp-sidebar__link' >";
+		    rightbar+="<i class='layui-icon layui-icon-group layhover'></i>";
+		    rightbar+="<span class='zp-sidebar__span'>客服</span></a>";
+		    rightbar+="</li>";
+		    rightbar+="<li class='zp-sidebar__li'>";
+		    rightbar+="<a class='zp-sidebar__link code' >";
+		    rightbar+="<i class='layui-icon layui-icon-cellphone layhover'></i>";
+		    rightbar+="<span class='zp-sidebar__span'>小程序</span></a>";
+		    //后期二维码存放处
+		    rightbar+="</li>";
+		    rightbar+="<li class='zp-sidebar__li'>";
+		    rightbar+="<a class='zp-sidebar__link' href='#topbase'>";
+		    rightbar+="<i class='layui-icon layui-icon-up layhover'></i>";
+		    rightbar+="<span class='zp-sidebar__span layui-icon layui-icon-up'></span></a>";
+		    rightbar+="</li>";
+		    rightbar+="</ol>";
+		    $('body').append(rightbar);
 	},
 	// 匹配url nav高亮
 	lastUrl : function() {

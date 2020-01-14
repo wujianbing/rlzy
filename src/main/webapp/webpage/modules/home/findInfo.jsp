@@ -51,7 +51,7 @@
 						<c:forEach items="${industry }" var="ind">
 							<li
 								onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
-								<a href="javascript:;" data-value="${ind.value}">${ind.label}</a>
+								<a href="javascript:;" data-value="${ind.value}" title="${ind.label}">${ind.label}</a>
 							</li>
 						</c:forEach>
 					</ul>
@@ -157,8 +157,33 @@
 							<li>
 								<div class="infoname">
 									<h5>
-										<span class="lefth5"><span class="nameb" data-id="${rlzyPosition.id }" data-cid="${rlzyPosition.companyid }"
-											onclick="javascript:window.open('${rlzyPath }/position/positionDetails?id=${rlzyPosition.id }&companyid=${rlzyPosition.companyid }')">${rlzyPosition.positionname }</span></span>
+										<c:if test="${rlzyPosition.status=='0' }">
+											<span class="lefth5"><span class="nameb"
+												data-id="${rlzyPosition.id }"
+												data-cid="${rlzyPosition.companyid }"
+												onclick="login()">${rlzyPosition.positionname }</span></span>
+										</c:if>
+										<c:if test="${rlzyPosition.status!='0' && rlzyPosition.flag=='3'}">
+											<c:if test="${type == '2'}">
+											<span class="lefth5"><span class="nameb"
+												data-id="${rlzyPosition.id }"
+												data-cid="${rlzyPosition.companyid }"
+												onclick="view()">${rlzyPosition.positionname }</span></span>
+												</c:if>
+											<c:if test="${type == '1'}">
+											<span class="lefth5"><span class="nameb"
+												data-id="${rlzyPosition.id }"
+												data-cid="${rlzyPosition.companyid }"
+												onclick="javascript:window.open('${rlzyPath }/position/positionDetails?id=${rlzyPosition.id }&companyid=${rlzyPosition.companyid }')">${rlzyPosition.positionname }</span></span>
+										</c:if>
+										</c:if>
+										
+										<c:if test="${rlzyPosition.status!='0' && rlzyPosition.flag!='3'}">
+											<span class="lefth5"><span class="nameb"
+												data-id="${rlzyPosition.id }"
+												data-cid="${rlzyPosition.companyid }"
+												onclick="javascript:window.open('${rlzyPath }/position/positionDetails?id=${rlzyPosition.id }&companyid=${rlzyPosition.companyid }')">${rlzyPosition.positionname }</span></span>
+										</c:if>
 										<span class="lefth5"> <span
 											onclick="javascript:window.open('${rlzyPath}/company/companyData?id=${rlzyPosition.companyid}')">${rlzyPosition.companyname }</span>&emsp;&emsp;
 											<span>${fns:getDictLabel(rlzyPosition.salaryrange, "salary", defaultValue)}</span>
@@ -175,16 +200,21 @@
 											</p>
 											<div class="infopname1 wordpj">
 												<div class="namei">企业福利：</div>
-												<div class="namei2">
-													${rlzyPosition.welfaretype}</div>
+												<div class="namei2">${rlzyPosition.welfaretype}</div>
 											</div>
 										</div>
 										<div class="rightbot">
-											<span data-id="${rlzyPosition.id }" data-cid="${rlzyPosition.companyid }" class="btnlock tdjl tdzw1" onclick="td1(this)">投递简历</span>
-											<span data-id="${rlzyPosition.id }" data-cid="${rlzyPosition.companyid }" class="btnlock sqzw sczw1" onclick="sc1(this)"><span class="layui-icon layui-icon-rate-solid"></span>&ensp;<span>收藏职位</span></span>
+											<span data-id="${rlzyPosition.id }"
+												data-cid="${rlzyPosition.companyid }"
+												class="btnlock tdjl tdzw1" onclick="td1(this)">投递简历</span> <span
+												data-id="${rlzyPosition.id }"
+												data-cid="${rlzyPosition.companyid }"
+												class="btnlock sqzw sczw1" onclick="sc1(this)"><span
+												class="layui-icon layui-icon-rate-solid"></span>&ensp;<span>收藏职位</span></span>
 										</div>
 									</div>
-								</div></li>
+								</div>
+							</li>
 						</c:forEach>
 					</ul>
 					<ul class="fastjob" id="ul2">
@@ -192,9 +222,37 @@
 							<li>
 								<div class="infoname">
 									<h5>
-										<span class="lefth5"><span class="nameb" data-id="${rlzyPosition.id }" data-cid="${rlzyPosition.companyid }"
-											onclick="javascript:window.open('${rlzyPath }/position/positionDetails?id=${rlzyPosition.id }&companyid=${rlzyPosition.companyid }')">${rlzyPosition.positionname }</span>
-											<sup>急聘</sup></span> <span class="lefth5"> <span
+										<c:if test="${rlzyPosition.status=='0' }">
+											<span class="lefth5"><span class="nameb"
+												data-id="${rlzyPosition.id }"
+												data-cid="${rlzyPosition.companyid }"
+												onclick="login()">${rlzyPosition.positionname }</span>
+												<sup>急聘</sup></span>
+										</c:if>
+										<c:if test="${rlzyPosition.status!='0' && rlzyPosition.flag=='3'}">
+										<c:if test="${type == '2'}">
+											<span class="lefth5"><span class="nameb"
+												data-id="${rlzyPosition.id }"
+												data-cid="${rlzyPosition.companyid }"
+												onclick="view()">${rlzyPosition.positionname }</span>
+												<sup>急聘</sup></span>
+											</c:if>	
+										<c:if test="${type == '1'}">
+											<span class="lefth5"><span class="nameb"
+												data-id="${rlzyPosition.id }"
+												data-cid="${rlzyPosition.companyid }"
+												onclick="javascript:window.open('${rlzyPath }/position/positionDetails?id=${rlzyPosition.id }&companyid=${rlzyPosition.companyid }')">${rlzyPosition.positionname }</span>
+												<sup>急聘</sup></span>
+											</c:if>	
+										</c:if>
+										<c:if test="${rlzyPosition.status!='0' && rlzyPosition.flag!='3'}">
+											<span class="lefth5"><span class="nameb"
+												data-id="${rlzyPosition.id }"
+												data-cid="${rlzyPosition.companyid }"
+												onclick="javascript:window.open('${rlzyPath }/position/positionDetails?id=${rlzyPosition.id }&companyid=${rlzyPosition.companyid }')">${rlzyPosition.positionname }</span>
+												<sup>急聘</sup></span>
+										</c:if>
+										<span class="lefth5"> <span
 											onclick="javascript:window.open('${rlzyPath}/company/companyData?id=${rlzyPosition.companyid}')">${rlzyPosition.companyname }</span>&emsp;&emsp;
 											<span>${fns:getDictLabel(rlzyPosition.salaryrange, "salary", defaultValue)}</span>
 										</span> <span class="lefth5 righth5"> 发布时间：<span><fmt:formatDate
@@ -210,16 +268,21 @@
 											</p>
 											<div class="infopname1 wordpj">
 												<div class="namei">企业福利：</div>
-												<div class="namei2">
-													${rlzyPosition.welfaretype}</div>
+												<div class="namei2">${rlzyPosition.welfaretype}</div>
 											</div>
 										</div>
 										<div class="rightbot">
-											<span data-id="${rlzyPosition.id }" data-cid="${rlzyPosition.companyid }" class="btnlock tdjl tdzw2" onclick="td2(this)">投递简历</span>
-											<span data-id="${rlzyPosition.id }" data-cid="${rlzyPosition.companyid }" class="btnlock sqzw sczw2" onclick="sc2(this)"><span class="layui-icon layui-icon-rate-solid"></span>&ensp;<span>收藏职位</span></span>
+											<span data-id="${rlzyPosition.id }"
+												data-cid="${rlzyPosition.companyid }"
+												class="btnlock tdjl tdzw2" onclick="td2(this)">投递简历</span> <span
+												data-id="${rlzyPosition.id }"
+												data-cid="${rlzyPosition.companyid }"
+												class="btnlock sqzw sczw2" onclick="sc2(this)"><span
+												class="layui-icon layui-icon-rate-solid"></span>&ensp;<span>收藏职位</span></span>
 										</div>
 									</div>
-								</div></li>
+								</div>
+							</li>
 						</c:forEach>
 					</ul>
 				</form:form>
@@ -241,9 +304,33 @@
 								id="companyId">
 								<div class="infoname namegc">
 									<h5>
-										<span class="lefth5 nameb" data-id="${findDesc.id }" data-cid="${findDesc.companyid }"
-											onclick="javascript:window.open('${rlzyPath }/position/positionDetails?id=${findDesc.id }&companyid=${findDesc.companyid }')"><span>${findDesc.positionname }</span>
-											<sup>急聘</sup></span> <span class="lefth5"><span>${fns:getDictLabel(findDesc.salaryrange, "salary", defaultValue)}</span></span>
+									<c:if test="${findDesc.status=='0' }">
+										<span class="lefth5 nameb" data-id="${findDesc.id }"
+												data-cid="${findDesc.companyid }"
+												onclick="login()"><span>${findDesc.positionname }</span>
+												<sup>急聘</sup></span>
+										</c:if>
+										<c:if test="${findDesc.status!='0' && findDesc.flag=='3'}">
+										<c:if test="${type == '2' }">
+											<span class="lefth5 nameb" data-id="${findDesc.id }"
+												data-cid="${findDesc.companyid }"
+												onclick="view()"><span>${findDesc.positionname }</span>
+												<sup>急聘</sup></span>
+										</c:if>
+										<c:if test="${type == '1' }">
+											<span class="lefth5 nameb" data-id="${findDesc.id }"
+												data-cid="${findDesc.companyid }"
+												onclick="javascript:window.open('${rlzyPath }/position/positionDetails?id=${findDesc.id }&companyid=${findDesc.companyid }')"><span>${findDesc.positionname }</span>
+												<sup>急聘</sup></span>
+										</c:if>
+										</c:if>
+										<c:if test="${findDesc.status!='0' && findDesc.flag!='3'}">
+											<span class="lefth5 nameb" data-id="${findDesc.id }"
+												data-cid="${findDesc.companyid }"
+												onclick="javascript:window.open('${rlzyPath }/position/positionDetails?id=${findDesc.id }&companyid=${findDesc.companyid }')"><span>${findDesc.positionname }</span>
+												<sup>急聘</sup></span>
+										</c:if>
+											<span class="lefth5"><span>${fns:getDictLabel(findDesc.salaryrange, "salary", defaultValue)}</span></span>
 									</h5>
 									<div class="bot">
 										<div class="letbot lefttyt">
@@ -258,8 +345,30 @@
 
 										</div>
 										<div class="rightbot righttyt">
-											<span class="btnlock ypsj wyyp" data-id="${findDesc.id }" data-cid="${findDesc.companyid }"
+										
+										<c:if test="${findDesc.status=='0' }">
+											<span class="btnlock ypsj wyyp" data-id="${findDesc.id }"
+												data-cid="${findDesc.companyid }"
+												onclick="login()">我要应聘</span>
+										</c:if>
+										<c:if test="${findDesc.status!='0' && findDesc.flag=='3'}">
+											<c:if test="${type == '2' }">
+												<span class="btnlock ypsj wyyp" data-id="${findDesc.id }"
+												data-cid="${findDesc.companyid }"
+												onclick="view()">我要应聘</span>
+											</c:if>
+											<c:if test="${type == '1' }">
+												<span class="btnlock ypsj wyyp" data-id="${findDesc.id }"
+												data-cid="${findDesc.companyid }"
 												onclick="javascript:window.open('${rlzyPath }/position/positionDetails?id=${findDesc.id }&companyid=${findDesc.companyid }')">我要应聘</span>
+											</c:if>
+												
+										</c:if>
+										<c:if test="${findDesc.status!='0' && findDesc.flag!='3'}">
+											<span class="btnlock ypsj wyyp" data-id="${findDesc.id }"
+												data-cid="${findDesc.companyid }"
+												onclick="javascript:window.open('${rlzyPath }/position/positionDetails?id=${findDesc.id }&companyid=${findDesc.companyid }')">我要应聘</span>
+										</c:if>
 										</div>
 									</div>
 								</div></li>
@@ -310,10 +419,24 @@
 		 				var time = new Date(data[i].createDate).format("yyyy-MM-dd")
 		 				arr.push('<li>');
 		 				arr.push('<div class="infoname">');
-		 				arr.push('<h5><span class="lefth5"><span class="nameb" onclick="javascript:window.open(/rlzy/position/positionDetails?id='+data[i].id+'&companyid='+data[i].companyid+')">'+data[i].positionname+'</span></span>');
-		 				arr.push('<span class="lefth5">');
-		 				arr.push('<span onclick="javascript:window.open(/rlzy/company/companyData?id='+data[i].companyid+')">'+data[i].companyname+'</span>&emsp;&emsp;');
-		 				arr.push('<span>'+data[i].salaryrange+'</span>');
+		 				arr.push('<h5>');
+		 				if(data[i].status=='0'){
+		 					arr.push('<span class="lefth5"><span class="nameb" onclick="login()">'+data[i].positionname+'</span></span>');
+			 				arr.push('<span class="lefth5">');
+		 				}else if(data[i].flag=='3' && data[i].status!='0'){
+		 					if(data[i].spe3=='2'){
+		 						arr.push('<span class="lefth5"><span class="nameb" onclick="view()">'+data[i].positionname+'</span></span>');
+				 				arr.push('<span class="lefth5">');
+		 					}else{
+		 						arr.push('<span class="lefth5"><span class="nameb" data-id="'+data[i].id+'" data-cid="'+data[i].companyid+'" onclick="positionDetail(this)">'+data[i].positionname+'</span></span>');
+				 				arr.push('<span class="lefth5">');
+		 					}
+		 				}else if(data[i].flag!='3' && data[i].status!='0'){
+		 					arr.push('<span class="lefth5"><span class="nameb" data-id="'+data[i].id+'" data-cid="'+data[i].companyid+'" onclick="positionDetail(this)">'+data[i].positionname+'</span></span>');
+			 				arr.push('<span class="lefth5">');
+		 				}
+		 				arr.push('<span data-cid="'+data[i].companyid+'" onclick="companyData(this)">'+data[i].companyname+'</span>&emsp;&emsp;');
+			 			arr.push('<span>'+data[i].salaryrange+'</span>');
 		 				arr.push('</span>');
 		 				arr.push('<span class="lefth5 righth5">');
 		 				arr.push('发布时间：<span>'+time+'</span></span></h5>');
@@ -373,9 +496,23 @@
 		 				var time = new Date(data[i].createDate).format("yyyy-MM-dd")
 		 				arr.push('<li>');
 		 				arr.push('<div class="infoname">');
-		 				arr.push('<h5><span class="lefth5"><span class="nameb" onclick="javascript:window.open(/rlzy/position/positionDetails?id='+data[i].id+'&companyid='+data[i].companyid+')">'+data[i].positionname+'</span> <sup>急聘</sup></span>');
-		 				arr.push('<span class="lefth5">');
-		 				arr.push('<span onclick="javascript:window.open(/rlzy/company/companyData?id='+data[i].companyid+')">'+data[i].companyname+'</span>&emsp;&emsp;');
+		 				arr.push('<h5>');
+		 				if(data[i].status=='0'){
+		 					arr.push('<span class="lefth5"><span class="nameb" onclick="login()">'+data[i].positionname+'</span> <sup>急聘</sup></span>');
+			 				arr.push('<span class="lefth5">');
+		 				}else if(data[i].flag=='3' && data[i].status!='0'){
+		 					if(data[i].spe3=='2'){
+		 						arr.push('<span class="lefth5"><span class="nameb" onclick="view()">'+data[i].positionname+'</span></span>');
+				 				arr.push('<span class="lefth5">');
+		 					}else{
+		 						arr.push('<span class="lefth5"><span class="nameb" data-id="'+data[i].id+'" data-cid="'+data[i].companyid+'" onclick="positionDetail(this)">'+data[i].positionname+'</span></span>');
+				 				arr.push('<span class="lefth5">');
+		 					}
+		 				}else if(data[i].flag!='3' && data[i].status!='0'){
+		 					arr.push('<span class="lefth5"><span class="nameb" data-id="'+data[i].id+'" data-cid="'+data[i].companyid+'" onclick="positionDetail(this)">'+data[i].positionname+'</span> <sup>急聘</sup></span>');
+			 				arr.push('<span class="lefth5">');
+			 			}
+		 				arr.push('<span data-cid="'+data[i].companyid+'" onclick="companyData(this)">'+data[i].companyname+'</span>&emsp;&emsp;');
 		 				arr.push('<span>'+data[i].salaryrange+'</span>');
 		 				arr.push('</span>');
 		 				arr.push('<span class="lefth5 righth5">');
@@ -536,6 +673,59 @@
 				  }
 			});
 		}
+	}
+	
+	
+	function login(){
+		layer.open({
+			  type: 1
+			  ,offset: 'auto' //具体配置参考：offset参数项
+			  ,content: '<div style="padding: 20px 80px;">您还未登陆!</div>'
+			  ,btn: '关闭'
+			  ,btnAlign: 'c' //按钮居中
+			  ,shade: 0 //不显示遮罩
+			  ,yes: function(){
+			    layer.closeAll();
+			    window.location.href = url + "/login/tologin";
+			  }
+		});
+	}
+	function view(){
+		layer.open({
+			  type: 1
+			  ,offset: 'auto' //具体配置参考：offset参数项
+			  ,content: '<div style="padding: 20px 80px;">您没有权限查看非本公司职位!</div>'
+			  ,btn: '关闭'
+			  ,btnAlign: 'c' //按钮居中
+			  ,shade: 0 //不显示遮罩
+			  ,yes: function(){
+			    layer.closeAll();
+			  }
+		});
+	}
+	function view2(){
+		layer.open({
+			  type: 1
+			  ,offset: 'auto' //具体配置参考：offset参数项
+			  ,content: '<div style="padding: 20px 80px;">您没有权限查看其他公司资料!</div>'
+			  ,btn: '关闭'
+			  ,btnAlign: 'c' //按钮居中
+			  ,shade: 0 //不显示遮罩
+			  ,yes: function(){
+			    layer.closeAll();
+			  }
+		});
+	}
+	function positionDetail(obj){
+		let that = $(obj);
+		var companyId = that.attr('data-cid');
+		var positionId  = that.attr('data-id');
+		window.open("/rlzy/position/positionDetails?id="+positionId+"&companyid="+companyId);
+	}
+	function companyData(obj){
+		let that = $(obj);
+		var companyId = that.attr('data-cid');
+		window.open("/rlzy/company/companyData?id="+companyId);
 	}
 	
 	//投递简历-分页

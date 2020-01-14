@@ -25,7 +25,6 @@
 <script type="text/javascript" src="${ctxStatic }/rlzy/scripts/simditor.min.js"></script>
 <!--*************************************************************************************  -->
 <link rel="stylesheet" href="${ctxStatic }/rlzy/css/main1119.css" />
-<!-- <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=ca98cd2bcafcacd654a33e4cf5e42dd9&plugin=AMap.Geocoder"></script>--> 
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.3&key=0250860ccb5953fa5d655e8acf40ebb7&plugin=AMap.Geocoder"></script>
 <script type="text/javascript" src="${ctxStatic }/rlzy/js/addToolbar.js"></script>
 <script type="text/javascript" src="${ctxStatic }/rlzy/js/main2.js"></script>
@@ -195,7 +194,7 @@
 							<div class="layui-form-item">
 								<label class="layui-form-label"><span class="sign">*</span>服务类型：</label>
 								<div class="layui-input-block">
-								<input type="text" disabled value="${fns:getDictLabel (rlzyCompany.serviceType, 'service_type', defaultValue)}" required lay-verify="required" autocomplete="off" class="layui-input  setselect">
+								<input type="text" disabled value="${fns:getDictLabel (rlzyCompany.serviceType, 'service_type', defaultValue)}" autocomplete="off" class="layui-input  setselect">
 									<form:select class="form-control" path="serviceType" name="serviceType">
 										<form:option value="" label="" />
 										<form:options items="${fns:getDictList('service_type')}" itemLabel="label" itemValue="value" htmlEscape="false" />
@@ -209,7 +208,7 @@
 							<label class="layui-form-label"><span class="sign">*</span>企业logo：</label>
 							<div class="layui-input-block">
 								<div id="preview">
-									<c:if test="${rlzyCompany.businesslicense == '' || rlzyCompany.businesslicense == null}">
+									<c:if test="${rlzyCompany.logo == '' || rlzyCompany.logo == null}">
 									<img id="imghead" class="imglogo" border="0" src="${ctxStatic }/rlzy/img/sc.jpg" onclick="$('#previewImg').click();">
 									</c:if>
 									<c:if test="${rlzyCompany.logo != '' && rlzyCompany.logo != null}">
@@ -478,8 +477,8 @@ var id = "${rlzyCompany.id}";
 	
 	/*富文本编辑器js*********************************  */
 	var editor = new Simditor({
-    toolbar: [ 'ol','|', 'ul', ],
-    textarea: '#editor',
+	toolbar: ['fontScale','|', 'ol', '|','ul'],
+	textarea: '#editor',
     placeholder: '写点什么...',
     cleanPaste: true
 	});

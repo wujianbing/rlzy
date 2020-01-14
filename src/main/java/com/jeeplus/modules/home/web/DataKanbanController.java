@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jeeplus.modules.home.utils.MapEntity;
 import com.jeeplus.modules.portal.entity.RlzyCompany;
+import com.jeeplus.modules.portal.entity.RlzyKanban;
 import com.jeeplus.modules.portal.entity.RlzyPosition;
 import com.jeeplus.modules.portal.entity.RlzyRelation;
 import com.jeeplus.modules.portal.entity.RlzyUser;
@@ -87,8 +89,8 @@ public class DataKanbanController {
 	 */
 	@RequestMapping("index")
 	public String index(Model model) {
-		Integer companyCount = kanBanService.findCompanyCount();
-		Integer userCount = kanBanService.findUserCount();
+		Integer companyCount = kanBanService.findCompanyCount(null);
+		Integer userCount = kanBanService.findUserCount(null);
 		Integer positionCount = kanBanService.findPositionCount();
 		Integer collectCount = kanBanService.findCollectCount();
 		model.addAttribute("companyCount", companyCount);
@@ -128,42 +130,19 @@ public class DataKanbanController {
 	@ResponseBody
 	public Map<String, Object> industryCount() {
 		Map<String, Object> count = new HashMap<String, Object>();
-		Integer count1 = kanBanService.findIndustryCount();
-		Integer count2 = kanBanService.findIndustryCount1();
-		Integer count3 = kanBanService.findIndustryCount2();
-		Integer count4 = kanBanService.findIndustryCount3();
-		Integer count5 = kanBanService.findOtherIndustryCount();
-		Integer count6 = kanBanService.findCompanyScaleCount();
-		Integer count7 = kanBanService.findCompanyScaleCount1();
-		Integer count8 = kanBanService.findCompanyScaleCount2();
-		Integer count9 = kanBanService.findCompanyScaleCount3();
-		Integer count10 = kanBanService.findCompanyScaleCount4();
-		Integer count11 = kanBanService.findSalaryRange();
-		Integer count12 = kanBanService.findSalaryRange1();
-		Integer count13 = kanBanService.findSalaryRange2();
-		Integer count14 = kanBanService.findSalaryRange3();
-		Integer count15 = kanBanService.findSalaryRange4();
-		Integer count16 = kanBanService.findSalaryRange5();
+		List<RlzyCompany> companyscale = new ArrayList<RlzyCompany>();
+		companyscale = kanBanService.findCompanyScale();
+		count.put("companyscale", companyscale);
+		List<RlzyKanban> salaryrange = new ArrayList<RlzyKanban>();
+		salaryrange = kanBanService.findSalaryRanges();
+		count.put("salaryRange", salaryrange);
+		List<RlzyKanban> industry = new ArrayList<RlzyKanban>();
+		industry = kanBanService.findIndustrys();
+		count.put("industry", industry);
 		Integer positionCount = kanBanService.findPositionCount();
 		Integer positionCollect = kanBanService.findPositionCollect();
 		Integer deliveryCollect = kanBanService.findDeliveryCollect();
 		Integer companyDeal = kanBanService.findCompanyDeal();
-		count.put("count1", count1);
-		count.put("count2", count2);
-		count.put("count3", count3);
-		count.put("count4", count4);
-		count.put("count5", count5);
-		count.put("count6", count6);
-		count.put("count7", count7);
-		count.put("count8", count8);
-		count.put("count9", count9);
-		count.put("count10", count10);
-		count.put("count11",count11);
-		count.put("count12",count12);
-		count.put("count13",count13);
-		count.put("count14",count14);
-		count.put("count15",count15);
-		count.put("count16",count16);
 		count.put("positionCount",positionCount);
 		count.put("positionCollect", positionCollect);
 		count.put("deliveryCollect", deliveryCollect);
@@ -184,14 +163,16 @@ public class DataKanbanController {
 		List<MapEntity> list = new ArrayList<>();
 		for (RlzyCompany company : companys) {
 			MapEntity entity = new MapEntity();
-			String[] lng = company.getLnglat().split("\\,");
-			double[] lngs = new double[2];
-			lngs[0] = Double.parseDouble(lng[0]);
-			lngs[1] = Double.parseDouble(lng[1]);
-			String name = company.getCompanyname();
-			entity.setLng(lngs);
-			entity.setName(name);
-			list.add(entity);
+			if(StringUtils.isNotBlank(company.getLnglat())) {
+				String[] lng = company.getLnglat().split("\\,");
+				double[] lngs = new double[2];
+				lngs[0] = Double.parseDouble(lng[0]);
+				lngs[1] = Double.parseDouble(lng[1]);
+				String name = company.getCompanyname();
+				entity.setLng(lngs);
+				entity.setName(name);
+				list.add(entity);	
+			}
 		}
 		return list;
 	}
@@ -259,32 +240,18 @@ public class DataKanbanController {
 			Map<String, Object> count =new HashMap<>();
 			Integer male = kanBanService.findMale();
 			Integer female = kanBanService.findFemale();
-			Integer salary = kanBanService.salary();
-			Integer salary1 = kanBanService.salary1();
-			Integer salary2 = kanBanService.salary2();
-			Integer salary3 = kanBanService.salary3();
-			Integer salary4 = kanBanService.salary4();
-			Integer salary5 = kanBanService.salary5();
-			Integer education = kanBanService.findEducation();
-			Integer education1 = kanBanService.findEducation1();
-			Integer education2 = kanBanService.findEducation2();
-			Integer education3 = kanBanService.findEducation3();
-			Integer education4 = kanBanService.findEducation4();
-			Integer education5 = kanBanService.findEducation5();
+			List<RlzyKanban> salarys = new ArrayList<RlzyKanban>();
+			salarys = kanBanService.salarys();
+			count.put("salarys", salarys);
+			List<RlzyKanban> education = kanBanService.findEducation();
+			count.put("education", education);
+			List<RlzyKanban> workingage = kanBanService.workingAge();
+			count.put("workingage", workingage);
+			List<RlzyKanban> userage =kanBanService.findAge();
+			count.put("userage", userage);
 			count.put("male", male);
 			count.put("female", female);
-			count.put("salary", salary);
-			count.put("salary1", salary1);
-			count.put("salary2", salary2);
-			count.put("salary3", salary3);
-			count.put("salary4", salary4);
-			count.put("salary5", salary5);
 			count.put("education", education);
-			count.put("education1", education1);
-			count.put("education2", education2);
-			count.put("education3", education3);
-			count.put("education4", education4);
-			count.put("education5", education5);
 			return count; 
 		}
 		

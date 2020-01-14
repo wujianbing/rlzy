@@ -27,7 +27,7 @@
 				<div class="s-cont">
 					<p class="s-cont-lst">${rlzyCompany.companyprofile }</p>
 					<p class="s-cont-tit">【服务范围】</p>
-					<p class="s-cont-lst">${rlzyCompany.servicerange }</p>
+					<p class="s-cont-lst">${fns:unescapeHtml(rlzyCompany.servicerange)}<%-- ${rlzyCompany.servicerange } --%></p>
 				</div>
 			</div>
 		</div>	

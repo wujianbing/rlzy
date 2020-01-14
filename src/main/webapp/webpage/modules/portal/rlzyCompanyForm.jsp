@@ -97,7 +97,7 @@
 										<td class="width-15"><form:input path="nickName"
 												htmlEscape="false" class="form-control required" /></td>
 										<td class="width-10 active"><label class="pull-right">密码：</label></td>
-										<td class="width-15"><form:input path="password"
+										<td class="width-15"><form:input path="password" 
 												htmlEscape="false" class="form-control required" /></td>
 										<td class="width-10 active"><label class="pull-right">企业logo：</label></td>
 										<td class="width-15"><sys:fileUpload path="logo"
@@ -203,6 +203,35 @@
 											</form:select></td>
 									</tr>
 									<tr>
+										<td class="width-10 active"><label class="pull-right">是否置顶：</label></td>
+										<td class="width-15"><form:select path="istop"
+												class="form-control">
+												<form:option value="" label="" />
+												<form:options items="${fns:getDictList('is_top')}"
+													itemLabel="label" itemValue="value" htmlEscape="false" />
+											</form:select></td>
+											
+										<c:if test="${rlzyCompany.companytype == '2'}">
+											<td class="width-10 active"><label class="pull-right">是否公开：</label></td>
+										<td class="width-15"><form:select path="ispublic"
+												class="form-control">
+												<form:option value="" label="" />
+												<form:options items="${fns:getDictList('is_public')}"
+													itemLabel="label" itemValue="value" htmlEscape="false" />
+											</form:select></td>
+										<td class="width-10 active"><label class="pull-right">排列序号：</label></td>
+										<td class="width-15"><form:input path="rank"
+												htmlEscape="false" class="form-control " type="number" value="0"/></td>
+													<td class="width-10 active"><label class="pull-right">服务类型：</label></td>
+										<td class="width-15"><form:select path="serviceType"
+												class="form-control">
+												<form:option value="" label="" />
+												<form:options items="${fns:getDictList('service_type')}"
+													itemLabel="label" itemValue="value" htmlEscape="false" />
+											</form:select></td>
+										</c:if>
+									</tr>
+									<tr>
 										<td class="width-10 active"><label class="pull-right">服务范围：</label></td>
 										<td class="width-15" colspan="7"><form:textarea
 												path="servicerange" htmlEscape="false" class="form-control "
@@ -223,9 +252,9 @@
 								</ul>
 								<div class="tab-content">
 									<div id="tab-1" class="tab-pane fade in  active">
-										<!-- <a class="btn btn-white btn-sm"
+										<a class="btn btn-white btn-sm"
 											onclick="addRow('#rlzyPositionList', rlzyPositionRowIdx, rlzyPositionTpl);rlzyPositionRowIdx = rlzyPositionRowIdx + 1;"
-											title="新增"><i class="fa fa-plus"></i> 新增</a> -->
+											title="新增"><i class="fa fa-plus"></i> 新增</a>
 										<table
 											class="table table-striped table-bordered table-condensed">
 											<thead>
@@ -332,7 +361,7 @@
 					</td>
 				</tr>
 			</script>
-										<script type="text/javascript">
+			<script type="text/javascript">
 				var rlzyPositionRowIdx = 0, rlzyPositionTpl = $("#rlzyPositionTpl").html().replace(/(\/\/\<!\-\-)|(\/\/\-\->)/g,"");
 				$(document).ready(function() {
 					var data = ${fns:toJson(rlzyCompany.rlzyPositionList)};

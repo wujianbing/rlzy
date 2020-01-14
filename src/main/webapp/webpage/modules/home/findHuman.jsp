@@ -21,6 +21,15 @@
 <link rel="stylesheet"
 	href="${ctxStatic }/rlzy/css/jquery.my-modal.1.1.css" />
 <link rel="stylesheet" href="${ctxStatic }/rlzy/css/findHuman.css" />
+<style type="text/css">
+ol.zp-sidebar li {
+    list-style: none;
+}
+	._parent *{
+		font-size:16px !important;
+		color: #666666 !important;
+	}
+</style>
 </head>
 <body>
 	<!--首页内容-->
@@ -99,7 +108,9 @@
 					<div class="infoname infolast">
 						<h5>职位描述</h5>
 						<p class="infopname1">岗位要求：</p>
+						<div class="_parent">
 							${rlzyPosition.positiondescription }
+						</div>
 					</div>
 					<!--按钮-->
 					<div class="infopname lastname lastjk">
@@ -181,7 +192,7 @@
 								layer.open({
 									  type: 1
 									  ,offset: 'auto' //具体配置参考：offset参数项
-									  ,content: '<div style="padding: 20px 80px;">投递成功!</div>'
+									  ,content: '<div style="padding: 20px 80px; font-size: 16px;">投递成功!</div>'
 									  ,btn: '关闭'
 									  ,btnAlign: 'c' //按钮居中
 									  ,shade: 0 //不显示遮罩
@@ -193,7 +204,7 @@
 								layer.open({
 									  type: 1
 									  ,offset: 'auto' //具体配置参考：offset参数项
-									  ,content: '<div style="padding: 20px 80px;text-align: center;">您已投递!</div>'
+									  ,content: '<div style="padding: 20px 80px;text-align: center; font-size: 16px;">您已投递!</div>'
 									  ,btn: '关闭'
 									  ,btnAlign: 'c' //按钮居中
 									  ,shade: 0 //不显示遮罩
@@ -207,7 +218,7 @@
 						layer.open({
 							  type: 1
 							  ,offset: 'auto' //具体配置参考：offset参数项
-							  ,content: '<div style="padding: 20px 80px;">您是企业账号，不能投递简历!</div>'
+							  ,content: '<div style="padding: 20px 80px; font-size: 16px;">您是企业账号，不能投递简历!</div>'
 							  ,btn: '关闭'
 							  ,btnAlign: 'c' //按钮居中
 							  ,shade: 0 //不显示遮罩
@@ -220,7 +231,7 @@
 					layer.open({
 						  type: 1
 						  ,offset: 'auto' //具体配置参考：offset参数项
-						  ,content: '<div style="padding: 20px 80px;">您还未登陆!</div>'
+						  ,content: '<div style="padding: 20px 80px; font-size: 16px;">您还未登陆!</div>'
 						  ,btn: '关闭'
 						  ,btnAlign: 'c' //按钮居中
 						  ,shade: 0 //不显示遮罩
@@ -249,7 +260,7 @@
 								layer.open({
 									  type: 1
 									  ,offset: 'auto' //具体配置参考：offset参数项
-									  ,content: '<div style="padding: 20px 80px;">收藏成功!</div>'
+									  ,content: '<div style="padding: 20px 80px; font-size: 16px;">收藏成功!</div>'
 									  ,btn: '关闭'
 									  ,btnAlign: 'c' //按钮居中
 									  ,shade: 0 //不显示遮罩
@@ -261,7 +272,7 @@
 								layer.open({
 									  type: 1
 									  ,offset: 'auto' //具体配置参考：offset参数项
-									  ,content: '<div style="padding: 20px 80px;">您已收藏!</div>'
+									  ,content: '<div style="padding: 20px 80px; font-size: 16px;">您已收藏!</div>'
 									  ,btn: '关闭'
 									  ,btnAlign: 'c' //按钮居中
 									  ,shade: 0 //不显示遮罩
@@ -275,7 +286,7 @@
 						layer.open({
 							  type: 1
 							  ,offset: 'auto' //具体配置参考：offset参数项
-							  ,content: '<div style="padding: 20px 80px;">您是企业账号不能收藏职位!</div>'
+							  ,content: '<div style="padding: 20px 80px; font-size: 16px;">您是企业账号不能收藏职位!</div>'
 							  ,btn: '关闭'
 							  ,btnAlign: 'c' //按钮居中
 							  ,shade: 0 //不显示遮罩
@@ -288,7 +299,7 @@
 					layer.open({
 						  type: 1
 						  ,offset: 'auto' //具体配置参考：offset参数项
-						  ,content: '<div style="padding: 20px 80px;">您还未登陆!</div>'
+						  ,content: '<div style="padding: 20px 80px; font-size: 16px;">您还未登陆!</div>'
 						  ,btn: '关闭'
 						  ,btnAlign: 'c' //按钮居中
 						  ,shade: 0 //不显示遮罩

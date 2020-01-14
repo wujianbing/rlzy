@@ -36,6 +36,10 @@
 		a.spe3 AS "spe3",
 		a.lnglat AS "lnglat",
 		a.remarks AS "remarks",
+		a.checkval AS "checkval",
+		a.istop AS "istop",
+		a.ispublic AS "ispublic",
+		a.rank AS "rank",
 		a.create_date AS "createDate",
 		a.update_date AS "updateDate",
 		a.creditcode AS "creditcode"
@@ -63,7 +67,10 @@
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			${dataScope}
 			<if test="companyname != null and companyname != ''">
-				AND a.companyname = #{companyname}
+				AND a.companyname LIKE 
+					<if test="dbName == 'oracle'">'%'||#{companyname}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{companyname}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{companyname},'%')</if>
 			</if>
 			<if test="companyscale != null and companyscale != ''">
 				AND a.companyscale = #{companyscale}
@@ -80,13 +87,35 @@
 			<if test="serviceType != null and serviceType != ''">
 				AND a.serviceType = #{serviceType}
 			</if>
+			<if test="id != null and id != ''">
+				AND a.id = #{id}
+			</if>
+			<if test="reviewstate != null and reviewstate != ''">
+				AND a.reviewstate = #{reviewstate}
+			</if>
+			<if test="istop != null and istop != ''">
+				AND a.istop = #{istop}
+			</if>
+			<if test="ispublic != null and ispublic != ''">
+				AND a.ispublic = #{ispublic}
+			</if>
+			<if test="companytype != null and companytype != ''">
+				AND a.companytype = #{companytype}
+			</if>
+			<if test="industry != null and industry != ''">
+				AND a.industry = #{industry}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
-				ORDER BY ${page.orderBy}
+				ORDER BY ${page.orderBy},a.create_date DESC
 			</when>
 			<otherwise>
-				ORDER BY a.update_date DESC
+				ORDER BY a.create_date 
+				<if test="rank != null and rank != ''">
+				  , a.rank 
+				</if>
+					DESC
 			</otherwise>
 		</choose>
 	</select>
@@ -145,6 +174,10 @@
 			spe3,
 			lnglat,
 			remarks,
+			checkval,
+			istop,
+			ispublic,
+			rank,
 			create_date,
 			update_date,
 			creditcode
@@ -182,6 +215,10 @@
 			#{spe3},
 			#{lnglat},
 			#{remarks},
+			#{checkval},
+			#{istop},
+			#{ispublic},
+			#{rank},
 			#{createDate},
 			#{updateDate},
 			#{creditcode}
@@ -220,12 +257,24 @@
 			spe2 = #{spe2},
 			spe3 = #{spe3},
 			lnglat = #{lnglat},
+			checkval = #{checkval},
+			istop = #{istop},
+			ispublic = #{ispublic},
+			rank = #{rank},
 			remarks = #{remarks},
 			update_date = #{updateDate},
 			creditcode = #{creditcode}
 		WHERE id = #{id}
 	</update>
 	
+	<!--updateCheck  -->
+	<!-- <update id="updateCheck">
+	UPDATE rlzy_company SET
+		reviewstate=#{reviewstate}
+		AND
+		check=#{check}
+	WHERE id = #{id}
+	</update> -->
 	
 	<!--物理删除-->
 	<update id="delete">

@@ -28,7 +28,7 @@
 				<div data-id="1" class="bg1">法律服务</div>
 				<div data-id="3" class="bg2">财务服务</div>
 				<div data-id="2" class="bg3">保险服务</div>
-				<div data-id="4" class="bg4">其他服务</div>
+				<div data-id="4" class="bg4">人力资源服务</div>
 			</div>
 		</div>
 		<div class="service-cont">

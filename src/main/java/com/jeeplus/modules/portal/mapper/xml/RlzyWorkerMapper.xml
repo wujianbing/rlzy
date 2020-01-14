@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.portal.mapper.RlzyWorkerMapper">
+    
+	<sql id="rlzyWorkerColumns">
+		a.id AS "id",
+		a.companyid AS "companyid",
+		a.parentid AS "parentid",
+		a.name AS "name",
+		a.sex AS "sex",
+		a.birthday AS "birthday",
+		a.age AS "age",
+		a.photo AS "photo",
+		a.liveplace AS "liveplace",
+		a.qq AS "qq",
+		a.phone AS "phone",
+		a.webchat AS "webchat",
+		a.selfdescription AS "selfdescription",
+		a.resumedoc AS "resumedoc",
+		a.dispatchstate AS "dispatchstate",
+		a.del_flag AS "delFlag",
+		a.remarks AS "remarks",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
+		a.ismatch AS "ismatch",
+		a.education AS "education",
+		a.major AS "major",
+		a.desiredindustry AS "desiredindustry",
+		a.salary AS "salary"
+	</sql>
+	
+	<sql id="rlzyWorkerJoins">
+		
+	</sql>
+	
+    
+	<select id="get" resultType="RlzyWorker" >
+		SELECT 
+			<include refid="rlzyWorkerColumns"/>
+		FROM rlzy_worker a
+		<include refid="rlzyWorkerJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RlzyWorker" >
+		SELECT 
+			<include refid="rlzyWorkerColumns"/>
+		FROM rlzy_worker a
+		<include refid="rlzyWorkerJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RlzyWorker" >
+		SELECT 
+			<include refid="rlzyWorkerColumns"/>
+		FROM rlzy_worker a
+		<include refid="rlzyWorkerJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rlzy_worker(
+			id,
+			companyid,
+			parentid,
+			name,
+			sex,
+			birthday,
+			age,
+			photo,
+			liveplace,
+			qq,
+			phone,
+			webchat,
+			selfdescription,
+			resumedoc,
+			dispatchstate,
+			del_flag,
+			remarks,
+			create_date,
+			update_date,
+			ismatch,
+			education,
+			major,
+			desiredindustry,
+			salary
+		) VALUES (
+			#{id},
+			#{companyid},
+			#{parentid},
+			#{name},
+			#{sex},
+			#{birthday},
+			#{age},
+			#{photo},
+			#{liveplace},
+			#{qq},
+			#{phone},
+			#{webchat},
+			#{selfdescription},
+			#{resumedoc},
+			#{dispatchstate},
+			#{delFlag},
+			#{remarks},
+			#{createDate},
+			#{updateDate},
+			#{ismatch},
+			#{education},
+			#{major},
+			#{desiredindustry},
+			#{salary}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rlzy_worker SET 	
+			companyid = #{companyid},
+			parentid = #{parentid},
+			name = #{name},
+			sex = #{sex},
+			birthday = #{birthday},
+			age = #{age},
+			photo = #{photo},
+			liveplace = #{liveplace},
+			qq = #{qq},
+			phone = #{phone},
+			webchat = #{webchat},
+			selfdescription = #{selfdescription},
+			resumedoc = #{resumedoc},
+			dispatchstate = #{dispatchstate},
+			remarks = #{remarks},
+			update_date = #{updateDate},
+			ismatch = #{ismatch},
+			education = #{education},
+			major = #{major},
+			desiredindustry = #{desiredindustry},
+			salary = #{salary}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM rlzy_worker
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE rlzy_worker SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="RlzyWorker" statementType="STATEMENT">
+		select * FROM rlzy_worker  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

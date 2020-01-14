@@ -75,7 +75,9 @@ public class PersonController {
 	 * @return
 	 */
 	@RequestMapping("/register")
-	public String personregister(Model model,RlzyUser rlzyUser) {
+	public String personregister(Model model,News news,RlzyUser rlzyUser) {
+		news= newsService.get("ee8276b9b98e4187adb882aa31427bbc");
+		model.addAttribute("news", news);
 		return "modules/home/personalRegisters";
 	}
 	
@@ -342,7 +344,7 @@ public class PersonController {
 	public String refuse(String id) {
 		RlzyRelation rlzyRelation = rlzyRelationService.get(id);
 		rlzyRelation.setAccept("3");
-		rlzyRelation.setCompanydealstate("3");
+		//rlzyRelation.setCompanydealstate("3");
 		rlzyRelationService.save(rlzyRelation);
 		return "1";
 	}
@@ -371,6 +373,7 @@ public class PersonController {
 		RlzyRelation rlzyRelation = new RlzyRelation();
 		rlzyRelation.setUserid(userId);
 		rlzyRelation.setCollectionstate("1");
+		rlzyRelation.setDeliverystate("2");
 		Page<RlzyRelation> rlzyRelations = new Page<RlzyRelation>();
 		rlzyRelations.setPageNo(Integer.parseInt(page));
 		rlzyRelations.setPageSize(Integer.parseInt(limit));

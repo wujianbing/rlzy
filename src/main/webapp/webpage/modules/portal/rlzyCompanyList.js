@@ -1,6 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <script>
 $(document).ready(function() {
+	var reviewstate = document.getElementById('reviewstate').value;
+	var url;
+	if("2" == reviewstate){
+		url = "${ctx}/portal/rlzyCompany/data?reviewstate=2"
+	}else if("1" == reviewstate){
+		url = "${ctx}/portal/rlzyCompany/data?reviewstate=1"
+	}else{
+		url = "${ctx}/portal/rlzyCompany/data?reviewstate=0"
+	}
 	$('#rlzyCompanyTable').bootstrapTable({
 		 
 		  //请求方法
@@ -41,7 +50,7 @@ $(document).ready(function() {
                //可供选择的每页的行数（*）    
                pageList: [10, 25, 50, 100],
                //这个接口需要处理bootstrap table传递的固定参数,并返回特定格式的json数据  
-               url: "${ctx}/portal/rlzyCompany/data",
+               url: url,
                //默认值为 'limit',传给服务端的参数为：limit, offset, search, sort, order Else
                //queryParamsType:'',   
                ////查询参数,每次调用是会带上这个参数，可自定义                         
@@ -62,7 +71,9 @@ $(document).ready(function() {
                    		edit(row.id);
                    }else if($el.data("item") == "view"){
                        view(row.id);
-                   } else if($el.data("item") == "delete"){
+                   }else if($el.data("item") == "check"){
+                       check(row.id);
+                   }else if($el.data("item") == "delete"){
                         jp.confirm('确认要删除该企业信息记录吗？', function(){
                        	jp.loading();
                        	jp.get("${ctx}/portal/rlzyCompany/delete?id="+row.id, function(data){
@@ -95,17 +106,7 @@ $(document).ready(function() {
 		        sortName: 'companyname',
 		        formatter:function(value, row , index){
 			        	value = jp.unescapeHTML(value);
-					   <c:choose>
-						   <c:when test="${fns:hasPermission('portal:rlzyCompany:edit')}">
-						      return "<a href='javascript:edit(\""+row.id+"\")'>"+value+"</a>";
-					      </c:when>
-						  <c:when test="${fns:hasPermission('portal:rlzyCompany:view')}">
-						      return "<a href='javascript:view(\""+row.id+"\")'>"+value+"</a>";
-					      </c:when>
-						  <c:otherwise>
-						      return value;
-					      </c:otherwise>
-					   </c:choose>
+			        	 return value;
 			     }
 		    }
 			,{
@@ -196,6 +197,16 @@ $(document).ready(function() {
 		       
 		    }
 			,{
+		        field: 'istop',
+		        title: '是否置顶',
+		        sortable: true,
+		        sortName: 'istop',
+		        formatter:function(value, row , index){
+		        	return jp.getDictLabel(${fns:toJson(fns:getDictList('is_top'))}, value, "-");
+		        }
+		       
+		    }
+			,{
 		        field: 'updateDate',
 		        title: '更新时间',
 		        sortable: true,
@@ -216,6 +227,7 @@ $(document).ready(function() {
 	  $('#rlzyCompanyTable').on('check.bs.table uncheck.bs.table load-success.bs.table ' +
                 'check-all.bs.table uncheck-all.bs.table', function () {
             $('#remove').prop('disabled', ! $('#rlzyCompanyTable').bootstrapTable('getSelections').length);
+            $('#check').prop('disabled', $('#rlzyCompanyTable').bootstrapTable('getSelections').length!=1);
             $('#view,#edit').prop('disabled', $('#rlzyCompanyTable').bootstrapTable('getSelections').length!=1);
         });
 		  
@@ -277,7 +289,10 @@ $(document).ready(function() {
 		  $('#rlzyCompanyTable').bootstrapTable('refresh');
 		});
 		
-		
+	 $("#check").click("click", function() {// 绑定查询按扭
+		  check("");
+	});
+	 
 	});
 		
   function getIdSelections() {
@@ -324,6 +339,12 @@ $(document).ready(function() {
          jp.go("${ctx}/portal/rlzyCompany/form/view?id=" + id);
  }
 
+function check(id){//没有权限时，不显示确定按钮
+     if(id == ""){
+            id = getIdSelections();
+     }
+        jp.go("${ctx}/portal/rlzyCompany/check?id=" + id);
+}
   
   
   

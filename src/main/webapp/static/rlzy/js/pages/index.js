@@ -24,24 +24,12 @@ Index.prototype = {
 	jobWant_fuc: function(){
 		let dataId = $(this).attr('data-id');
 		let dom = $('#'+$(this).attr('id'));
-		if(index.user != null || index.user != undefined){
-			let type=index.user.type;
-			if(dataId === '1' && type==='2'){
-				dom.attr('href',url+'/talent/talentList');
-			}else if(dataId === '1' && type==='1'){
-				layer.msg("您好，个人不能查看他人简历信息");
-				return false;
-			}else{
-				dom.attr('href',url+'/position/positionList');
-			}
+		if(dataId === '1'){
+			//招
+			dom.attr('href',url+'/talent/talentList');
 		}else{
-			if(dataId === '1'){
-				//招
-				dom.attr('href',url+'/login/tologin');
-			}else{
-				//投
-				dom.attr('href',url+'/position/positionList');
-			}
+			//投
+			dom.attr('href',url+'/position/positionList');
 		}
 	},
 	

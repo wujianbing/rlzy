@@ -11,7 +11,7 @@
     justify-content: center; */
     width: 446px;
     border-radius: 4px;
-    height: 425px;
+   /* // height: 425px; */
     margin: 0 auto;
     margin-top: -36px;
 }
@@ -63,7 +63,7 @@ h5 {
 	padding: 0;
 	font-size: 30px;
 	font-weight: bold;
-	height: 7rem;
+	height: 8rem;
 	color: #999999;
 }
 

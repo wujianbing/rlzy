@@ -70,7 +70,7 @@
 							</div>
 							<div class="acp">
 								<span class="acp-span">居住地：</span>
-								<input id="liveplace" type="text" name="liveplace" value="${rlzyUser.liveplace }" class="form-control gname" placeholder="请输入居住地" disabled="true">
+								<input id="liveplace" type="text" title="${rlzyUser.liveplace}" name="liveplace" value="${rlzyUser.liveplace }" class="form-control gname" placeholder="请输入居住地" disabled="true">
 							</div>
 							
 							<div class="acp">
@@ -153,20 +153,20 @@
 						</div>
 						<div class="acp">
 							<span class="acp-span">工作地区：</span>
-							<input id="workplace" type="text" name="workplace" value="${rlzyUser.workplace }" class="form-control gname" placeholder="请输入工作地区" disabled="true">
+							<input id="workplace" type="text" name="workplace" title="${rlzyUser.workplace }" value="${rlzyUser.workplace }" class="form-control gname" placeholder="请输入工作地区" disabled="true">
 						</div>
 						<div class="acp">
 							<span class="acp-span">期望行业：</span>
-							<form:select class="form-control gname" disabled="true" path="desiredindustry" name="desiredindustry">
+							<form:select class="form-control gname"   disabled="true" path="desiredindustry" name="desiredindustry" >
 								<form:option value="" label=""/>
-								<form:options items="${fns:getDictList('desired_industry')}" itemLabel="label" itemValue="value" htmlEscape="false" />
+								<form:options items="${fns:getDictList('desired_industry')}"    itemLabel="label" itemValue="value" htmlEscape="false" />
 							</form:select>
 						</div>
 						<div class="acp">
 							<span class="acp-span">期望职位：</span>
 							 <input type="text" name="desiredposition" disabled="true" required value="${rlzyUser.desiredposition }"
 											lay-verify="required" placeholder="请选择期望职业"
-											autocomplete="off" class="form-control  gname" id="workchange">
+											autocomplete="off" class="form-control  gname" id="workchange"  title="${rlzyUser.desiredposition }">
 							 <%-- <form:select class="form-control gname" disabled="true" path="desiredposition" name="desiredposition">
 								<form:option value="" label=""/>
 								<form:options items="${fns:getDictList('desired_position')}" itemLabel="label" itemValue="value" htmlEscape="false" />
@@ -225,8 +225,8 @@
 							<div class="layui-timeline-content layui-text timeline-flex">
 								<h3 class="layui-timeline-title rev-teach1 layui-timeline-title1"><span class="studyTime1"><fmt:formatDate value="${rlzyResume.startdate }" pattern="yyyy-MM"/></span>至<span class="studyTime2"><fmt:formatDate value="${rlzyResume.enddate }" pattern="yyyy-MM"/></span>【${fns:getComparePrecise(rlzyResume.startdate,rlzyResume.enddate)}】</h3>
 								<h3 data-id="${rlzyResume.id}"  class="layui-timeline-title rev-teach2 layui-timeline-mar">${fns:getDictLabel(rlzyResume.education, "education", defaultValue)}</h3>
-								<h3 class="layui-timeline-title rev-teach3 layui-timeline-mar">${rlzyResume.name }</h3>
-								<h3 class="layui-timeline-title rev-teach4 layui-timeline-mar">${rlzyResume.major }</h3>
+								<h3 class="layui-timeline-title rev-teach3 layui-timeline-mar" title="${rlzyResume.name }">${rlzyResume.name }</h3>
+								<h3 class="layui-timeline-title rev-teach4 layui-timeline-mar" title="${rlzyResume.major }">${rlzyResume.major }</h3>
 								<div class="layui-timeline-title timeline-right"><span class="rev-id" onclick="myFind.teachRe(this)">修改</span>/<span onclick="myFind.teachDel(this)">删除</span></div>
 							</div>
 						</li>
@@ -302,8 +302,8 @@
 							<i class="layui-icon layui-timeline-axis"></i>
 							<div class="layui-timeline-content layui-text timeline-flex">
 								<h3 class="layui-timeline-title rev-teach1 layui-timeline-title1"><span class="studyTime1"><fmt:formatDate value="${rlzyResume.startdate }" pattern="yyyy-MM"/></span>至<span class="studyTime2"><fmt:formatDate value="${rlzyResume.enddate }" pattern="yyyy-MM"/></span>【${fns:getComparePrecise(rlzyResume.startdate,rlzyResume.enddate)}】</h3>
-								<h3 data-id="${rlzyResume.id}"  class="layui-timeline-title rev-teach2 layui-timeline-mar">${rlzyResume.major}</h3>
-								<h3 class="layui-timeline-title rev-teach3 layui-timeline-mar">${rlzyResume.name }</h3>
+								<h3 data-id="${rlzyResume.id}"  class="layui-timeline-title rev-teach2 layui-timeline-mar" title="${rlzyResume.major}">${rlzyResume.major}</h3>
+								<h3 class="layui-timeline-title rev-teach3 layui-timeline-mar" title="${rlzyResume.name }">${rlzyResume.name }</h3>
 								<h3 class="layui-timeline-title rev-teach4 layui-timeline-mar">${rlzyResume.describes }</h3>
 								<div class="layui-timeline-title timeline-right"><span class="rev-id" onclick="myFind.jobRe(this)">修改</span>/<span onclick="myFind.teachDel(this)">删除</span></div>
 							</div>
@@ -377,8 +377,8 @@
 							<i class="layui-icon layui-timeline-axis"></i>
 							<div class="layui-timeline-content layui-text timeline-flex">
 								<h3 class="layui-timeline-title rev-teach1 layui-timeline-title1"><span class="studyTime1"><fmt:formatDate value="${rlzyResume.startdate }" pattern="yyyy-MM"/></span>至<span class="studyTime2"><fmt:formatDate value="${rlzyResume.enddate }" pattern="yyyy-MM"/></span>【${fns:getComparePrecise(rlzyResume.startdate,rlzyResume.enddate)}】</h3>
-								<h3 data-id="${rlzyResume.id}"  class="layui-timeline-title rev-teach2 layui-timeline-mar">${rlzyResume.major}</h3>
-								<h3 class="layui-timeline-title rev-teach3 layui-timeline-mar">${rlzyResume.name }</h3>
+								<h3 data-id="${rlzyResume.id}"  class="layui-timeline-title rev-teach2 layui-timeline-mar" title="${rlzyResume.major}">${rlzyResume.major}</h3>
+								<h3 class="layui-timeline-title rev-teach3 layui-timeline-mar" title="${rlzyResume.name }">${rlzyResume.name }</h3>
 								<h3 class="layui-timeline-title rev-teach4 layui-timeline-mar">${rlzyResume.describes }</h3>
 								<div class="layui-timeline-title timeline-right"><span class="rev-id" onclick="myFind.trainRe(this)">修改</span>/<span onclick="myFind.teachDel(this)">删除</span></div>
 							</div>

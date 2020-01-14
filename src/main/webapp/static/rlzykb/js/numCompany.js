@@ -6,6 +6,11 @@ var date =[];
 var delCount =[];
 var positionCount =[];
 var collectCount = [];
+var scales =[];
+var scaleCount = [];
+var salaryRange = '';
+
+var test = [];
 
 	$.ajax({
 		url :'/rlzy/data/companyCurve' , // 请求路径
@@ -17,7 +22,7 @@ var collectCount = [];
 						var post = res[i];
 						var postition = post[j];
 						date.push(postition.date);
-						console.log(date);
+						/*console.log(date);*/
 						positionCount.push(postition.count);
 					}else if(i == 1){
 						var del= res[i];
@@ -41,6 +46,17 @@ NumPerson.prototype = {
 			contentType: "application/json;charset=utf-8",
 			success:function(data){
 				map = data;
+				companyscale = data.companyscale;
+				salaryRange =data.salaryRange;
+				console.log(salaryRange);
+				console.log(companyscale);
+				for(var i =0;i<companyscale.length;i++){
+					let companyscales ={};
+					companyscales['name']=companyscale[i].companyscale;
+					companyscales['value']=companyscale[i].count;
+					test.push(companyscales)
+				}
+				
 				numPerson.get();
 			}
 		});
@@ -59,58 +75,14 @@ NumPerson.prototype = {
 	get: function(){
 		let _self = this;
 		let dataLevelPieLeg = [];
-		let datalevelPieSer = [{
-				value: map.count11,
-				name: '1-1.5K/月'
-			},
-			{
-				value: map.count12,
-				name: '1.5-2K/月'
-			},
-			{
-				value: map.count13,
-				name: '2-3K/月'
-			},
-			{
-				value: map.count14,
-				name: '3-5K/月'
-			},
-			{
-				value: map.count15,
-				name: '5-10K/月'
-			},			
-			{
-				value: map.count16,
-				name: '10K以上/月'
-			}
-		];
-		_self.pie_s("pie1", "企业 分布", dataLevelPieLeg, datalevelPieSer, "pie");
+		let datalevelPieSer = salaryRange;
+		_self.pie_s("pie1", "企业发布职位薪资分布", dataLevelPieLeg, datalevelPieSer, "pie");
 		
 		let dataLevelPieLeg2 = [];
-		let datalevelPieSer2 = [{
-					value: map.count6,
-					name: '1-20人'
-				},
-				{
-					value: map.count7,
-					name: '20-50人'
-				},
-				{
-					value: map.count8,
-					name: '50-100人'
-				},
-				{
-					value: map.count9,
-					name: '100-500人'
-				},
-				{
-					value: map.count10,
-					name: '500+人'
-				}
-		];
-		_self.pie_s("pie2", "职位相关数据", dataLevelPieLeg2, datalevelPieSer2, "pie");
+		let datalevelPieSer2 = test;
+		_self.pie_s("pie2", "企业发布职位相关数据", dataLevelPieLeg2, datalevelPieSer2, "pie");
 		
-		let dataDomainPieLeg = ['PLC故障', 'CNC故障', '加工程序出错', '单元出错', '搜索出错'];
+		let dataDomainPieLeg = [];
 		let dataDomainPieSer = [{
 				value: map.positionCount,
 				name: '职位发布数'
@@ -128,7 +100,7 @@ NumPerson.prototype = {
 				name: '职位被收藏数'
 			}
 		];
-		_self.pie_h("pie3", "职位相关数据", dataDomainPieLeg, dataDomainPieSer, "pie",'45%');
+		_self.pie_h("pie3", "企业职位相关数据", dataDomainPieLeg, dataDomainPieSer, "pie",'45%');
 		_self.bar('bar1');
 		_self.line('line1');
 	},
@@ -178,7 +150,7 @@ NumPerson.prototype = {
 				}
 			},
 			series: [{
-				name: '企业信息',
+				name: '企业发布职位薪资分布',
 				type: 'pie',
 				radius: '80%',
 				center: ['50%', '50%'],
@@ -305,7 +277,7 @@ NumPerson.prototype = {
 					url:'/rlzy/data/industry',
 					type:'post',
 					success:function(data){
-						console.log(data);
+						/*console.log(data);*/
 						var name =[];
 						var count=[];
 						for(var key in data){

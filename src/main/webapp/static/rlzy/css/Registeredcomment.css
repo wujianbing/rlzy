@@ -2,15 +2,20 @@ html,body {
 	background: #f5f6f6;
 }
 .logo{
-	width: 50px;
-	margin-right: 6px;
+	width: 95px;
+    margin-right: 6px;
+    margin-bottom: 5px;
+    height: 80px;
+    margin-left: -18px;
 }
-.titleTop{
-	padding: 30px 0;
-	background: #fff;
-	background: url('../img/le-run.png') no-repeat center;
-	background-size: 100% 100%;
+/******************************************  */
+.titleTop {
+    padding: 17px 0;
+    background: #fff;
+    /* background: url(../img/le-run.png) no-repeat center; */
+    background-size: 100% 100%;
 }
+/******************************************  */
 .rowTop {
 	width: 1200px;
 	margin: 0 auto;
@@ -32,10 +37,9 @@ html,body {
 	margin: 0 auto;
 }
 .title {
-	/* color: #666; */
-	color: #1787fb;
-	/* flex: 1; */
+	color: #3a71d6;
 }
+/* ************************************** */
 .title h3 {
 	font-weight: bolder;
 	font-size: 24px;
@@ -77,25 +81,31 @@ html,body {
 .searchBar-left{
 	margin-right: 18px;
 }
+/************************************************/
 .land{
     display: inline-block;
     overflow: hidden;
-   	padding: 0 5px;
-   	color:#333;
+    min-width: 50px;
+    height: 36px;
+    /* background: #2a8bf8; */
+    border-radius: 6px;
+    line-height: 36px;
+    text-align: center;
+    color: #585858;
     margin-right: 15px;
-      line-height: 36px;
     cursor: pointer;
+    font-size: 17px;
 }
+
 .land:nth-of-type(2){
 	width: 60px;
     height: 36px;
  margin-right:0px;
-    background: white;
     color: #2a8bf8;
      border-radius: 6px;
-  
     text-align: center;
 }
+/******************************************  */
 .land:nth-of-type(2):hover{
  margin-right:0px;
     background: white;
@@ -111,6 +121,7 @@ html,body {
 	justify-content: space-between;
 	border-bottom: 0;
 	padding: 22px 0;
+	margin-left: 56px;
 }
 .nav.nav-tabs a {
 	display: inline-block;
@@ -238,4 +249,98 @@ html,body {
 }
 #tianqi{
  margin-left:52px;
+}
+/* xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx */
+.leftonw {
+    width: 1200px;
+    margin: 0 auto;
+    height: 54px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+.navleft {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.zp-sidebar {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+    width:70px;
+    padding: 10px 0 5px;
+    position: fixed;
+    right: 0;
+    bottom: 200px;
+    background-color: #fff;
+    border: 1px solid #f4f6f9;
+    z-index: 1;
+}
+/*二维码的样式*/
+#ercode{
+	width: 60px;
+	height: 60px;
+	position: fixed;
+	left: 79.5%;
+/*	border: 2px dotted #1787fb;*/
+	display: none;
+}
+.zp-sidebar__li {
+    height: 60px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+.zp-sidebar__link {
+    display: block;
+    margin: 0 4px;
+    width: 60px;
+    height: 60px;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 60px;
+    border-radius: 20px;
+    color: #bababa;
+    
+}
+.zp-sidebar__link i.layui-icon {
+    color: #3a71d6;
+    font-weight: bolder;
+    font-size: 25px;
+    
+}
+
+.zp-sidebar__link:hover span.zp-sidebar__span{
+	z-index: 999;
+	display:flex!important;
+}
+.zp-sidebar__link:hover i.layui-icon.layhover{
+	visibility:hidden!important;
+}
+.zp-sidebar__span {
+    display: none;
+    font-size: 15px;
+    font-weight: 700;
+    background:#1787fb;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-top: -60px;
+    color: #fff;
+}
+i.layui-icon.zp-sidebar__span {
+    display: none;
+    font-size: 25px;
+    font-weight: 700;
+    background:#1787fb;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-top: -60px;
+    color: #fff;
+}
+
+ol.zp-sidebar li {
+    list-style: none;
 }

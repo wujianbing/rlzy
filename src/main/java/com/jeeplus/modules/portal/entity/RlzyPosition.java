@@ -46,6 +46,8 @@ public class RlzyPosition extends DataEntity<RlzyPosition> {
 	private String email;
 	private String pageNo;
 	private String utime;
+	private String status;//登录状态
+	private String flag;
 	
 	public RlzyPosition(RlzyCompany rlzyCompany){
 		this.rlzyCompany = rlzyCompany;
@@ -302,6 +304,19 @@ public class RlzyPosition extends DataEntity<RlzyPosition> {
 	public void setUtime(String utime) {
 		this.utime = utime;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getFlag() {
+		return flag;
+	}
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
+	
 	
 	
 }

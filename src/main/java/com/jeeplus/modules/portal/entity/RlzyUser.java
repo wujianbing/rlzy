@@ -12,6 +12,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.google.common.collect.Lists;
 
 import com.jeeplus.core.persistence.DataEntity;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import com.jeeplus.common.utils.excel.annotation.ExcelField;
 
 /**
@@ -19,12 +23,16 @@ import com.jeeplus.common.utils.excel.annotation.ExcelField;
  * @author 喻昆昆
  * @version 2019-11-15
  */
+@ApiModel(value="RlzyUser",discriminator="叶鹏",subTypes= {RlzyUser.class})
 public class RlzyUser extends DataEntity<RlzyUser> {
 	
 	private static final long serialVersionUID = 1L;
+	//必填项
+	@ApiModelProperty(required=true)
 	private String name;		// 姓名
 	private String sex;		// 性别
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date birthday;		// 出生年月
 	private String age;		// 年龄
 	private String photo;		// 照片
@@ -55,14 +63,16 @@ public class RlzyUser extends DataEntity<RlzyUser> {
 	private String spe3;		// 预留3
 	private String utime;
 	private String industry;
-	private String collectionstate;
+	private String collectionstate;//收藏状态
+	private String invite;//邀请状态
 	private String userid;
 	private String companyid;
 	private String relationid;
 	private String date;
 	private String pageNo;
 	private String count;
-	private String positionname; //职位名称
+	private String positionid; //职位id
+	private String status;//登录状态
 	private List<RlzyResume> rlzyResumeList = Lists.newArrayList();		// 子表列表
 	
 	public RlzyUser() {
@@ -130,6 +140,14 @@ public class RlzyUser extends DataEntity<RlzyUser> {
 	@ExcelField(title="籍贯", align=2, sort=7)
 	public String getNativeplace() {
 		return nativeplace;
+	}
+
+	public String getInvite() {
+		return invite;
+	}
+
+	public void setInvite(String invite) {
+		this.invite = invite;
 	}
 
 	public void setNativeplace(String nativeplace) {
@@ -405,12 +423,12 @@ public class RlzyUser extends DataEntity<RlzyUser> {
 		this.pageNo = pageNo;
 	}
 
-	public String getPositionname() {
-		return positionname;
+	public String getPositionid() {
+		return positionid;
 	}
 
-	public void setPositionname(String positionname) {
-		this.positionname = positionname;
+	public void setPositionid(String positionid) {
+		this.positionid = positionid;
 	}
 
 	public String getCount() {
@@ -420,5 +438,14 @@ public class RlzyUser extends DataEntity<RlzyUser> {
 	public void setCount(String count) {
 		this.count = count;
 	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 	
 }

@@ -51,7 +51,8 @@
 						<c:forEach items="${industry }" var="ind">
 							<li
 								onclick="this.parentNode.previousSibling.previousSibling.value=this.innerText;">
-								<a data-value="${ind.value}" title="${ind.value}" href="javascript:;">${ind.label}</a>
+								<a data-value="${ind.value}" title="${ind.value}"
+								href="javascript:;">${ind.label}</a>
 							</li>
 						</c:forEach>
 					</ul>
@@ -195,23 +196,45 @@
 							<li>
 								<div class="infoname">
 									<h5>
-										<span class="lefth5"><span class="nameb"
-											onclick="javascript:window.open('${rlzyPath }/talent/talentDetails?id=${rlzyUser.id }&companyid=${companyid}')">
-												${fns:getDictLabel(rlzyUser.desiredindustry,"desired_industry",defaultValue)}</span></span>
-										<span class="lefth5"> <span
-											onclick="javascript:window.open('${rlzyPath }/talent/talentDetails?id=${rlzyUser.id }&companyid=${companyid}')">${rlzyUser.name}</span>&emsp;&emsp;
-										</span> <span class="lefth5"> <span>${rlzyUser.liveplace}</span>&emsp;&emsp;
+										<c:if test="${rlzyUser.status=='0' }">
+											<span class="lefth5"><span class="nameb"
+												onclick="login()">
+													${rlzyUser.desiredposition}</span></span>
+											<span class="lefth5"> <span onclick="login()">${rlzyUser.name}</span>&emsp;&emsp;
+											</span>
+										</c:if>
+										<c:if test="${rlzyUser.status=='1' }">
+											<span class="lefth5"><span class="nameb"
+												onclick="alert()">
+													${rlzyUser.desiredposition}</span></span>
+											<span class="lefth5"> <span onclick="alert()">${rlzyUser.name}</span>&emsp;&emsp;
+											</span>
+										</c:if>
+										<c:if test="${rlzyUser.status!='0' && rlzyUser.status!='1' }">
+											<span class="lefth5"><span class="nameb"
+												onclick="javascript:window.open('${rlzyPath }/talent/talentDetails?id=${rlzyUser.id }&companyid=${companyid}')">
+													${rlzyUser.desiredposition}</span></span>
+											<span class="lefth5"> <span
+												onclick="javascript:window.open('${rlzyPath }/talent/talentDetails?id=${rlzyUser.id }&companyid=${companyid}')">${rlzyUser.name}</span>&emsp;&emsp;
+											</span>
+										</c:if>
+										<span class="lefth5"> <span>${rlzyUser.liveplace}</span>&emsp;&emsp;
 											<!--<span>4-6千/月</span>-->
 										</span> <span class="lefth5 righth5"> 发布时间：<span><fmt:formatDate
 													value="${rlzyUser.createDate }" pattern="yyyy-MM-dd" /></span></span>
 									</h5>
 									<div class="bot">
 										<div class="imgntitle">
-											<img src="${rlzyUser.photo }" />
+											<c:if test="${rlzyUser.photo != '' && rlzyUser.photo!= null}">
+												<img src="${rlzyUser.photo }" />
+											</c:if>
+											<c:if test="${rlzyUser.photo == '' || rlzyUser.photo == null}">
+												<img src="${ctxStatic }/rlzy/img/timg.jpg" />
+											</c:if>
 										</div>
 										<div class="letbot">
 											<p class="infopname1">
-												<span class="sitename">${fns:getDictLabel(rlzyUser.desiredposition,"desired_position",defaultValue)}</span>
+												<%-- <span title='${rlzyUser.desiredposition}' class="sitename">${rlzyUser.desiredposition}</span> --%>
 												<span class="sitename">${fns:getDictLabel(rlzyUser.sex,"sex", defaultValue)}</span>
 												<span class="sitename">${rlzyUser.age}<span>岁</span></span>
 												<span class="sitename">${fns:getDictLabel(rlzyUser.education,"education", defaultValue)}</span>
@@ -219,37 +242,53 @@
 
 											</p>
 											<p class="infopname1">
-												<span
-													title='${fns:getDictLabel(rlzyUser.major,"major", defaultValue)}'
-													class="sitename">${fns:getDictLabel(rlzyUser.major,"major", defaultValue)}</span>
 												<span class="sitename">${fns:getDictLabel(rlzyUser.currentstate,"current_state", defaultValue)}</span>
 												<span class="sitename">${fns:getDictLabel(rlzyUser.worknature,"work_nature",defaultValue)}</span>
 												<span class="sitename">${fns:getDictLabel(rlzyUser.salary,"salary",defaultValue)}</span>
+												<span title='${fns:getDictLabel(rlzyUser.major,"major", defaultValue)}' class="sitename">${fns:getDictLabel(rlzyUser.major,"major", defaultValue)}</span>
 											</p>
 											<p class="infopname2">
+											<c:if test="${rlzyUser.selfdescription == '' || rlzyUser.selfdescription == null}">
+												<span class="sitename2">自我介绍：<span>暂无</span></span>
+											</c:if>
+											<c:if test="${rlzyUser.selfdescription != '' && rlzyUser.selfdescription != null}">
 												<span class="sitename2">自我介绍：<span>${rlzyUser.selfdescription}</span></span>
+											</c:if>
 											</p>
 
 										</div>
 										<div class="rightbot">
-											<a href="#"><span class="btnlock tdjl ckjl"
-												onclick="javascript:window.open('${rlzyPath }/talent/talentDetails?id=${rlzyUser.id }&companyid=${companyid}')">查看简历</span></a>
-											<c:if test="${rlzyUser.collectionstate == 1}">
-												<span class="btnlock sqzw sc active" id="sc"
-													data-user="${rlzyUser.id }"
-													data-id="${rlzyUser.relationid}"
+											<c:if test="${rlzyUser.status=='0' }">
+												<a href="#"><span class="btnlock tdjl ckjl"
+													onclick="login()">查看简历</span></a>
+											</c:if>
+											<c:if test="${rlzyUser.status=='1' }">
+												<a href="#"><span class="btnlock tdjl ckjl"
+													onclick="alert()">查看简历</span></a>
+											</c:if>
+											<c:if test="${rlzyUser.status!='0' && rlzyUser.status!='1' }">
+												<a href="#"><span class="btnlock tdjl ckjl"
+													onclick="javascript:window.open('${rlzyPath }/talent/talentDetails?id=${rlzyUser.id }&companyid=${companyid}')">查看简历</span></a>
+											</c:if>
+												
+											<c:if test="${rlzyUser.status=='0' }">
+											<span class="btnlock sqzw sc" id="sc" onclick="login()"
+												data-user="${rlzyUser.id }" data-id="${rlzyUser.relationid}"
+												data-s="${rlzyUser.collectionstate}"><span
+												class="layui-icon layui-icon-rate-solid"></span>收&ensp;藏</span>
+											</c:if>
+											<c:if test="${rlzyUser.status=='1' }">
+												<span class="btnlock sqzw sc" id="sc" onclick="alert2()"
+													data-user="${rlzyUser.id }" data-id="${rlzyUser.relationid}"
 													data-s="${rlzyUser.collectionstate}"><span
 													class="layui-icon layui-icon-rate-solid"></span>收&ensp;藏</span>
 											</c:if>
-											<c:if test="${rlzyUser.collectionstate != 1}">
+											<c:if test="${rlzyUser.status!='0' && rlzyUser.status!='1' }">
 												<span class="btnlock sqzw sc" id="sc" onclick="ac(this)"
-													data-user="${rlzyUser.id }"
-													data-id="${rlzyUser.relationid}"
-													data-s="${rlzyUser.collectionstate}"><span
-													class="layui-icon layui-icon-rate-solid"></span>收&ensp;藏</span>
+												data-user="${rlzyUser.id }" data-id="${rlzyUser.relationid}"
+												data-s="${rlzyUser.collectionstate}"><span
+												class="layui-icon layui-icon-rate-solid"></span>收&ensp;藏</span>
 											</c:if>
-
-
 										</div>
 									</div>
 								</div>
@@ -282,8 +321,8 @@
 				console.log(that);
 				var companyId = $("#companyId").val();
 				let userId = that.attr("data-user");
-		
-				$.get("${rlzyPath}/talent/keepUser?userid=" + userId + "&companyid=" + companyId, function(data) {
+				if(companyId!=''){
+					$.get("${rlzyPath}/talent/keepUser?userid=" + userId + "&companyid=" + companyId, function(data) {
 						that.css({
 							"color" : "#ff6d86",
 							"border" : "1px solid #ff6d86"
@@ -315,6 +354,21 @@
 							});
 						}
 					});
+				}else{
+					layer.open({
+						  type: 1
+						  ,offset: 'auto' //具体配置参考：offset参数项
+						  ,content: '<div style="padding: 20px 80px;">您还未登陆!</div>'
+						  ,btn: '关闭'
+						  ,btnAlign: 'c' //按钮居中
+						  ,shade: 0 //不显示遮罩
+						  ,yes: function(){
+						    layer.closeAll();
+						    window.location.href = url + "/login/tologin";
+						  }
+					});
+				}
+				
 			}
 		
 			function pages(count) {
@@ -348,10 +402,23 @@
 										var time = new Date(data[i].createDate).format("yyyy-MM-dd")
 										arr.push('<li>');
 										arr.push('<div class="infoname">');
-										arr.push('<h5><span class="lefth5"><span class="nameb">' + data[i].desiredindustry + '</span></span>')
-										arr.push('<span class="lefth5">');
-										arr.push('<span>' + data[i].name + '</span>&emsp;&emsp;');
-										arr.push('</span>');
+										arr.push('<h5>');
+										if(data[i].status=='0'){
+											arr.push('<span class="lefth5"><span class="nameb" onclick="login()" >' + data[i].desiredposition/* data[i].desiredindustry */ + '</span></span>')
+											arr.push('<span class="lefth5">');
+											arr.push('<span onclick="login()">' + data[i].name + '</span>&emsp;&emsp;');
+											arr.push('</span>');
+										}else if(data[i].status=='1'){
+											arr.push('<span class="lefth5"><span class="nameb" onclick="alert()" >' + data[i].desiredposition + '</span></span>')
+											arr.push('<span class="lefth5">');
+											arr.push('<span onclick="alert()">' + data[i].name + '</span>&emsp;&emsp;');
+											arr.push('</span>');
+										}else if(data[i].status!='0' && data[i].status!='1'){
+											arr.push('<span class="lefth5"><span class="nameb" data-id="' + data[i].id + '" data-cid="' + data[i].companyid + '"  onclick="talentDetail(this)">' + data[i].desiredposition + '</span></span>')
+											arr.push('<span class="lefth5">');
+											arr.push('<span data-id="' + data[i].id + '" data-cid="' + data[i].companyid + '"  onclick="talentDetail(this)">' + data[i].name + '</span>&emsp;&emsp;');
+											arr.push('</span>');
+										}
 										arr.push('<span class="lefth5">');
 										arr.push('<span>' + data[i].liveplace + '</span>&emsp;&emsp;');
 										arr.push('</span>');
@@ -363,25 +430,37 @@
 										arr.push('</div>')
 										arr.push('<div class="letbot">');
 										arr.push('<p class="infopname1">');
-										arr.push('<span class="sitename">' + data[i].desiredposition + '</span>');
+										/* arr.push('<span title=' + data[i].desiredposition + ' class="sitename">' + data[i].desiredposition + '</span>'); */
 										arr.push('<span class="sitename">' + data[i].sex + '</span>');
 										arr.push('<span class="sitename">' + data[i].age + '<span>岁</span></span>');
 										arr.push('<span class="sitename">' + data[i].education + '</span>');
 										arr.push('<span class="sitename">' + data[i].workingage + '</span>');
 										arr.push('</p>');
 										arr.push('<p class="infopname1">');
-										arr.push('<span class="sitename">' + data[i].major + '</span>');
 										arr.push('<span class="sitename">' + data[i].currentstate + '</span>');
 										arr.push('<span class="sitename">' + data[i].worknature + '</span>');
 										arr.push('<span class="sitename">' + data[i].salary + '</span>');
+										arr.push('<span title='+ data[i].major + ' class="sitename">' + data[i].major + '</span>');
 										arr.push('</p>');
 										arr.push('<p class="infopname2">');
 										arr.push('<span class="sitename2">自我介绍：<span>' + data[i].selfdescription + '</span></span>');
 										arr.push('</p>');
 										arr.push('</div>');
 										arr.push('<div class="rightbot">');
-										arr.push('<a href="#"><span class="btnlock tdjl ckjl" onclick="javascript:window.open(\'/rlzy/talent/talentDetails?id=' + data[i].id + '\')">查看简历</span></a>');
-										arr.push('<span class="btnlock sqzw sc" onclick="ac(this)"  id="sc" data-user="' + data[i].id + '"><span class="layui-icon layui-icon-rate-solid"></span>收&ensp;藏</span>');
+										if(data[i].status=='0'){
+											arr.push('<a href="#"><span class="btnlock tdjl ckjl" onclick="login()">查看简历</span></a>');
+										}else if(data[i].status=='1'){
+											arr.push('<a href="#"><span class="btnlock tdjl ckjl" onclick="alert()">查看简历</span></a>');
+										}else if(data[i].status!='0' && data[i].status!='1'){
+											arr.push('<a href="#"><span class="btnlock tdjl ckjl" onclick="javascript:window.open(\'/rlzy/talent/talentDetails?id=' + data[i].id + '\')">查看简历</span></a>');
+										}
+										if(data[i].status=='0'){
+											arr.push('<span class="btnlock sqzw sc" onclick="login()"  id="sc" data-user="' + data[i].id + '"><span class="layui-icon layui-icon-rate-solid"></span>收&ensp;藏</span>');
+										}else if(data[i].status=='1'){
+											arr.push('<span class="btnlock sqzw sc" onclick="alert2()"  id="sc" data-user="' + data[i].id + '"><span class="layui-icon layui-icon-rate-solid"></span>收&ensp;藏</span>');
+										}else if(data[i].status!='0' && data[i].status!='1'){
+											arr.push('<span class="btnlock sqzw sc" onclick="ac(this)"  id="sc" data-user="' + data[i].id + '"><span class="layui-icon layui-icon-rate-solid"></span>收&ensp;藏</span>');
+										}
 										arr.push('</div>');
 										arr.push('</div>');
 										arr.push('</div>');
@@ -429,10 +508,23 @@
 									var time = new Date(data[i].createDate).format("yyyy-MM-dd")
 									arr.push('<li>');
 									arr.push('<div class="infoname">');
-									arr.push('<h5><span class="lefth5"><span class="nameb">' + data[i].desiredindustry + '</span></span>')
-									arr.push('<span class="lefth5">');
-									arr.push('<span>' + data[i].name + '</span>&emsp;&emsp;');
-									arr.push('</span>');
+									arr.push('<h5>');
+									if(data[i].status=='0'){
+										arr.push('<span class="lefth5"><span class="nameb" onclick="login()" >' + data[i].desiredposition + '</span></span>')
+										arr.push('<span class="lefth5">');
+										arr.push('<span onclick="login()">' + data[i].name + '</span>&emsp;&emsp;');
+										arr.push('</span>');
+									}else if(data[i].status=='1'){
+										arr.push('<span class="lefth5"><span class="nameb" onclick="alert()" >' + data[i].desiredposition + '</span></span>')
+										arr.push('<span class="lefth5">');
+										arr.push('<span onclick="alert()">' + data[i].name + '</span>&emsp;&emsp;');
+										arr.push('</span>');
+									}else if(data[i].status!='0' && data[i].status!='1'){
+										arr.push('<span class="lefth5"><span class="nameb" data-id="' + data[i].id + '" data-cid="' + data[i].companyid + '"  onclick="talentDetail(this)">' + data[i].desiredposition + '</span></span>')
+										arr.push('<span class="lefth5">');
+										arr.push('<span data-id="' + data[i].id + '" data-cid="' + data[i].companyid + '"  onclick="talentDetail(this)">' + data[i].name + '</span>&emsp;&emsp;');
+										arr.push('</span>');
+									}
 									arr.push('<span class="lefth5">');
 									arr.push('<span>' + data[i].liveplace + '</span>&emsp;&emsp;');
 									arr.push('</span>');
@@ -444,25 +536,37 @@
 									arr.push('</div>')
 									arr.push('<div class="letbot">');
 									arr.push('<p class="infopname1">');
-									arr.push('<span class="sitename">' + data[i].desiredposition + '</span>');
+									/* arr.push('<span title=' + data[i].desiredposition + ' class="sitename">' + data[i].desiredposition + '</span>'); */
 									arr.push('<span class="sitename">' + data[i].sex + '</span>');
 									arr.push('<span class="sitename">' + data[i].age + '<span>岁</span></span>');
 									arr.push('<span class="sitename">' + data[i].education + '</span>');
 									arr.push('<span class="sitename">' + data[i].workingage + '</span>');
 									arr.push('</p>');
 									arr.push('<p class="infopname1">');
-									arr.push('<span class="sitename">' + data[i].major + '</span>');
 									arr.push('<span class="sitename">' + data[i].currentstate + '</span>');
 									arr.push('<span class="sitename">' + data[i].worknature + '</span>');
 									arr.push('<span class="sitename">' + data[i].salary + '</span>');
+									arr.push('<span title=' + data[i].major + ' class="sitename">' + data[i].major + '</span>');
 									arr.push('</p>');
 									arr.push('<p class="infopname2">');
 									arr.push('<span class="sitename2">自我介绍：<span>' + data[i].selfdescription + '</span></span>');
 									arr.push('</p>');
 									arr.push('</div>');
 									arr.push('<div class="rightbot">');
-									arr.push('<a href="#"><span class="btnlock tdjl ckjl" onclick="javascript:window.open(\'/rlzy/talent/talentDetails?id=' + data[i].id + '\')">查看简历</span></a>');
-									arr.push('<span class="btnlock sqzw sc" onclick="ac(this)"  id="sc" data-user="' + data[i].id + '"><span class="layui-icon layui-icon-rate-solid"></span>收&ensp;藏</span>');
+									if(data[i].status=='0'){
+										arr.push('<a href="#"><span class="btnlock tdjl ckjl" onclick="login()">查看简历</span></a>');
+									}else if(data[i].status=='1'){
+										arr.push('<a href="#"><span class="btnlock tdjl ckjl" onclick="alert()">查看简历</span></a>');
+									}else if(data[i].status!='0' && data[i].status!='1'){
+										arr.push('<a href="#"><span class="btnlock tdjl ckjl" onclick="javascript:window.open(\'/rlzy/talent/talentDetails?id=' + data[i].id + '\')">查看简历</span></a>');
+									}
+									if(data[i].status=='0'){
+										arr.push('<span class="btnlock sqzw sc" onclick="login()"  id="sc" data-user="' + data[i].id + '"><span class="layui-icon layui-icon-rate-solid"></span>收&ensp;藏</span>');
+									}else if(data[i].status=='1'){
+										arr.push('<span class="btnlock sqzw sc" onclick="alert2()"  id="sc" data-user="' + data[i].id + '"><span class="layui-icon layui-icon-rate-solid"></span>收&ensp;藏</span>');
+									}else if(data[i].status!='0' && data[i].status!='1'){
+										arr.push('<span class="btnlock sqzw sc" onclick="ac(this)"  id="sc" data-user="' + data[i].id + '"><span class="layui-icon layui-icon-rate-solid"></span>收&ensp;藏</span>');
+									}
 									arr.push('</div>');
 									arr.push('</div>');
 									arr.push('</div>');
@@ -476,6 +580,52 @@
 					}
 				});
 			});
+			function talentDetail(obj){
+				let that = $(obj);
+				var companyId = that.attr('data-cid');
+				var id  = that.attr('data-id');
+				window.open("/rlzy/talent/talentDetails?id="+id+"&companyid="+companyId);
+			}
+			function login(){
+				layer.open({
+					  type: 1
+					  ,offset: 'auto' //具体配置参考：offset参数项
+					  ,content: '<div style="padding: 20px 80px;">您还未登陆!</div>'
+					  ,btn: '关闭'
+					  ,btnAlign: 'c' //按钮居中
+					  ,shade: 0 //不显示遮罩
+					  ,yes: function(){
+					    layer.closeAll();
+					    window.location.href = url + "/login/tologin";
+					  }
+				});
+			}
+			function alert(){
+				layer.open({
+					  type: 1
+					  ,offset: 'auto' //具体配置参考：offset参数项
+					  ,content: '<div style="padding: 20px 80px;">只有企业才能查看简历详情!</div>'
+					  ,btn: '关闭'
+					  ,btnAlign: 'c' //按钮居中
+					  ,shade: 0 //不显示遮罩
+					  ,yes: function(){
+					    layer.closeAll();
+					  }
+				});
+			}
+			function alert2(){
+				layer.open({
+					  type: 1
+					  ,offset: 'auto' //具体配置参考：offset参数项
+					  ,content: '<div style="padding: 20px 80px;">只有企业才能收藏人才!</div>'
+					  ,btn: '关闭'
+					  ,btnAlign: 'c' //按钮居中
+					  ,shade: 0 //不显示遮罩
+					  ,yes: function(){
+					    layer.closeAll();
+					  }
+				});
+			}
 		</script>
 </body>
 

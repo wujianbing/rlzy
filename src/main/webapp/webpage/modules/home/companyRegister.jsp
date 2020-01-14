@@ -24,6 +24,7 @@
 		<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.3&key=0250860ccb5953fa5d655e8acf40ebb7&plugin=AMap.Geocoder"></script>
 		<script type="text/javascript" src="${ctxStatic }/rlzy/js/addToolbar.js"></script>
 		<script type="text/javascript" src="${ctxStatic }/rlzy/js/main2.js"></script>
+		<link rel="stylesheet" href="${ctxStatic }/rlzy/css/my-modal.css" />
 <style>
 <style type="text/css">
 
@@ -88,11 +89,22 @@ p.textarea-numberbar {
     justify-content: center;
     z-index: 999;
 }
+.wenb textarea {
+    width: 85%;
+}
+.tpone {
+    padding: 0;
+}
+.test-span {
+    font-size: 16px;
+    color: red;
+    position: absolute;
+}
 </style>
 </head>
 <body>
 	<!--首页内容-->
-	<div class="humanbox">
+	<div id ="body" class="humanbox">
 		<div class="yuqbottom">
 			<!--里面注册部分-->
 			<div class="asp">
@@ -110,13 +122,13 @@ p.textarea-numberbar {
 					<form action="">
 						<p class="formname">
 							<span class="leftnum">手机号：</span><input type="text" id="num"
-								value="" onblur="checkPhone()" maxlength="11"
+								value=""  maxlength="11"
 								placeholder="请输入手机号码" />
 						</p>
 						<p class="formname">
 							<span class="leftnum">验证码：</span><input type="text"
 								placeholder="" maxlength="4" id="yzcode" /><label
-								id="yzm" onclick="count()">获取验证码</label>
+								id="yzm" >获取验证码</label>
 						</p>
 					</form>
 					<p class="btnone">
@@ -221,7 +233,7 @@ p.textarea-numberbar {
 													src="${ctxStatic }/rlzy/img/sc.jpg"
 													onclick="$('#certiimg').click();">
 											</div>
-											<input type="file" style="display: none;" id="certiimg">
+											<input type="file" style="display: none;" id="certiimg" accept=".jpeg,.jpg,.png" />
 											<input type="text" value="" name="logo" hidden="hidden"
 												id="logo">
 										</div>
@@ -234,7 +246,7 @@ p.textarea-numberbar {
 													src="${ctxStatic }/rlzy/img/sc.jpg"
 													onclick="$('#license').click();">
 											</div>
-											<input type="file" style="display: none;" id="license">
+											<input type="file" style="display: none;" id="license" accept=".jpeg,.jpg,.png" />
 											<input type="text" value="" name="businesslicense"
 												hidden="hidden" id="businesslicense">
 										</div>
@@ -274,6 +286,7 @@ p.textarea-numberbar {
 							</div>
 							<!--联系人  -->
 							<div class="tpone">
+								<div class='divs'>
 								<div class="layui-form-item">
 									<label class="layui-form-label"><span class="sign">*</span>联系人：</label>
 									<div class="layui-input-block">
@@ -287,7 +300,7 @@ p.textarea-numberbar {
 									<label class="layui-form-label"><span class="sign">*</span>联系电话：</label>
 									<div class="layui-input-block">
 										<input id="zd" type="text" name="telephone" required
-											lay-verify="required" placeholder="请输入联系电话" readonly="readonly"
+											lay-verify="required" placeholder="请输入联系电话"
 											autocomplete="off" class="layui-input">
 									</div>
 								</div>
@@ -300,8 +313,10 @@ p.textarea-numberbar {
 											autocomplete="off" class="layui-input">
 									</div>
 								</div>
-
-
+								
+								
+								</div>
+								<div class='divs'>
 								<div class="layui-form-item">
 									<label class="layui-form-label">QQ：</label>
 									<div class="layui-input-block">
@@ -328,6 +343,10 @@ p.textarea-numberbar {
 											autocomplete="off" class="layui-input" onblur="geocoder();">
 									</div>
 								</div>
+								
+								</div>
+
+								
 								<input id="lnglat" name="lnglat" value="" hidden="hidden">
 
 							</div>
@@ -347,7 +366,7 @@ p.textarea-numberbar {
 								<div class="layui-form-item">
 									<label class="layui-form-label"><span class="sign">*</span>设置密码：</label>
 									<div class="layui-input-block">
-										<input type="text" id="psw" name="password" required
+										<input type="password" id="psw" name="password" required
 											lay-verify="required" placeholder="请输入密码" autocomplete="off"
 											class="layui-input">
 									</div>
@@ -356,7 +375,7 @@ p.textarea-numberbar {
 								<div class="layui-form-item">
 									<label class="layui-form-label"><span class="sign">*</span>确认密码：</label>
 									<div class="layui-input-block">
-										<input type="email" id="psw_ag" name="title" required
+										<input type="password" id="psw_ag" name="title" required
 											lay-verify="required" placeholder="请确认密码" autocomplete="off"
 											class="layui-input">
 									</div>
@@ -373,21 +392,20 @@ p.textarea-numberbar {
 									<label class="layui-form-label"><span class="sign">*</span>入驻类型：</label>
 									<div class="layui-input-block">
 										<form:select class="form-control" path="companytype"
-											name="companytype">
-											<form:option value="" label="" />
+											name="companytype" lay-verify="required">
 											<form:options items="${fns:getDictList('company_type')}"
 												itemLabel="label" itemValue="value" htmlEscape="false" />
 										</form:select>
 									</div>
 								</div>
-								<div class="layui-form-item" style="margin-top: 20px;">
+								<!-- <div class="layui-form-item" style="margin-top: 20px;">
 									<label class="layui-form-label"><span class="sign">*</span>入驻缴费：</label>
 									<div class="layui-input-block wenb web2">
 
 										<p class="pnamew">信息填写完成后需缴纳1,000￥平台入驻费，点击注册跳转至支付流程，我们会在1-3个工作日内完成入驻审核，
 											若审核不通过会退还您的入驻费用。</p>
 									</div>
-								</div>
+								</div> -->
 							</div>
 							<div class="layui-form-item cys">
 								<button class="layui-btn btn" id="btn1" lay-submit
@@ -415,18 +433,21 @@ p.textarea-numberbar {
 			</div>
 		</div>
 	</div>
-	<%-- <!--子页面  -->
-	<div class="m-modal">
+	<!--下面的角色选择-->
+	<div class="m-modal" style="display: none;">
 		<div class="m-modal-dialog">
 			<div class="m-top">
-				<h4 class="m-modal-title"></h4>
+				<h4 class="m-modal-title">
+				 温馨提示
+			</h4>
 				<span class="m-modal-close">&times;</span>
 			</div>
 			<!--模态框的简历基本信息-->
-			<div class="m-middle">${fns:unescapeHtml(news.content)}</div>
-
+			<div class="m-middle">
+				${fns:unescapeHtml(news.content)}
+			</div>
 		</div>
-	</div> --%>
+	</div>
 	<input id="companyId" value="" hidden="hidden">
 </body>
 
@@ -435,12 +456,20 @@ p.textarea-numberbar {
 <script src="${ctxStatic }/rlzy/js/common/citySet/Popt.js"></script>
 <script src="${ctxStatic }/rlzy/js/common/citySet/cityJson.js"></script>
 <script src="${ctxStatic }/rlzy/js/common/citySet/citySet.js"></script>
+<script src="${ctxStatic }/rlzy/js/jquery.my-modal.1.1.js"></script>
 <script type="text/javascript" src="${ctxStatic }/rlzy/js/logophoto.js"></script>
 <script type="text/javascript" src="${ctxStatic }/rlzy/js/yyphoto.js"></script>
 <script type="text/javascript" src="${ctxStatic }/rlzy/js/jquery.my-modal.1.1.js"></script>
+<script src="${ctxStatic }/rlzy/js/registerunti.js"></script>
+<script src="${ctxStatic }/rlzy/js/register.js"></script>
 <script type="text/javascript">
+	$(document).ready(function(){
+		var m1 = new MyModal.modal(function() {
+		});
+		m1.show()
+	});
 	/* 手机号验证 */
-	var bools = true;
+	/* var bools = true;
 	function checkPhone() {
 		var _phone = document.getElementById("num").value; //获取手机号 
 		if (!(/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test(_phone))) {
@@ -463,9 +492,9 @@ p.textarea-numberbar {
 	    	}
 	       
 	    });
-	};
+	}; */
 	/* 短信验证码到倒计时 */
-	var bool = true;
+	/* var bool = true;
 	function count() {
 		var phone = document.getElementById("num").value; //获取手机号
 		//验证码获取 TODO
@@ -494,7 +523,7 @@ p.textarea-numberbar {
 			return false;
 		}
 	}
-};
+}; */
 
 	//禁止返回
 	var status = localStorage.getItem("status");
@@ -517,30 +546,36 @@ p.textarea-numberbar {
 		
 		//获取验证码
 		var code = document.getElementById("yzcode").value;
-		$.ajax({
-			type : "POST",
-			url : "${rlzyPath}/home/checkSms",
-			data : {
-				"code" : code
-			},
-			success : function(data) {
-				if (data[0] == "0") {
-					layer.msg("验证码错误，请重新输入");
-					return false;
-				} else {
-					localStorage.setItem("status", "1");
-					$('.regnum').css("display", "none");
-					$('.regnum2').css("display", "block");
-					$('.regnum3').css("display", "none");
-					$('.ringnum').addClass('activeRing').siblings().removeClass('activeRing');
-					$('.ring2').addClass('activeRing');
-					var phone = document.getElementById("num").value; //获取手机号
-					$("#zd").val(phone);
-					$(".yuqbottom").css("height","auto");
-					$(".asp").css("paddingTop","0");
+		var phone = document.getElementById("num").value; //获取手机号
+		if(code!=""&& phone!=""){
+			$.ajax({
+				type : "POST",
+				url : "${rlzyPath}/home/checkSms",
+				data : {
+					"code" : code
+				},
+				success : function(data) {
+					if (data[0] == "0") {
+						layer.msg("验证码错误，请重新输入");
+						return false;
+					} else {
+						localStorage.setItem("status", "1");
+						$('.regnum').css("display", "none");
+						$('.regnum2').css("display", "block");
+						$('.regnum3').css("display", "none");
+						$('.ringnum').addClass('activeRing').siblings().removeClass('activeRing');
+						$('.ring2').addClass('activeRing');
+						var phone = document.getElementById("num").value; //获取手机号
+						$("#zd").val(phone);
+						$(".yuqbottom").css("height","auto");
+						$(".asp").css("paddingTop","0");
+					}
 				}
-			}
-		});
+			});
+		}else{
+			layer.msg("请输入手机号或验证码!");
+			return false;
+		}
 	}
 
 	//填写详细信息页面毕点击提交后出现页面的函数
@@ -555,7 +590,8 @@ p.textarea-numberbar {
 	}
 	var secs = 3; //倒计时的秒数
 	var companyId = $("#companyId").val();
-	var URL = '${rlzyPath}/pay/payMethod?companyId='+companyId;
+	var URL = '${rlzyPath}/home/index';
+	//var URL = '${rlzyPath}/pay/payMethod?companyId='+companyId;
 	function Load() {
 		for (var i = secs; i >= 0; i--) {
 			window.setTimeout('doUpdate(' + i + ')', (secs - i) * 1000);
@@ -573,20 +609,36 @@ p.textarea-numberbar {
 		var form = layui.form;
 		//监听表单提交非空验证
 		form.on('submit(formDemo)', function(data) {
-			$.ajax({
-				cache : true,
-				type : "POST",
-				url : "${rlzyPath}/company/saveCompany",
-				data : $("#form").serialize(),
-				success : function(data) {
-					if (data != "") {
-						layer.msg("注册信息填写成功!");
-						$("#companyId").val(data);
-						zczg();
-						localStorage.removeItem("status");
+			var logo = $("#logo").val();
+			var logo2 = $("#businesslicense").val();
+			if(logo =="" || logo == null || logo2 == "" || logo2 == null){
+				layer.open({
+					  type: 1
+					  ,offset: 'auto' //具体配置参考：offset参数项
+					  ,content: '<div style="padding: 20px 80px;">请上传logo和营业执照!</div>'
+					  ,btn: '关闭'
+					  ,btnAlign: 'c' //按钮居中
+					  ,shade: 0 //不显示遮罩
+					  ,yes: function(){
+					    layer.closeAll();
+					  }
+				});
+			}else{
+				$.ajax({
+					cache : true,
+					type : "POST",
+					url : "${rlzyPath}/company/saveCompany",
+					data : $("#form").serialize(),
+					success : function(data) {
+						if (data != "") {
+							layer.msg("注册信息填写成功!");
+							$("#companyId").val(data);
+							zczg();
+							localStorage.removeItem("status");
+						}
 					}
-				}
-			});
+				});
+			}
 			return false;
 		});
 	});
@@ -600,11 +652,20 @@ p.textarea-numberbar {
 		$("#psw_ag").blur(function() {
 			if ($("#psw").val() != $("#psw_ag").val()) {
 				layer.msg('两次输入的密码不一致');
-
 			}
 		})
 
 	})
+	$(function() {
+		var bnav = $("#tail").outerHeight(true);
+		var h = $(document).outerHeight(true);
+		var topnav = $("#topbase").outerHeight(true);
+		var topnav2 = $(".bar").outerHeight(true);
+		$(".yuqbottom").css("height", h - topnav - bnav-topnav2); //这里改成你想要的高度就可以了~
+	/* 	$("#tail").css("marginTop","140px"); //这里改成你想要的高度就可以了~ */
+		$("#tail").insertAfter(".yuqbottom");
+
+	});
 </script>
 
 <script type="text/javascript">
@@ -612,11 +673,7 @@ p.textarea-numberbar {
 	$('#certiimg').on('change', function() {
 		var formData = new FormData();
 		var file = document.getElementById("certiimg").files[0];
-		// 检测文件大小 1024*1024=1048576(1M)
-		/* if (file.size >= 1048576) {
-			alert("上传图片大小不得超过1M")
-			return false;
-		} */
+		
 		console.log(file);
 		formData.append("file", file);
 		$.ajax({
@@ -694,7 +751,7 @@ p.textarea-numberbar {
 
 	}
 </script>
-
+<script src="${ctxStatic }/rlzy/js/pages/nav.js"></script>
 <script type="text/javascript">
 var $addressBox = document.getElementById('map');
 //创建地图
@@ -760,5 +817,4 @@ function geocoder_CallBack(data) {
 	})
 }
 </script>
-<script src="${ctxStatic }/rlzy/js/pages/nav.js"></script>
 </html>

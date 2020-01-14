@@ -51,7 +51,10 @@ public class RlzyCompany extends DataEntity<RlzyCompany> {
 	private String lnglat;
 	private int count;
 	private String date;
-	
+	private String checkval;
+	private String istop;
+	private String ispublic;
+	private String rank;
 	public RlzyCompany() {
 		super();
 	}
@@ -346,5 +349,39 @@ public class RlzyCompany extends DataEntity<RlzyCompany> {
 	public void setDate(String date) {
 		this.date = date;
 	}
+
+	public String getCheckval() {
+		return checkval;
+	}
+
+	public void setCheckval(String checkval) {
+		this.checkval = checkval;
+	}
+	@ExcelField(title="是否置顶", align=2, sort=22,dictType="is_top")
+	public String getIstop() {
+		return istop;
+	}
+
+	public void setIstop(String istop) {
+		this.istop = istop;
+	}
+	@ExcelField(title="是否公开", align=2, sort=23,dictType="is_pubilc")
+	public String getIspublic() {
+		return ispublic;
+	}
+
+	public void setIspublic(String ispublic) {
+		this.ispublic = ispublic;
+	}
+
+	public String getRank() {
+		return rank;
+	}
+
+	public void setRank(String rank) {
+		this.rank = rank;
+	}
+	
+	
 	
 }

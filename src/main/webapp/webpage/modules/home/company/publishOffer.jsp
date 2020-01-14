@@ -91,6 +91,10 @@
 .layui-input-block.laytextarea {
     width: 632px;
 }
+.laytextarea .simditor-body{
+	height: 350px;
+    overflow: auto;
+}
 /* 文本工具栏 */
 .simditor .simditor-toolbar {
     border-bottom: 1px solid #e6e6e6;
@@ -119,7 +123,7 @@
 								<label class="layui-form-label"><span class="sign">*</span>职位类型：</label>
 								<div class="layui-input-block">
 									<form:select class="form-control" path="positiontype"
-										name="positiontype">
+										name="positiontype" lay-verify="required">
 										<form:option value="" label="" />
 										<form:options items="${fns:getDictList('work_nature')}"
 											itemLabel="label" itemValue="value" htmlEscape="false" />
@@ -136,7 +140,7 @@
 								<label class="layui-form-label"><span class="sign">*</span>最高学历：</label>
 								<div class="layui-input-block">
 									<form:select class="form-control" path="education"
-										name="education">
+										name="education" lay-verify="required">
 										<form:option value="" label="" />
 										<form:options items="${fns:getDictList('education')}"
 											itemLabel="label" itemValue="value" htmlEscape="false" />
@@ -147,7 +151,7 @@
 								<label class="layui-form-label"><span class="sign">*</span>年龄要求：</label>
 								<div class="layui-input-block">
 									<form:select class="form-control" path="agerequirement"
-										name="agerequirement">
+										name="agerequirement" lay-verify="required">
 										<form:option value="" label="" />
 										<form:options items="${fns:getDictList('age_range')}"
 											itemLabel="label" itemValue="value" htmlEscape="false" />
@@ -181,7 +185,7 @@
 								<label class="layui-form-label"><span class="sign">*</span>薪资范围：</label>
 								<div class="layui-input-block">
 									<form:select class="form-control" path="salaryrange"
-										name="salaryrange">
+										name="salaryrange" lay-verify="required">
 										<form:option value="" label="" />
 										<form:options items="${fns:getDictList('salary')}"
 											itemLabel="label" itemValue="value" htmlEscape="false" />
@@ -192,7 +196,7 @@
 								<label class="layui-form-label"><span class="sign">*</span>工作年限：</label>
 								<div class="layui-input-block">
 									<form:select class="form-control" path="workingage"
-										name="workingage">
+										name="workingage" lay-verify="required">
 										<form:option value="" label="" />
 										<form:options items="${fns:getDictList('working_age')}"
 											itemLabel="label" itemValue="value" htmlEscape="false" />
@@ -244,7 +248,7 @@
 								<label class="layui-form-label leftlabel2"><span class="sign">*</span>是否为急聘岗位：</label>
 								<div class="layui-input-block fastworkone">
 										<form:select class="form-control" path="postflag"
-										name="postflag">
+										name="postflag" lay-verify="required">
 										<form:option value="" label="" />
 										<form:options items="${fns:getDictList('is_post')}" itemLabel="label" itemValue="value" htmlEscape="false" />
 									</form:select>
@@ -313,7 +317,7 @@ $("#workplace").click(function(e) {
 
 /*富文本编辑器js*********************************  */
 	var editor = new Simditor({
-    toolbar: [ 'ol','|', 'ul', ],
+	toolbar: ['fontScale','|', 'ol', '|','ul'],
     textarea: '#editor',
     placeholder: '写点什么...',
     cleanPaste: true

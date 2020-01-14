@@ -12,6 +12,19 @@
 <link rel="stylesheet"
 	href="${ctxStatic }/rlzy/css/common/layui-v2.5.5/layui/css/layui.css">
 <link rel="stylesheet" href="${ctxStatic }/rlzy/css/Jobdetiles.css" />
+<style type="text/css">
+	.selectBox.qyfl li {
+    font-size: 14px;
+    float: left;
+    border: 0;
+    padding: 0 10px;
+    color: #555;
+    padding: 0 10px;
+}
+.selectBox{
+	display: block !important;
+}
+</style>
 </head>
 <body>
 	<div class="jlpage" id="app">
@@ -71,7 +84,7 @@
 						<div class="layui-form-item layui-form-text">
 							<label class="layui-form-label">职位描述：</label>
 							<div class="layui-input-block">
-								<textarea name="desc" class="layui-textarea" disabled="disabled">${rlzyPosition.positiondescription}</textarea>
+								<div name="desc" class="layui-textarea" style="line-height:26px;font-size:16px; padding:0; color:#333;">${rlzyPosition.positiondescription}</div>
 							</div>
 						</div>
 					</div>
@@ -96,4 +109,3 @@
 </html>
 <script type="text/javascript" src="${ctxStatic }/rlzy/js/jquery.min.js"></script>
 <script type="text/javascript" src="${ctxStatic }/rlzy/css/common/layui-v2.5.5/layui/layui.js"></script>
-

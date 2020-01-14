@@ -1,0 +1,163 @@
+/*+++++++++++++++涓婚鏍峰紡+++++++++++*/
+
+.leftbtn {
+	width: 100%;
+}
+
+.yuleft {
+	width: 100%;
+}
+
+
+/*鎼滅储妗嗙殑鏍峰紡*/
+
+.sxl .divset:nth-of-type(1) {
+	flex: 1;
+	padding-left: 30px;
+	font-size: 22px;
+	white-space: nowrap;
+	color: #3a71d6;
+	font-weight: bold;
+}
+
+.sxl .divset:nth-of-type(2) {
+	flex: 9;
+	justify-content: flex-end;
+	display: flex;
+	align-items: center;
+	padding-right: 30px;
+}
+
+div.search form {
+	display: flex;
+}
+
+.bar1 input {
+	border: 2px solid #4b96cf;
+	border-radius: 5px;
+	/*   background: #f9f8f5;*/
+	color: #9E9C9C;
+	width: 224px;
+	height: 42px;
+	padding-left: 13px;
+	outline: none;
+	border-right: 0;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.bar1 .setsec {
+	background: #4b96cf;
+	;
+	border-radius: 0 5px 5px 0;
+	height: 42px;
+	width: 42px;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.bar1 .setsec i.layui-icon.layui-icon-search {
+	font-size: 20px;
+	font-weight: bold;
+	color: #fff;
+}
+
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.alljob li{
+	width: 96%;	
+	margin:0 2% 15px;	
+   border-bottom: 1px dashed #ccc;
+  
+}
+.company-header-block {
+	/*background-color: #fffcf7;*/
+	width: 100%;
+	display: flex;
+	align-items: center;
+	padding: 10px 0;
+}
+.name{
+	    font-size: 16px;
+}
+.company-header-block .divt:nth-of-type(1) {
+	flex: 2;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.company-header-block .divt:nth-of-type(1) img {
+	width: 120px;
+	height: 120px;
+}
+
+.company-header-block .divt:nth-of-type(2) {
+	flex: 8;
+	/* background: #009688;*/
+
+}
+
+.company-header-block .box .content .header .name {
+	display: inline-block;
+	font-size: 20px;
+	max-width: 620px;
+	margin: 0;
+	padding: 0;
+	line-height: 26px;
+	vertical-align: middle;
+	color: #000;
+	font-weight: 700;
+}
+
+.detailw {
+	width: 100%;
+	padding-left: 15px;
+	margin-top: 20px;
+
+                                                       
+銆�銆�銆�銆�銆�銆�銆�銆�銆�銆�銆�銆�銆�銆�銆�銆�銆� 
+}
+
+.clear:before,.clearfix:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.detailw ul {
+	width: 100%;
+}
+
+.detailw ul li {
+	width: 49%;
+	float: left;
+	padding: 5px 0;
+	color: #666;
+	font-size: 16px;
+	font-family: "Microsoft YaHei";
+	 box-shadow:none;
+    border-radius:0;
+    margin:0;
+     border-bottom: 0;	
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+}
+.detailw ul li:last-child {
+	width: 100%;
+	float: left;
+}
+.banner {
+    width: 100%;
+    height: 120px;
+    background: #fff;
+    background: url(../img/bannerFind.png) no-repeat;
+    background-size: 100%;
+    margin-bottom: 20px;
+}
+.yuqbottom2{
+	
+}

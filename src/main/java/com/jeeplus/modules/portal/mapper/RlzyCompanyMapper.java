@@ -3,6 +3,8 @@
  */
 package com.jeeplus.modules.portal.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.jeeplus.core.persistence.BaseMapper;
 import com.jeeplus.core.persistence.annotation.MyBatisMapper;
 import com.jeeplus.modules.portal.entity.RlzyCompany;
@@ -19,4 +21,5 @@ public interface RlzyCompanyMapper extends BaseMapper<RlzyCompany> {
 
 	void updatePayStatus(String companyId, String payStatus);
 	
+	void updateCheck(@Param("reviewstate") String reviewstate,@Param("check")String check,@Param("id")String id);
 }

@@ -41,6 +41,7 @@ public class RlzyRelation extends DataEntity<RlzyRelation> {
 	private String date;
 	private String apply;
 	private String description;
+	private String education;
 	public RlzyRelation() {
 		super();
 	}
@@ -273,6 +274,14 @@ public class RlzyRelation extends DataEntity<RlzyRelation> {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getEducation() {
+		return education;
+	}
+
+	public void setEducation(String education) {
+		this.education = education;
 	}
 	
 }

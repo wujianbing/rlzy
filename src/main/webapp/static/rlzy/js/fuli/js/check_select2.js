@@ -1,10 +1,11 @@
 $(function(){
-				
+	oliDelete();			
 	//定义一个存储数据的数组，用于下面重复选择判断，删除标签
 	var oliIdArray = [];
 			
 	//点击输入框时候
 	$(".selectBox").on("click",function(event){
+		//document.getElementById("qyful").style.display="none";
 		$(".divp").toggle();//ul弹窗展开
 		$(".selectUl").toggle();//ul弹窗展开
 //		myJobwant.iframH('#app','iframe');
@@ -26,6 +27,7 @@ $(function(){
 	
 	//点击右边箭头icon时候
 	$(".selectBox .fa").on("click",function(event){
+		//document.getElementById("qyful").style.display="none";
 		$(".divp").toggle();//ul弹窗展开
 		$(".selectUl").toggle();//ul弹窗展开
 //		myJobwant.iframH('#app','iframe');
@@ -49,11 +51,11 @@ $(function(){
 		$(this).addClass("actived_li");//点击当前的添加   actived_li这个类；
 		var oliId = $(this).attr("oliId");
 		if(oliIdArray.indexOf(oliId)>-1){
-	
+			
 		}else{
 			oliIdArray.push(oliId);
 			$(this).parent().prev().children().attr("oliId",oliIdArray);//把当前点击的oliId赋值到显示的input的oliId里面
-			$("#role_select").append("<span class='person_root'><span>"+$(this).text()+"</span><i class='close' oliId='" + oliId + "' >x</i></span>");
+			$("#role_select").append("<span class='person_root'><span data-id=\'"+oliId+"\'>"+$(this).text()+"</span><i class='close' oliId='" + oliId + "' >x</i></span>");
 		}
 		console.log(oliIdArray)
 		$("#data").val(oliIdArray);
@@ -81,7 +83,8 @@ $(function(){
 			        if (oliIdArray[i] === oliId){ //表示数组里面有这个元素
 			            id = i;//元素位置
 			            oliIdArray.splice(i,1);
-			            console.log('删除当前的序号'+oliId+';'+'剩下数组'+oliIdArray)
+			            console.log('删除当前的序号'+oliId+';'+'剩下数组'+oliIdArray);
+			            console.log(oliIdArray);
 			        }
 			    }
 				$(".selectUl li").eq(oliId-1).removeClass("actived_li");
@@ -94,8 +97,8 @@ $(function(){
 	$(document).click(function(event){
 		event=event||window.event; 
 		$(".inputCase .fa").removeClass("fa-caret-up").addClass("fa-caret-down")//当点隐藏ul弹窗时候，把小图标恢复原状
-//		$(".selectUl").hide();//当点击空白处，隐藏ul弹窗
-	
+		//$(".selectUl").hide();//当点击空白处，隐藏ul弹窗
+		//document.getElementById("qyful").style.display="block";
 	});
 	
 })
@@ -104,6 +107,4 @@ $(function(){
 	$(".qudi").click(function(event){
 		$(".selectUl").hide();//当点击空白处，隐藏ul弹窗
 		$(".divp").hide();//当点击空白处，隐藏ul弹窗
-
-
 })

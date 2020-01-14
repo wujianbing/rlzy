@@ -18,11 +18,15 @@
 	width: 800px;
 	background-color: #ffffff;
 	box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+	position: absolute;
+    top: 18%;
+    left: 50%;
+    margin-left: -400px;
 }
 
 .m-top {
 	border-bottom: 1px solid #EEEEEE;
-    background: #126cc9;
+    background: #3c78a6;
 }
 .m-top h4 {
     color: #fff;
@@ -60,6 +64,8 @@
 .m-middle {
 	padding: 12px;
 	font-size: 16px;
+	height: 480px;
+    overflow: auto;
 }
 
 .m-bottom {

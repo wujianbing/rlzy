@@ -109,7 +109,7 @@ h5 {
 		<input type = 'hidden' id = 'url' name = 'url' value = '${rlzyPath}'></input>
 			<h4>请选择注册类型</h4>
 		<div class="roal">
-		<a href="${rlzyPath}/company/register">
+		<a href="${rlzyPath}/company/register?type=1">
 				<div class="roalOne" >
 				<!--上面的logo-->
 				<div class="logo2">
@@ -137,7 +137,7 @@ h5 {
 				</div>
 			</div>
 		</a>
-		<a href="${rlzyPath}/company/register">
+		<a href="${rlzyPath}/company/register?type=2">
 			<div class="roalOne" >
 				<!--上面的logo-->
 				<div class="logo2">
@@ -154,7 +154,7 @@ h5 {
 		</div>
 		</a>
 		</div>
-		<!--下面的角色选择-->
+		<%-- <!--下面的角色选择-->
 		<div class="m-modal" style="display: none;">
 			<div class="m-modal-dialog">
 				<div class="m-top">
@@ -168,7 +168,7 @@ h5 {
 					${fns:unescapeHtml(news.content)}
 				</div>
 			</div>
-		</div>
+		</div> --%>
 		
 	</body>
 </html>

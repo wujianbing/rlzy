@@ -40,7 +40,11 @@
 								<li data-id="4">收藏人才</li>
 								<li data-id="5">简历管理</li>
 								<li data-id="6">账号管理</li>
+								<c:if test="${rlzyCompany.companytype == '2'}">
 								<li data-id="7">产品信息</li>
+								<li data-id="8">合作企业</li>
+								<li data-id="9">合作人员</li>
+								</c:if>
 							</ul>
 						</div>
 					</div>

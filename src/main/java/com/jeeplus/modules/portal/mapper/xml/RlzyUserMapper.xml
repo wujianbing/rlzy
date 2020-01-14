@@ -126,14 +126,9 @@
 		<include refid="rlzyUserJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			and
-			a.ispublic='1'
 			${dataScope}
 			<if test="name != null and name != ''">
-				AND a.name LIKE 
-					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+				AND a.name LIKE  concat('%',#{name},'%') or desiredposition like concat('%',#{name},'%')
 			</if>
 			<if test="workingage != null and workingage != ''">
 				AND a.workingage = #{workingage}
@@ -162,8 +157,14 @@
 			<if test="phone != null and phone != ''">
 				AND a.phone = #{phone}
 			</if>
+			<if test="ispublic != null and ispublic != ''">
+				AND a.ispublic = #{ispublic}
+			</if>
 			<if test="utime != null and utime != ''">
 				AND a.update_date >= DATE_SUB( CURDATE(), INTERVAL #{utime} DAY )
+			</if>
+			<if test="id != null and id != ''">
+				AND a.id = #{id}
 			</if>
 		</where>
 		<choose>

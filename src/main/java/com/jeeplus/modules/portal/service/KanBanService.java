@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jeeplus.modules.portal.entity.RlzyCompany;
+import com.jeeplus.modules.portal.entity.RlzyKanban;
 import com.jeeplus.modules.portal.entity.RlzyPosition;
 import com.jeeplus.modules.portal.entity.RlzyRelation;
 import com.jeeplus.modules.portal.entity.RlzyUser;
@@ -19,12 +20,12 @@ public class KanBanService {
 	@Autowired
 	private KanBanMapper kanBanMapper;
 
-	public Integer findCompanyCount() {
-		return kanBanMapper.findCompanyCount();
+	public Integer findCompanyCount(String createDate) {
+		return kanBanMapper.findCompanyCount(createDate);
 	}
 	
-	public Integer findUserCount() {
-		return kanBanMapper.findUserCount();
+	public Integer findUserCount(String createDate) {
+		return kanBanMapper.findUserCount(createDate);
 	}
 	
 	public Integer findPositionCount() {
@@ -35,42 +36,6 @@ public class KanBanService {
 		return kanBanMapper.findCollectCount();
 	}
 	
-	public Integer findIndustryCount(){
-		return kanBanMapper.findIndustryCount();
-	}
-	
-	public Integer findIndustryCount1(){
-		return kanBanMapper.findIndustryCount1();
-	}
-	
-	public Integer findIndustryCount2(){
-		return kanBanMapper.findIndustryCount2();
-	}
-	
-	public Integer findIndustryCount3(){
-		return kanBanMapper.findIndustryCount3();
-	}
-	
-	public Integer findOtherIndustryCount(){
-		return kanBanMapper.findOtherIndustryCount();
-	}
-	
-	public Integer findCompanyScaleCount(){
-		return kanBanMapper.findCompanyScaleCount();
-	}
-	
-	public Integer findCompanyScaleCount1(){
-		return kanBanMapper.findCompanyScaleCount1();
-	}
-	public Integer findCompanyScaleCount2(){
-		return kanBanMapper.findCompanyScaleCount2();
-	}
-	public Integer findCompanyScaleCount3(){
-		return kanBanMapper.findCompanyScaleCount3();
-	}
-	public Integer findCompanyScaleCount4(){
-		return kanBanMapper.findCompanyScaleCount4();
-	}
 	public List<RlzyUser> findDesiredPosition(){
 		return kanBanMapper.findDesiredPosition();
 	}
@@ -81,24 +46,6 @@ public class KanBanService {
 	
 	public List<RlzyPosition> findPositionList(){
 		return kanBanMapper.findPositionList();
-	}
-	public Integer findSalaryRange(){
-		return kanBanMapper.findSalaryRange();
-	}
-	public Integer findSalaryRange1(){
-		return kanBanMapper.findSalaryRange1();
-	}
-	public Integer findSalaryRange2(){
-		return kanBanMapper.findSalaryRange2();
-	}
-	public Integer findSalaryRange3(){
-		return kanBanMapper.findSalaryRange3();
-	}
-	public Integer findSalaryRange4(){
-		return kanBanMapper.findSalaryRange4();
-	}
-	public Integer findSalaryRange5(){
-		return kanBanMapper.findSalaryRange5();
 	}
 	
 	public Integer findPositionCollect(){
@@ -117,50 +64,8 @@ public class KanBanService {
 		return kanBanMapper.findFemale();
 	}
 	
-	public Integer salary() {
-		return kanBanMapper.findSalary();
-	}
-	
-	public Integer salary1(){
-		return kanBanMapper.findSalary1();
-	}
-	
-	public Integer salary2(){
-		return kanBanMapper.findSalary2();
-	}
-	
-	public Integer salary3(){
-		return kanBanMapper.findSalary3();
-	}
-	
-	public Integer salary4(){
-		return kanBanMapper.findSalary4();
-	}
-	public Integer salary5(){
-		return kanBanMapper.findSalary5();
-	}
-	
-	public Integer findEducation() {
-		return kanBanMapper.findEducation();
-	}
-	
-	public Integer findEducation1(){
-		return kanBanMapper.findEducation1();
-	}
-	
-	public Integer findEducation2(){
-		return kanBanMapper.findEducation2();
-	}
-	
-	public Integer findEducation3(){
-		return kanBanMapper.findEducation3();
-	}
-	
-	public Integer findEducation4(){
-		return kanBanMapper.findEducation4();
-	}
-	public Integer findEducation5(){
-		return kanBanMapper.findEducation5();
+	public List<RlzyKanban> findEducation() {
+		return kanBanMapper.findEducations();
 	}
 	
 	public List<RlzyUser> userCountCurve(){
@@ -188,5 +93,28 @@ public class KanBanService {
 	public List<RlzyRelation> collectCurve(){
 		return kanBanMapper.collectCurve();
 	}
+
+	public List<RlzyCompany> findCompanyScale() {
+		return kanBanMapper.findCompanyScale();
+	}
+
+	public List<RlzyKanban> findSalaryRanges() {
+		return kanBanMapper.findSalaryRanges();
+	}
+
+	public List<RlzyKanban> findIndustrys() {
+		return kanBanMapper.findIndustrys();
+	}
+
+	public List<RlzyKanban> salarys() {
+		return kanBanMapper.findSalarys();
+	}
 	
+	public List<RlzyKanban> workingAge() {
+		return kanBanMapper.findWorkingAge();
+	}
+	
+	public List<RlzyKanban> findAge() {
+		return kanBanMapper.findAge();
+	}
 }

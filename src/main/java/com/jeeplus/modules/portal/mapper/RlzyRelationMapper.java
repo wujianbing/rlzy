@@ -16,17 +16,15 @@ import com.jeeplus.modules.portal.entity.RlzyRelation;
  */
 @MyBatisMapper
 public interface RlzyRelationMapper extends BaseMapper<RlzyRelation> {
-	//面试邀请-
-	List<RlzyRelation> deliverList(RlzyRelation rlzyRelation);
-	//收藏列表
-	List<RlzyRelation> collectList(RlzyRelation rlzyRelation);
 	
-	//企业查询收到的简历
-	List<RlzyRelation> companyList(RlzyRelation rlzyRelation);
-	
-	//企业查询收藏的候选人
-	List<RlzyRelation> companyCollectList(RlzyRelation rlzyRelation);
-	
-	//求职列表
-	List<RlzyRelation> applyList(RlzyRelation rlzyRelation);
+	//个人收藏职位
+	Integer personalCollect(RlzyRelation rlzyRelation);
+	//个人投递简历
+	Integer personalResume(RlzyRelation rlzyRelation);
+	//企业收到简历
+	Integer companyResume(RlzyRelation rlzyRelation);
+	//企业面试邀请
+	Integer companyInvite(RlzyRelation rlzyRelation);
+	//个人面试邀请
+	Integer personalInvite(RlzyRelation rlzyRelation);
 }

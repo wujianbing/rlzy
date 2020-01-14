@@ -137,10 +137,25 @@ ol{
 
 .infoname ol li{
 	color: #666;
+	font-size: 16px!important;
+}
+.infoname ol li span{
 	font-size: 16px;
 }
 
 .infoname ol li:last-child{
+	margin-bottom: 20px;
+}
+
+.infoname ul li{
+	color: #666;
+	font-size: 16px!important;
+}
+.infoname ul li span{
+	font-size: 16px;
+}
+
+.infoname ul li:last-child{
 	margin-bottom: 20px;
 }
 .sqzw-btn{
@@ -189,6 +204,7 @@ margin: 2rem auto;
 	border:1px solid #eceded;
 	text-indent: 2em;
 	padding: 5px;
+	font-size: 14px;
 }
 
 .infosend{

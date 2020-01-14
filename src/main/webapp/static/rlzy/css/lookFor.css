@@ -953,7 +953,12 @@ content: '';
 }
 .infopname2{
 	color: #666666;
-	    line-height: 25px;
+	line-height: 25px;
+	 text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    display: -webkit-box;
 }
 .letbot{
 	width:80%;

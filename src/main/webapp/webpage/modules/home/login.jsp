@@ -32,13 +32,13 @@
 							<form class="layui-form" action="">
 								<div class="layui-form-item">
 									<div class="layui-input-block">
-										<input id="phone" type="text"  onblur="checkPhone()" name="phone" required lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+										<input id="phone" type="text" name="phone" required lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input">
 									</div>
 								</div>
 								<div class="layui-form-item">
 									<div class="layui-input-block yzm-v">
 										<input id="num" type="text" name="" required lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input yzm-inp">
-          								<button id="yzm_bnt" type="button" onclick="count()" class="yzm-txt">获取验证码</button>
+          								<button id="yzm_bnt" type="button" class="yzm-txt">获取验证码</button>
 									</div>
 								</div>
 								<div class="layui-form-item">
@@ -50,7 +50,7 @@
 							<form class="layui-form" action="" style="display: none;" >
 								<div class="layui-form-item">
 									<div class="layui-input-block">
-										<input type="text" name="user" required lay-verify="required" placeholder="用户名/手机号" autocomplete="off" class="layui-input">
+										<input type="text" name="user" required lay-verify="required" placeholder="手机号" autocomplete="off" class="layui-input">
 									</div>
 								</div>
 								<div class="layui-form-item">
@@ -78,41 +78,6 @@
 		<script src="${ctxStatic }/rlzy/js/pages/nav.js"></script>
 		<script src="${ctxStatic }/rlzy/js/pages/login.js"></script>
 		<script type="text/javascript">
-			/* 手机号验证 */
-			var bools = true;
-			function checkPhone() {
-				var _phone = document.getElementById("phone").value; //获取手机号 
-				if (!(/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test(_phone))) {
-					layer.msg('您的手机号不正确，请重新输入！');
-					return false;
-				}
-			};
-			/* 短信验证码到倒计时 */
-			function count() {
-				var phone = document.getElementById("phone").value; //获取手机号
-				//验证码获取 TODO
-				$.get("${rlzyPath}/home/sendSms?phone="+phone);
-				if(bool == true) {
-				if (bool == true) {
-					var lab = document.getElementById('yzm_bnt');
-					var count = 60;
-					var time = setInterval(function() {
-						bool = false;
-						count--;
-						lab.innerHTML = count + "秒";
-						if (count == 0) {
-							clearInterval(time);
-							lab.innerHTML = '重新获验证码';
-							bool = true;
-						}
-						;
-					}, 1000);
-				}
-				if (bool == false) {
-					return false;
-				}
-				};
-			};
 			//Demo
 			layui.use('form', function() {
 				var form = layui.form;
@@ -139,13 +104,13 @@
 					 					 	//跳转用户首页
 					 					 	window.location.href=url+"/home/index";
 					 					 }else if(data == "3"){
-						 					 	layer.msg("用户名或密码错误！");
+						 					 	layer.msg("用户信息不存在，请先注册!");
 						 					 	return false;
 					 					 
 					 					 }else if(data == "2"){
 					 			              //跳转企业首页
 					 			              window.location.href=url+"/home/index";
-					 			            }else{
+					 			         }else{
 					 						 
 					 						//已注册，未支付
 				 				            layer.confirm('是否前去支付', {
@@ -179,7 +144,7 @@
 		 					 	//跳转企业首页
 		 					 	window.location.href=url+"/home/index";
 		 					 }else if(data == "3"){
-		 					 	layer.msg("用户名或密码错误！");
+		 					 	layer.msg("用户信息不存在，请先注册!");
 		 					 	return false;
 		 					 }else{
 		 						//已注册，未支付

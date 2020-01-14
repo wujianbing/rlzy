@@ -81,9 +81,23 @@ function reload (rlzyPosition,postflag){
 	 				var time = new Date(data[i].createDate).format("yyyy-MM-dd")
 	 				arr.push('<li>');
 	 				arr.push('<div class="infoname">');
-	 				arr.push('<h5><span class="lefth5"><span class="nameb" onclick="javascript:window.open(/rlzy/position/positionDetails?id='+data[i].id+'&companyid='+data[i].companyid+')">'+data[i].positionname+'</span></span>');
-	 				arr.push('<span class="lefth5">');
-	 				arr.push('<span onclick="javascript:window.open('+data[i].companywebsite+')">'+data[i].companyname+'</span>&emsp;&emsp;');
+	 				arr.push('<h5>');
+	 				if(data[i].status=='0'){
+	 					arr.push('<span class="lefth5"><span class="nameb" onclick="login()">'+data[i].positionname+'</span></span>');
+		 				arr.push('<span class="lefth5">');
+	 				}else if(data[i].flag=='3' && data[i].status!='0'){
+	 					if(data[i].spe3=='2'){
+	 						arr.push('<span class="lefth5"><span class="nameb" onclick="view()">'+data[i].positionname+'</span></span>');
+			 				arr.push('<span class="lefth5">');
+	 					}else{
+	 						arr.push('<span class="lefth5"><span class="nameb" data-id="'+data[i].id+'" data-cid="'+data[i].companyid+'" onclick="positionDetail(this)">'+data[i].positionname+'</span></span>');
+			 				arr.push('<span class="lefth5">');
+	 					}
+	 				}else if(data[i].flag!='3' && data[i].status!='0'){
+	 					arr.push('<span class="lefth5"><span class="nameb" data-id="'+data[i].id+'" data-cid="'+data[i].companyid+'" onclick="positionDetail(this)">'+data[i].positionname+'</span></span>');
+		 				arr.push('<span class="lefth5">');
+	 				}
+	 				arr.push('<span data-cid="'+data[i].companyid+'" onclick="companyData(this)">'+data[i].companyname+'</span>&emsp;&emsp;');
 	 				arr.push('<span>'+data[i].salaryrange+'</span>');
 	 				arr.push('</span>');
 	 				arr.push('<span class="lefth5 righth5">');
@@ -138,9 +152,23 @@ function reload (rlzyPosition,postflag){
 	 				var time = new Date(data[i].createDate).format("yyyy-MM-dd")
 	 				arr.push('<li>');
 	 				arr.push('<div class="infoname">');
-	 				arr.push('<h5><span class="lefth5"><span class="nameb" onclick="javascript:window.open(/rlzy/position/positionDetails?id='+data[i].id+'&companyid='+data[i].companyid+')">'+data[i].positionname+'</span> <sup>急聘</sup></span>');
-	 				arr.push('<span class="lefth5">');
-	 				arr.push('<span onclick="javascript:window.open('+data[i].companywebsite+')">'+data[i].companyname+'</span>&emsp;&emsp;');
+	 				arr.push('<h5>');
+	 				if(data[i].status=='0'){
+	 					arr.push('<span class="lefth5"><span class="nameb" onclick="login()">'+data[i].positionname+'</span></span>');
+		 				arr.push('<span class="lefth5">');
+	 				}else if(data[i].flag=='3' && data[i].status!='0'){
+	 					if(data[i].spe3=='2'){
+	 						arr.push('<span class="lefth5"><span class="nameb" onclick="view()">'+data[i].positionname+'</span></span>');
+			 				arr.push('<span class="lefth5">');
+	 					}else{
+	 						arr.push('<span class="lefth5"><span class="nameb" data-id="'+data[i].id+'" data-cid="'+data[i].companyid+'" onclick="positionDetail(this)">'+data[i].positionname+'</span></span>');
+			 				arr.push('<span class="lefth5">');
+	 					}
+	 				}else if(data[i].flag!='3' && data[i].status!='0'){
+	 					arr.push('<span class="lefth5"><span class="nameb" data-id="'+data[i].id+'" data-cid="'+data[i].companyid+'" onclick="positionDetail(this)">'+data[i].positionname+'</span></span>');
+		 				arr.push('<span class="lefth5">');
+	 				}
+	 				arr.push('<span data-cid="'+data[i].companyid+'" onclick="companyData(this)">'+data[i].companyname+'</span>&emsp;&emsp;');
 	 				arr.push('<span>'+data[i].salaryrange+'</span>');
 	 				arr.push('</span>');
 	 				arr.push('<span class="lefth5 righth5">');
@@ -216,9 +244,23 @@ function pages(count,postflag){
 	  	 				var time = new Date(data[i].createDate).format("yyyy-MM-dd")
 	  	 				arr.push('<li>');
 	  	 				arr.push('<div class="infoname">');
-	  	 				arr.push('<h5><span class="lefth5"><span class="nameb" onclick="javascript:window.open(/rlzy/position/positionDetails?id='+data[i].id+'&companyid='+data[i].companyid+')">'+data[i].positionname+'</span></span>');
-	  	 				arr.push('<span class="lefth5">');
-	  	 				arr.push('<span onclick="javascript:window.open('+data[i].companywebsite+')">'+data[i].companyname+'</span>&emsp;&emsp;');
+	  	 				arr.push('<h5>');
+		 				if(data[i].status=='0'){
+		 					arr.push('<span class="lefth5"><span class="nameb" onclick="login()">'+data[i].positionname+'</span></span>');
+			 				arr.push('<span class="lefth5">');
+		 				}else if(data[i].flag=='3' && data[i].status!='0'){
+		 					if(data[i].spe3=='2'){
+		 						arr.push('<span class="lefth5"><span class="nameb" onclick="view()">'+data[i].positionname+'</span></span>');
+				 				arr.push('<span class="lefth5">');
+		 					}else{
+		 						arr.push('<span class="lefth5"><span class="nameb" data-id="'+data[i].id+'" data-cid="'+data[i].companyid+'" onclick="positionDetail(this)">'+data[i].positionname+'</span></span>');
+				 				arr.push('<span class="lefth5">');
+		 					}
+		 				}else if(data[i].flag!='3' && data[i].status!='0'){
+		 					arr.push('<span class="lefth5"><span class="nameb" data-id="'+data[i].id+'" data-cid="'+data[i].companyid+'" onclick="positionDetail(this)">'+data[i].positionname+'</span></span>');
+			 				arr.push('<span class="lefth5">');
+		 				}
+	  	 				arr.push('<span data-cid="'+data[i].companyid+'" onclick="companyData(this)">'+data[i].companyname+'</span>&emsp;&emsp;');
 	  	 				arr.push('<span>'+data[i].salaryrange+'</span>');
 	  	 				arr.push('</span>');
 	  	 				arr.push('<span class="lefth5 righth5">');
@@ -263,9 +305,23 @@ function pages(count,postflag){
 	  	 				var time = new Date(data[i].createDate).format("yyyy-MM-dd")
 	  	 				arr.push('<li>');
 	  	 				arr.push('<div class="infoname">');
-	  	 				arr.push('<h5><span class="lefth5"><span class="nameb" onclick="javascript:window.open(/rlzy/position/positionDetails?id='+data[i].id+'&companyid='+data[i].companyid+')">'+data[i].positionname+'</span> <sup>急聘</sup></span>');
-	  	 				arr.push('<span class="lefth5">');
-	  	 				arr.push('<span onclick="javascript:window.open('+data[i].companywebsite+')">'+data[i].companyname+'</span>&emsp;&emsp;');
+	  	 				arr.push('<h5>');
+		 				if(data[i].status=='0'){
+		 					arr.push('<span class="lefth5"><span class="nameb" onclick="login()">'+data[i].positionname+'</span></span>');
+			 				arr.push('<span class="lefth5">');
+		 				}else if(data[i].flag=='3' && data[i].status!='0'){
+		 					if(data[i].spe3=='2'){
+		 						arr.push('<span class="lefth5"><span class="nameb" onclick="view()">'+data[i].positionname+'</span></span>');
+				 				arr.push('<span class="lefth5">');
+		 					}else{
+		 						arr.push('<span class="lefth5"><span class="nameb" data-id="'+data[i].id+'" data-cid="'+data[i].companyid+'" onclick="positionDetail(this)">'+data[i].positionname+'</span></span>');
+				 				arr.push('<span class="lefth5">');
+		 					}
+		 				}else if(data[i].flag!='3' && data[i].status!='0'){
+		 					arr.push('<span class="lefth5"><span class="nameb" data-id="'+data[i].id+'" data-cid="'+data[i].companyid+'" onclick="positionDetail(this)">'+data[i].positionname+'</span></span>');
+			 				arr.push('<span class="lefth5">');
+		 				}
+	  	 				arr.push('<span data-cid="'+data[i].companyid+'" onclick="companyData(this)">'+data[i].companyname+'</span>&emsp;&emsp;');
 	  	 				arr.push('<span>'+data[i].salaryrange+'</span>');
 	  	 				arr.push('</span>');
 	  	 				arr.push('<span class="lefth5 righth5">');
@@ -637,3 +693,15 @@ Date.prototype.format = function(fmt) {
 	   }
 	  return fmt; 
 	}
+
+function positionDetail(obj){
+	let that = $(obj);
+	var companyId = that.attr('data-cid');
+	var positionId  = that.attr('data-id');
+	window.open("/rlzy/position/positionDetails?id="+positionId+"&companyid="+companyId);
+}
+function companyData(obj){
+	let that = $(obj);
+	var companyId = that.attr('data-cid');
+	window.open("/rlzy/company/companyData?id="+companyId);
+}

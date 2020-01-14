@@ -10,6 +10,8 @@
 <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
 <title>企业概况</title>
 <!-- Bootstrap -->
+<link rel="shortcut icon" href="${ctxStatic }/rlzy/favicon.ico"/>
+<link rel="bookmark" href="${ctxStatic }/rlzy/favicon.ico"/>
 <link rel="stylesheet" href="${ctxStatic }/rlzy/css/common/layui-v2.5.5/layui/css/layui.css">
 <link rel="stylesheet" href="${ctxStatic }/rlzy/css/Registeredcomment.css" />
 <style type="text/css">
@@ -131,7 +133,6 @@ html, body {
 	width: -moz-calc(100% - 40px);
 	width: -webkit-calc(100% - 40px);
 	display: flex;
-	max-height: 136px;
 	align-items: center;
 }
 
@@ -144,15 +145,6 @@ html, body {
 .left13 {
 	padding-top: 20px;
 	width: 100%;
-	font-size: 13px;
-	overflow: hidden;
-	text-overflow: -o-ellipsis-lastline;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	display: -webkit-box;
-	-webkit-line-clamp: 8;
-	line-clamp: 8;
-	-webkit-box-orient: vertical;
 	font-size: 16px;
 }
 
@@ -300,7 +292,7 @@ html, body {
 						</div>
 						<div class="layui-row layq">
 							<div class="layui-col-md12 nameonef">
-								园区地址：<span>${rlzyCompany.address}</span>
+								地址：<span>${rlzyCompany.address}</span>
 							</div>
 						
 						</div>
@@ -317,7 +309,8 @@ html, body {
 						</p>
 					</div>
 				</div>
-				<div class="nametitile3">产品介绍</div>
+				<c:if test="${list != '' && list != null}">
+					<div class="nametitile3">产品介绍</div>
 					<div class="layui-row layq onedit">
 				      <ul>
 				      <c:forEach items="${list}" var="rlzyProduct">
@@ -332,13 +325,18 @@ html, body {
 				      </c:forEach>
 				      </ul>
 					</div>
+				</c:if>
+				<c:if test="${rlzyCompany.servicerange!=null && rlzyCompany.servicerange!=''}">
 				<div class="nametitile3">服务范围</div>
 				<div class="ve23">
 					<div class="left13">
-						${rlzyCompany.servicerange}
+						${fns:unescapeHtml(rlzyCompany.servicerange)}
+						<%-- ${rlzyCompany.servicerange} --%>
 						</p>
 					</div>
 				</div>
+				</c:if>
+				<c:if test="${str!=null && str!=''}">
 				<div class="nametitile3">案例图片</div>
 				<div class="veimg">
 					<ul>
@@ -347,7 +345,7 @@ html, body {
 					</c:forEach>
 					</ul>
 				</div>
-
+				</c:if>
 			</div>
 		</div>
 	</div>

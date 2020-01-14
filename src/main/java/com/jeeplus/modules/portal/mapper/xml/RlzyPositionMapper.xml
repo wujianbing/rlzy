@@ -72,6 +72,9 @@
 		<where>
 			1=1
 			AND a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="positionname != null and positionname != ''">
+				AND a.positionname like concat('%',#{positionname},'%') or b.companyname like concat('%',#{positionname},'%')
+			</if>
 			<if test="postflag != null and postflag != ''">
 				AND a.postflag = #{postflag}
 			</if>
@@ -295,6 +298,7 @@
 	<!--物理删除 -->
 	<update id="delete">
 		DELETE FROM rlzy_position
+		WHERE id = #{id}
 	</update>
 
 	<!--逻辑删除 -->
@@ -313,7 +317,7 @@
 	</select>
 	
 	<select id="findPositionListById" resultType="RlzyPosition">
-		select id,positionname from rlzy_position WHERE companyid=#{companyid}
+		select id,positionname from rlzy_position WHERE companyid=#{companyid} AND line = "1" AND del_flag = "0"
 	
 	</select>
 

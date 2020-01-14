@@ -81,4 +81,10 @@ public class RlzyCompanyService extends CrudService<RlzyCompanyMapper, RlzyCompa
 		
 	}
 	
+	@Transactional(readOnly = false)
+	public void updateCheck(String check, String checkVal, String id) {
+		rlzyCompanyMapper.updateCheck(check, checkVal, id);
+
+	}
+	
 }

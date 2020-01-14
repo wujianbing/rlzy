@@ -58,6 +58,25 @@
     border: 1px solid #e6e6e6;
 }
 /******************************************  */
+.qyfl li{ 
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 0px 6px;
+    border-radius: 4px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 26px;
+    line-height: 26px;
+    font-size: 14px;
+    color: #1787fb;
+    }
+.actived_li {
+    color: #fff !important;
+}
+.ful{
+	width: 632px;
+    margin-left: 159px;
+}
 </style>
 </head>
 <body>
@@ -162,12 +181,32 @@
 					</div>
 					<div class="col-lg-12" style="padding:0">
 						<label class="layui-form-label"><span class="sign">*</span>企业福利:</label>
-							<div class="selectBox">
-			        	<div class="inputCase">
-			        		<div id="role_select" class="select-menu-input imitationSelect"></div>
-							<i class="fa fa-caret-down"></i>
+						<div class="selectBox">
+				        	<div class="inputCase" >
+				        		<div id="role_select" class="select-menu-input imitationSelect">
+				        			<c:forEach items="${arr}" var="arr">
+										<span class="person_root">
+										<span data-id="${arr}">${ fns:getDictLabel (arr, "company_welfare", defaultValue)}</span>
+										<i class="close" oliid="${arr}">x</i>
+										</span>
+										</c:forEach>
+				        		</div>
+								<i class="fa fa-caret-down"></i>
+							</div>
 						</div>
 			        </div>
+			       <%--  <div class="col-lg-12" style="padding:0">
+				        <c:if test="${rlzyPosition.welfaretype != '' }">
+				        	<label class="layui-form-label"><span class="sign">*</span>当前福利:</label>
+				         	<div class="ful" id="qyful">
+									<ul class="qyfl">
+										<c:forEach items="${arr}" var="arr">
+										<li>${ fns:getDictLabel (arr, "company_welfare", defaultValue)}</li>
+										</c:forEach>
+									</ul>
+							</div>
+				        </c:if>
+			        </div> --%>
 			  		<div class="divp" style="display: none;">
 			        	<ul class="selectUl">
 			        	<c:set var="i" value="${0}" />
@@ -177,6 +216,7 @@
 			        		</c:forEach>
 						</ul>
 						 <div class="layui-btn qudi" >确定</div>
+						 <input id="data" value="" type="text" name="welfaretype" hidden="hidden"/>
 			 		 </div>
 					</div>
 					<div class="col-lg-12" style="padding:0">
@@ -216,6 +256,17 @@
 		var form = layui.form;
 		//监听提交
 		form.on('submit(formDemo)', function(data) {
+			var obj = document.getElementById('role_select').getElementsByTagName('i');
+			var description = '';
+			var arr1 = new Array;
+			 for (var i = 0; i < obj.length; i++) {
+				var property = obj[i];
+				var s = $(property).attr('oliid');
+				arr1.push(s);
+			}
+			var str = arr1.join(',')
+			$("#data").val(str);
+			console.log(str);
 		  $.ajax({
 				type : "POST",
 				url : "${rlzyPath}/company/offerEditData?id=${rlzyPosition.id}",
@@ -269,7 +320,7 @@
 	
 	/*富文本编辑器js*********************************  */
 	var editor = new Simditor({
-    toolbar: [ 'ol','|', 'ul', ],
+    toolbar: ['fontScale','|', 'ol', '|','ul'],
     textarea: '#editor',
     placeholder: '写点什么...',
     cleanPaste: true

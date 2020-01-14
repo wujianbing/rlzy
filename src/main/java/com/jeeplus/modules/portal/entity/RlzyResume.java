@@ -23,14 +23,17 @@ public class RlzyResume extends DataEntity<RlzyResume> {
 	private String userid;		// 个人id
 	private String name;		// 名称
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date startdate;		// 开始时间
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date enddate;		// 结束时间
 	private String major;		// 专业(行业）
 	private String describes;		// 描述
 	private String education;		// 学历
 	private String course;		// 培训课程
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date gaindate;		// 获得时间
 	private String experiencetype;	// 类型(教育，工作经验等）
 	private String spe1;		// 预留1

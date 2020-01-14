@@ -10,8 +10,8 @@
 <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
 <title>吴忠人力资源首页</title>
 <!-- Bootstrap -->
-<link rel="shortcut icon" href="${ctxStatic }/rlzy/favicon.ico"/>
-<link rel="bookmark" href="${ctxStatic }/rlzy/favicon.ico"/>
+<link rel="shortcut icon" href="${ctxStatic }/rlzy/favicon.ico" />
+<link rel="bookmark" href="${ctxStatic }/rlzy/favicon.ico" />
 <link rel="stylesheet" href="${ctxStatic }/rlzy/css/iconfont.css" />
 <link rel="stylesheet"
 	href="${ctxStatic }/rlzy/css/common/layui-v2.5.5/layui/css/layui.css">
@@ -20,109 +20,128 @@
 <link rel="stylesheet"
 	href="${ctxStatic }/rlzy/css/Registeredcomment.css" />
 <link rel="stylesheet" href="${ctxStatic }/rlzy/css/RegisteredOne.css" />
+<link rel="stylesheet" href="${ctxStatic }/rlzy/css/my-modal.css" />
 <style type="text/css">
 .asp {
-		    margin-top: 3rem;
-		}
-		#yzm {
-		    display: inline-block;
-		    width: 7rem;
-		    margin-left: 2rem;
-		    text-align: center;
-		    height: 40px;
-		    line-height: 40px;
-		    border-radius: 5px;
-		    color: #4b96cf;
-		    font-weight: normal;
-		    border: 1px solid #4b96cf;
-		        font-size: 14px;
-		        cursor: pointer;
-		}
-.leftnum {
-    width: 5rem;
+	margin-top: 3rem;
 }
-.worduser2 {
-    text-decoration: underline;
-    text-align: center;
-    font-size: 14px;
-    color: #9999;
-    padding-left: 2rem;
-    margin-top: 1rem;
-}
-.m3{
+
+#yzm {
+	display: inline-block;
+	width: 7rem;
+	margin-left: 2rem;
+	text-align: center;
+	height: 40px;
+	line-height: 40px;
+	border-radius: 5px;
+	color: #4b96cf;
+	font-weight: normal;
+	border: 1px solid #4b96cf;
+	font-size: 14px;
 	cursor: pointer;
-	    color: #4b96cf;
+}
+
+.leftnum {
+	width: 5rem;
+}
+
+.worduser2 {
+	text-decoration: underline;
+	text-align: center;
+	font-size: 14px;
+	color: #9999;
+	padding-left: 2rem;
+	margin-top: 1rem;
+}
+
+.m3 {
+	cursor: pointer;
+	color: #4b96cf;
 }
 
 .rowTop {
-    align-items: center;
+	align-items: center;
 }
+
 .titleTop {
-    padding: 14px 0;
-    background: #fff;
+	padding: 14px 0;
+	background: #fff;
 }
+
 .regnum {
-    display:block;
-    align-items: center;
-    justify-content: center;
-    width: 446px;
-    border-radius: 4px;
-    height: 425px;
-    margin: 0 auto;
-    margin-top: 10px;
-    /* background: #D6E9C6; */
-    /* box-shadow: 10px 10px 20px 10px rgba(255,255,0,0.5), -10px 10px 10px 10px rgba(255,255,255,0.5); */
+	display: block;
+	align-items: center;
+	justify-content: center;
+	width: 446px;
+	border-radius: 4px;
+	/* height: 425px; */
+	margin: 0 auto;
+	margin-top: 10px;
+	/* background: #D6E9C6; */
+	/* box-shadow: 10px 10px 20px 10px rgba(255,255,0,0.5), -10px 10px 10px 10px rgba(255,255,255,0.5); */
 }
+
 .formname input {
-    width: 19rem;
-    height: 42px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    text-indent: 2rem;
-    outline: none;
+	width: 19rem;
+	height: 42px;
+	font-size: 16px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	text-indent: 2rem;
+	outline: none;
 }
+
 #yzcode {
-    width: 10rem!important;
-    font-size: 16px;
-    /* cursor: pointer; */
+	width: 10rem !important;
+	font-size: 16px;
+	/* cursor: pointer; */
 }
+
 #yzm {
-    display: inline-block;
-    width: 7rem;
-    margin-left: 2rem;
-    text-align: center;
-    height: 40px;
-    line-height: 40px;
-    border-radius: 5px;
-    color: #4b96cf;
-    font-weight: normal;
-    border: 1px solid #4b96cf;
-    font-size: 14px;
-    cursor: pointer;
+	display: inline-block;
+	width: 7rem;
+	margin-left: 2rem;
+	text-align: center;
+	height: 40px;
+	line-height: 40px;
+	border-radius: 5px;
+	color: #4b96cf;
+	font-weight: normal;
+	border: 1px solid #4b96cf;
+	font-size: 14px;
+	cursor: pointer;
 }
+
 .ljzc {
-    height: 40px;
-    width: 8rem!important;
-    line-height: 40px;
-    margin-top: 2rem;
-    margin-left: 0rem!important;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    outline: none;
-    background: #4b96cf;
-    border: 1px solid #4b96cf;
-    outline: none;
-    color: #fff;
-    margin-bottom: 1rem;
-    cursor: pointer;
+	height: 40px;
+	width: 8rem !important;
+	line-height: 40px;
+	margin-top: 2rem;
+	margin-left: 0rem !important;
+	font-size: 16px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	outline: none;
+	background: #4b96cf;
+	border: 1px solid #4b96cf;
+	outline: none;
+	color: #fff;
+	margin-bottom: 1rem;
+	cursor: pointer;
 }
+
 .yuqbottom {
+	padding: 27px 0;
+	min-height: 0;
+}
 
-    padding: 27px 0;
-    min-height: 0;
-
+.test-span {
+	font-size: 16px;
+	color: red;
+	position: absolute;
+}
+.layui-layer-msg{
+	top:50% !important;
 }
 </style>
 
@@ -148,13 +167,11 @@
 					<form action="" method="post">
 						<p class="formname">
 							<span class="leftnum">手机号：</span><input type="text" id="num"
-								value="" onblur="checkPhone()" maxlength="11"
-								placeholder="" />
+								value="" maxlength="11" placeholder="" />
 						</p>
 						<p class="formname">
 							<span class="leftnum">验证码：</span><input type="text"
-								placeholder="" maxlength="4" id="yzcode" /><label
-								id="yzm" onclick="count()">获取验证码</label>
+								placeholder="" maxlength="4" id="yzcode" /><label id="yzm">获取验证码</label>
 						</p>
 					</form>
 					<p class="btnone">
@@ -162,7 +179,8 @@
 							onclick="phonenum()" />
 					</p>
 					<p class="worduser2">
-						点击立即注册即表示您同意<a target="_blank" href="${rlzyPath}/user/agreement"  class='m3'>《用户使用协议》</a>
+						点击立即注册即表示您同意<a target="_blank" href="${rlzyPath}/user/agreement"
+							class='m3'>《用户使用协议》</a>
 					</p>
 				</div>
 
@@ -198,7 +216,7 @@
 									<label class="layui-form-label"><span class="sign">*</span>学历选择：</label>
 									<div class="layui-input-block" style="cursor: pointer">
 										<form:select class="form-control" path="education"
-											name="education">
+											name="education" lay-verify="required">
 											<form:option value="" label="" />
 											<form:options items="${fns:getDictList('education')}"
 												itemLabel="label" itemValue="value" htmlEscape="false" />
@@ -211,7 +229,7 @@
 									<label class="layui-form-label"><span class="sign">*</span>手机号：</label>
 									<div class="layui-input-block">
 										<input id="zd" type="text" name="phone" required
-											lay-verify="required" readonly="readonly" autocomplete="off"
+											lay-verify="required" autocomplete="off"
 											class="layui-input">
 									</div>
 								</div>
@@ -241,7 +259,7 @@
 									<label class="layui-form-label"><span class="sign">*</span>工作年限：</label>
 									<div class="layui-input-block">
 										<form:select class="form-control" path="workingage"
-											name="workingage">
+											name="workingage" lay-verify="required">
 											<form:option value="" label="" />
 											<form:options items="${fns:getDictList('working_age')}"
 												itemLabel="label" itemValue="value" htmlEscape="false" />
@@ -260,7 +278,7 @@
 									<label class="layui-form-label"><span class="sign">*</span>目前状态：</label>
 									<div class="layui-input-block">
 										<form:select class="form-control" path="currentstate"
-											name="currentstate">
+											name="currentstate" lay-verify="required">
 											<form:option value="" label="" />
 											<form:options items="${fns:getDictList('current_state')}"
 												itemLabel="label" itemValue="value" htmlEscape="false" />
@@ -272,7 +290,7 @@
 									<label class="layui-form-label"><span class="sign">*</span>期望行业：</label>
 									<div class="layui-input-block">
 										<form:select class="form-control" path="desiredindustry"
-											name="desiredindustry">
+											name="desiredindustry" id="industry" lay-verify="required">
 											<form:option value="" label="" />
 											<form:options items="${fns:getDictList('desired_industry')}"
 												itemLabel="label" itemValue="value" htmlEscape="false" />
@@ -316,7 +334,7 @@
 								<div class="layui-form-item">
 									<label class="layui-form-label"><span class="sign">*</span>期望薪资：</label>
 									<div class="layui-input-block">
-										<form:select path="salary" class="form-control" name="salary">
+										<form:select path="salary" class="form-control" name="salary" lay-verify="required">
 											<form:option value="" label="" />
 											<form:options items="${fns:getDictList('salary')}"
 												itemLabel="label" itemValue="value" htmlEscape="false" />
@@ -379,138 +397,152 @@
 			</div>
 		</div>
 	</div>
-	<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-	<script src="${ctxStatic }/rlzy/js/jquery.min.js"></script>
-	<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-
-<%-- 	<div class="m-modal">
+	<div class="m-modal" style="display: none;">
 		<div class="m-modal-dialog">
 			<div class="m-top">
-				<h4 class="m-modal-title"></h4>
+				<h4 class="m-modal-title">温馨提示</h4>
 				<span class="m-modal-close">&times;</span>
 			</div>
 			<!--模态框的简历基本信息-->
 			<div class="m-middle">${fns:unescapeHtml(news.content)}</div>
-
 		</div>
-	</div> --%>
+	</div>
 </body>
 </html>
-<script type="text/javascript"
-	src="${ctxStatic }/rlzy/js/jquery.my-modal.1.1.js"></script>
+<script src="${ctxStatic }/rlzy/js/jquery.min.js"></script>
+<script src="${ctxStatic }/rlzy/js/jquery.my-modal.1.1.js"></script>
 <script src="${ctxStatic }/rlzy/css/common/layui-v2.5.5/layui/layui.js"></script>
 <script src="${ctxStatic }/rlzy/js/Popt.js"></script>
+<script src="${ctxStatic }/rlzy/js/registerunti.js"></script>
+<script src="${ctxStatic }/rlzy/js/register.js"></script>
 <script src="${ctxStatic }/rlzy/js/cityJson.js"></script>
 <script src="${ctxStatic }/rlzy/js/citySet.js"></script>
 <script src="${ctxStatic }/rlzy/js/jobtier.js"></script>
 <script src="${ctxStatic }/rlzy/js/workset.js"></script>
 <script type="text/javascript">
-	var bools = true;
+	$(document).ready(function() {
+		var m1 = new MyModal.modal(function() {
+		});
+		m1.show()
+	});
 	$("#workchange").click(function(e) {
 		selwork(this, e);
-		console.log("inout", $(this).val(), new Date())
 	});
-
-	/* 手机号验证 */
-	function checkPhone() {
+	/* 	var bools = true;
+	 *//* 手机号验证 */
+	/* function checkPhone() {
 		var _phone = document.getElementById("num").value; //获取手机号 
 		if (!(/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test(_phone))) {
 			layer.msg('您的手机号不正确，请重新输入！');
 			return false;
-		}
-		//验证手机号是否已注册 TODO
-		$.ajax({
-			type : "POST",
-			url : "${rlzyPath}/home/check",
-			data : {
-				"phone" : _phone
-			},
-			success : function(data) {
-				if (data == "2") {
-					layer.msg('该手机号已经注册过，请登录！');
-					bools = false;
-					return false;
-				} else {
-					bools = true;
+		}else{
+			//验证手机号是否已注册 TODO
+			$.ajax({
+				type : "POST",
+				url : "${rlzyPath}/home/check",
+				data : {
+					"phone" : _phone
+				},
+				success : function(data) {
+					if (data == "2") {
+						layer.msg('该手机号已经注册过，请登录！');
+						bools = false;
+						return false;
+					} else {
+						bools = true;
+						return true;
+					}
 				}
-			}
 
-		});
-	};
+			});
+		}
+		
+	}; */
 	/* 短信验证码到倒计时 */
-	var bool = true;
+	/* var bool = true;
 	function count() {
-		var phone = document.getElementById("num").value; //获取手机号
-		if (!bools) {
-			layer.msg('该手机号已经注册过，请登录！');
-			return false;
+		if(checkPhone()){
+			var phone = document.getElementById("num").value; //获取手机号
+			if (!bools) {
+				layer.msg('该手机号已经注册过，请登录！');
+				return false;
+			}
+			//验证码获取 TODO
+			$.get("${rlzyPath}/home/sendSms?phone=" + phone);
+			if (bool == true) {
+				var lab = document.getElementById('yzm');
+				var count = 60;
+				var time = setInterval(function() {
+					bool = false;
+					count--;
+					lab.innerHTML = count + "秒";
+					if (count == 0) {
+						clearInterval(time);
+						lab.innerHTML = '重新获验证码';
+						bool = true;
+					}
+					;
+				}, 1000);
+			}
+		}else{
+			layer.msg('请输入正确的手机号!');
 		}
-		//验证码获取 TODO
-		$.get("${rlzyPath}/home/sendSms?phone=" + phone);
-		if (bool == true) {
-			var lab = document.getElementById('yzm');
-			var count = 60;
-			var time = setInterval(function() {
-				bool = false;
-				count--;
-				lab.innerHTML = count + "秒";
-				if (count == 0) {
-					clearInterval(time);
-					lab.innerHTML = '重新获验证码';
-					bool = true;
-				}
-				;
-			}, 1000);
-		}
-
-	};
+	}; */
 	//点击出现用户协议
-
 	//禁止返回
 	var status = localStorage.getItem("status");
 	if (status == "1") {
 		$('.regnum').css("display", "none");
 		$('.regnum2').css("display", "block");
 		$('.regnum3').css("display", "none");
-		$('.ringnum').addClass('activeRing').siblings().removeClass('activeRing');
+		$('.ringnum').addClass('activeRing').siblings().removeClass(
+				'activeRing');
 		$('.ring2').addClass('activeRing');
 
 	} else if (status == "2") {
 		$('.regnum').css("display", "none");
 		$('.regnum2').css("display", "none");
 		$('.regnum3').css("display", "block");
-		$('.ringnum').addClass('activeRing').siblings().removeClass('activeRing');
+		$('.ringnum').addClass('activeRing').siblings().removeClass(
+				'activeRing');
 		$('.ring3').addClass('activeRing');
 		Load();
 	}
 	//验证码和手机号都验证完毕点击立即注册后出现填写详细信息页面的函数
 	function phonenum() {
-		;
 		//获取验证码
 		var code = document.getElementById("yzcode").value;
-		$.ajax({
-			type : "POST",
-			url : "${rlzyPath}/home/checkSms",
-			data : {
-				"code" : code
-			},
-			success : function(data) {
-				if (data[0] == "0") {
-					layer.msg("验证码错误，请重新输入");
-					return false;
-				} else {
-					localStorage.setItem("status", "1");
-					$('.regnum').css("display", "none");
-					$('.regnum2').css("display", "block");
-					$('.regnum3').css("display", "none");
-					$('.ringnum').addClass('activeRing').siblings().removeClass('activeRing');
-					$('.ring2').addClass('activeRing');
-					var phone = document.getElementById("num").value; //获取手机号
-					$("#zd").val(phone);
-					$(".yuqbottom").css("height","auto");
+		var phone = document.getElementById("num").value; //获取手机号
+		if (code != "" && phone != "") {
+			$.ajax({
+				type : "POST",
+				url : "${rlzyPath}/home/checkSms",
+				data : {
+					"code" : code
+				},
+				success : function(data) {
+					if (data[0] == "0") {
+						layer.msg("验证码错误，请重新输入");
+						return false;
+					} else {
+						localStorage.setItem("status", "1");
+						$('.regnum').css("display", "none");
+						$('.regnum2').css("display", "block");
+						$('.regnum3').css("display", "none");
+						$('.ringnum').addClass('activeRing').siblings()
+								.removeClass('activeRing');
+						$('.ring2').addClass('activeRing');
+						var phone = document.getElementById("num").value; //获取手机号
+						$("#zd").val(phone);
+						$(".yuqbottom").css("height", "auto");
+					}
 				}
-			}
-		});
+			});
+		} else {
+			layer.msg("请输入手机号或验证码!");
+			return false;
+		}
+
 	};
 
 	//填写详细信息页面毕点击提交后出现页面的函数
@@ -562,6 +594,11 @@
 		form.on('submit(formDemo)', function(data) {
 			//提交注册信息
 			var phone = document.getElementById("num").value; //获取手机号
+			/* var industry = $('#industry option:selected').val();
+			if(industry == "" || industry == null){
+				layer.msg("请选择期望行业!");
+				return false;
+			} */
 			$.ajax({
 				cache : true,
 				type : "POST",
@@ -583,17 +620,17 @@
 		$("#psw_ag2").blur(function() {
 			if ($("#psw2").val() != $("#psw_ag2").val()) {
 				layer.msg('两次输入的密码不一致');
+				return false;
 			}
 		})
 	})
-	
-	$(function(){
-		  var bnav=$("#tail").outerHeight(true) ;                                                      
-		  var h=$(document).outerHeight(true) ; 
-		   var topnav=$("#nav").outerHeight(true) ;  
-	    $(".yuqbottom").css("height",h-topnav-bnav-238); //这里改成你想要的高度就可以了~
-	    
-	});
 
+	$(function() {
+		var bnav = $("#tail").outerHeight(true);
+		var h = $(document).outerHeight(true);
+		var topnav = $("#nav").outerHeight(true);
+		$(".yuqbottom").css("height", h - topnav - bnav - 238); //这里改成你想要的高度就可以了~
+
+	});
 </script>
 <script src="${ctxStatic }/rlzy/js/pages/nav.js"></script>

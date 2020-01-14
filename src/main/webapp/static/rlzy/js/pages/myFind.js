@@ -48,6 +48,19 @@ MyFind.prototype = {
 	  }
 	},
 	tab1Decline : function(res) {
+		if("2" == res.accepts){
+			layer.open({
+				type: 1
+				,offset: 'auto' //具体配置参考：offset参数项
+				,content: '<div style="padding: 20px 80px;">您已同意暂时无法拒绝，请等待</div>'
+				,btn: '关闭'
+				,btnAlign: 'c' //按钮居中
+				,shade: 0 //不显示遮罩
+				,yes: function(){
+				layer.closeAll();
+				}
+			});
+		}else{
 		layer.confirm('是否确定拒绝？', {
 			btn : [ '确定', '取消' ]
 		// 按钮
@@ -62,6 +75,7 @@ MyFind.prototype = {
 				}
 			});
 		});
+	  }
 	},
 	tab2Decline : function(res) {
 		layer.confirm('是否取消收藏？', {

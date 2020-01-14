@@ -1,6 +1,7 @@
 package com.jeeplus.modules.home.web;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -23,17 +24,23 @@ import com.jeeplus.common.utils.CookieUtils;
 import com.jeeplus.common.utils.MyBeanUtils;
 import com.jeeplus.common.utils.StringUtils;
 import com.jeeplus.core.persistence.Page;
+import com.jeeplus.modules.portal.entity.News;
+import com.jeeplus.modules.portal.entity.NewsModel;
 import com.jeeplus.modules.portal.entity.RlzyCompany;
+import com.jeeplus.modules.portal.entity.RlzyCooperation;
 import com.jeeplus.modules.portal.entity.RlzyPosition;
 import com.jeeplus.modules.portal.entity.RlzyProduct;
 import com.jeeplus.modules.portal.entity.RlzyRelation;
 import com.jeeplus.modules.portal.entity.RlzyUser;
+import com.jeeplus.modules.portal.entity.RlzyWorker;
 import com.jeeplus.modules.portal.service.NewsService;
 import com.jeeplus.modules.portal.service.RlzyCompanyService;
+import com.jeeplus.modules.portal.service.RlzyCooperationService;
 import com.jeeplus.modules.portal.service.RlzyPositionService;
 import com.jeeplus.modules.portal.service.RlzyProductService;
 import com.jeeplus.modules.portal.service.RlzyRelationService;
 import com.jeeplus.modules.portal.service.RlzyUserService;
+import com.jeeplus.modules.portal.service.RlzyWorkerService;
 import com.jeeplus.modules.sys.entity.DictValue;
 import com.jeeplus.modules.sys.utils.DictUtils;
 
@@ -64,6 +71,12 @@ public class CompanyController {
 	
 	@Autowired
 	RlzyProductService rlzyProductService;
+	
+	@Autowired
+	RlzyCooperationService rlzyCooperationService;
+	
+	@Autowired
+	RlzyWorkerService rlzyWorkerService;
 	/**
 	 * 保存企业注册信息
 	 * 
@@ -75,9 +88,11 @@ public class CompanyController {
 	@RequestMapping(value="saveCompany")
     public String saveCompany(RlzyCompany rlzyCompany,HttpServletRequest request){
 		rlzyCompany.setCpflag("2");
-		rlzyCompany.setPaystatus("1");
+		rlzyCompany.setPaystatus("0");
 		rlzyCompany.setReviewstate("1");
 		rlzyCompany.setTrystate("2");
+		rlzyCompany.setIstop("2");
+		rlzyCompany.setIspublic("2");
 		rlzyCompanyService.save(rlzyCompany);
 		String id = rlzyCompany.getId();
 		return id;
@@ -90,7 +105,14 @@ public class CompanyController {
 	 * 
 	 * */
 	@RequestMapping("register")
-	public String register(Model model,RlzyCompany rlzyCompany) {
+	public String register(Model model,String type,RlzyCompany rlzyCompany) {
+		if(type.equals("1")) {
+		  News news= newsService.get("6c88e1c2b4ad4ae093a17282e34ec60b");
+		  model.addAttribute("news", news);
+		}else {
+		  News news= newsService.get("8820d854ebe844b08713f35efe387a88");
+		  model.addAttribute("news", news);
+		}
 		return "modules/home/companyRegister";
 	}
 	
@@ -101,7 +123,7 @@ public class CompanyController {
 	@RequestMapping("/upload")
 	@ResponseBody
 	public String upload(MultipartFile file,HttpSession session,String flag) {
-		/* String phone = (String)session.getAttribute("tel") */;
+		/* String phone = (String)session.getAttribute("tel"); */
 	    String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 	    String name = file.getOriginalFilename().substring(0,file.getOriginalFilename().lastIndexOf("."));
 	    // 当前app根目录
@@ -267,6 +289,24 @@ public class CompanyController {
 	public String publishOfferEdit(String id,Model model,String firmId) {
 		RlzyPosition rlzyPosition = rlzyPositionService.get(id);
 		List<DictValue> list = DictUtils.getDictList("company_welfare");
+		String wType = rlzyPosition.getWelfaretype();
+		if(wType != null){
+			String[] arr = StringUtils.split(wType, "\\,");
+			StringBuilder builder = new StringBuilder();
+			if(arr.length >0){
+				for(int i=0;i<arr.length;i++){
+					if(i==arr.length-1){
+						builder.append(DictUtils.getDictLabel(arr[i], "company_welfare", ""));
+					}else{
+						builder.append(DictUtils.getDictLabel(arr[i], "company_welfare", ""));
+						builder.append(" | ");
+					}
+					
+				}
+				rlzyPosition.setWelfaretype(builder.toString());
+			}
+			model.addAttribute("arr", arr);
+		}
 		model.addAttribute("firmId", firmId);
 		model.addAttribute("list", list);
 		model.addAttribute("rlzyPosition", rlzyPosition);
@@ -300,6 +340,9 @@ public class CompanyController {
 	@ResponseBody
 	@RequestMapping(value="publishData")
 	public String publishData(String firmId,RlzyPosition rlzyPosition) {
+		if(rlzyPosition.getWelfaretype().equals("")) {
+			rlzyPosition.setWelfaretype("0");
+		}
 		rlzyPosition.setCompanyid(firmId);
 		rlzyPosition.setLine("1");
 		rlzyPosition.setNum("0");
@@ -355,6 +398,7 @@ public class CompanyController {
 		RlzyRelation rlzyRelation = new RlzyRelation();
 		rlzyRelation.setCompanyid(firmId);
 		rlzyRelation.setCompanycollectstate("1");
+		rlzyRelation.setInvite("2");
 		Page<RlzyRelation> rlzyRelations = new Page<RlzyRelation>();
 		rlzyRelations.setPageNo(Integer.parseInt(page));
 		rlzyRelations.setPageSize(Integer.parseInt(limit));
@@ -473,6 +517,7 @@ public class CompanyController {
 		RlzyRelation rlzyRelation = new RlzyRelation();
 		rlzyRelation.setCompanyid(firmId);
 		rlzyRelation.setDeliverystate("1");
+		rlzyRelation.setInvite("2");
 		Page<RlzyRelation> rlzyRelationss = new Page<RlzyRelation>();
 		rlzyRelationss.setPageNo(Integer.parseInt(page));
 		rlzyRelationss.setPageSize(Integer.parseInt(limit));
@@ -670,10 +715,12 @@ public class CompanyController {
 	/**
 	 * 确认职位
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
 	@ResponseBody
 	@RequestMapping(value="confirm")
-	public String confirm(String id,String txt,String positionId) {
+	public String confirm(String id,String txt,String positionId,HttpServletRequest req) throws UnsupportedEncodingException {
+		req.setCharacterEncoding("utf-8");
 		RlzyRelation rlzyRelation = rlzyRelationService.get(id);
 		rlzyRelation.setPositionname(txt);
 		rlzyRelation.setPositionid(positionId);
@@ -709,7 +756,7 @@ public class CompanyController {
 	}
 	
 	/**
-	 * 收到简历-数据查询
+	 * 已邀请简历-数据查询
 	 * @param firmId
 	 * @return
 	 */
@@ -765,14 +812,17 @@ public class CompanyController {
 	public String companyData(String id,Model model) {
 		RlzyCompany rlzyCompany = rlzyCompanyService.get(id);
 		String str = rlzyCompany.getCasepic();
-		String[] arr = str.split("\\|");
+		String[] arr = null;
+		if(StringUtils.isNotBlank(str)) {
+			arr = str.split("\\|");
+		}
+		model.addAttribute("arr",arr);
 		RlzyProduct rlzyProduct = new RlzyProduct();
 		rlzyProduct.setCompanyid(id);
 		List<RlzyProduct> list = rlzyProductService.findList(rlzyProduct);
 		if(list.size() > 0) {
 			model.addAttribute("list",list);
 		}
-		model.addAttribute("arr",arr);
 		model.addAttribute("rlzyCompany",rlzyCompany);
 		return "/modules/home/company/companyData";
 	}
@@ -892,4 +942,253 @@ public class CompanyController {
 		rlzyProductService.deleteAllByLogic(list);
 		return "1";
 	}
+	
+	
+	//合作企业
+	
+	/**
+	 * 合作企业页面
+	 * @return
+	 */
+	@RequestMapping(value="cooperationPage")
+	public String cooperationPage(String firmId,Model model) {
+			model.addAttribute("companyId", firmId);
+		return "/modules/home/company/companyslist";
+	}
+	
+	/**
+	 * 合作企业页面
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="cooperationData")
+	public String cooperationData(String id,String page,String limit) {
+		RlzyCooperation rlzyCooperation = new RlzyCooperation();
+		rlzyCooperation.setCompanyid(id);
+		Page<RlzyCooperation> rlzyCooperations = new Page<RlzyCooperation>();
+		rlzyCooperations.setPageNo(Integer.parseInt(page));
+		rlzyCooperations.setPageSize(Integer.parseInt(limit));
+		Page<RlzyCooperation> rlzyCooperationLists = rlzyCooperationService.findPage(rlzyCooperations, rlzyCooperation);
+		List<RlzyCooperation> rlzyCooperationList = rlzyCooperationLists.getList();
+		StringBuffer jsonStr = new StringBuffer();
+		jsonStr.append("{\"code\":\"0\",");
+		jsonStr.append("\"msg\":\"0\",");
+		jsonStr.append("\"count\":\""+rlzyCooperationLists.getCount()+"\",");
+		jsonStr.append("\"data\":[");
+		if(rlzyCooperationList.size() > 0) {
+			for(int i=0;i<rlzyCooperationList.size();i++) {
+				if(rlzyCooperationList.size()-i==1) {
+					jsonStr.append("{\"id\":\""+i+"\",");
+					jsonStr.append("\"cooperationId\":\""+rlzyCooperationList.get(i).getId()+"\",");
+					jsonStr.append("\"companyName\":\""+rlzyCooperationList.get(i).getCompanyname()+"\",");
+					jsonStr.append("\"address\":\""+rlzyCooperationList.get(i).getAddress()+"\",");
+					jsonStr.append("\"contact\":\""+rlzyCooperationList.get(i).getContacts()+"\",");
+					jsonStr.append("\"registeredcapital\":\""+rlzyCooperationList.get(i).getRegisteredcapital()+"\",");
+					jsonStr.append("\"companyprofile\":\""+rlzyCooperationList.get(i).getCompanyprofile()+"\"");
+					jsonStr.append("}");
+				}else {
+					jsonStr.append("{\"id\":\""+i+"\",");
+					jsonStr.append("\"cooperationId\":\""+rlzyCooperationList.get(i).getId()+"\",");
+					jsonStr.append("\"companyName\":\""+rlzyCooperationList.get(i).getCompanyname()+"\",");
+					jsonStr.append("\"address\":\""+rlzyCooperationList.get(i).getAddress()+"\",");
+					jsonStr.append("\"contact\":\""+rlzyCooperationList.get(i).getContacts()+"\",");
+					jsonStr.append("\"registeredcapital\":\""+rlzyCooperationList.get(i).getRegisteredcapital()+"\",");
+					jsonStr.append("\"companyprofile\":\""+rlzyCooperationList.get(i).getCompanyprofile()+"\"");
+					jsonStr.append("},");
+				}
+			}
+		}
+		jsonStr.append("]}");
+		return jsonStr.toString();
+	}
+	
+	/**
+	 * 查看-合作企业信息
+	 * @return
+	 */
+	@RequestMapping(value="lookDetail")
+	public String lookDetail(String id,Model model) {
+		RlzyCooperation rlzyCooperation = rlzyCooperationService.get(id);
+		model.addAttribute("rlzyCooperation",rlzyCooperation);
+		return "/modules/home/company/editcompany";
+	}
+	
+	/**
+	 * 合作企业页面-新增
+	 * @return
+	 */
+	@RequestMapping(value="publishCooperation")
+	public String publishCooperation(String id,Model model) {
+			RlzyCooperation rlzyCooperation = new RlzyCooperation();
+			model.addAttribute("id",id);
+			model.addAttribute("rlzyCooperation",rlzyCooperation);
+		return "/modules/home/company/addcompany";
+	}
+	
+	/**
+	 * 合作企业-保存
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="saveCooperation")
+	public String saveCooperation(RlzyCooperation rlzyCooperation) {
+		rlzyCooperationService.save(rlzyCooperation);
+		return "1";
+	}
+	
+	
+	/**
+	 * 合作企业页面-修改-保存
+	 * @return
+	 * @throws Exception 
+	 */
+	@ResponseBody
+	@RequestMapping(value="editCooperationSave")
+	public String editCooperationSave(String id,RlzyCooperation rlzyCooperation) throws Exception {
+		if (!rlzyCooperation.getIsNewRecord()) {
+			RlzyCooperation t = rlzyCooperationService.get(id);
+			MyBeanUtils.copyBeanNotNull2Bean(rlzyCooperation, t);
+			rlzyCooperationService.save(t);
+		}
+		return "1";
+	}
+	
+	/**
+	 * 合作企业页面-修改-删除
+	 * @return
+	 * @throws Exception 
+	 */
+	@ResponseBody
+	@RequestMapping(value="editCooperationDel")
+	public String editCooperationDel(String id){
+		RlzyCooperation rlzyCooperation =rlzyCooperationService.get(id);
+		List<RlzyCooperation> list = new ArrayList<>();
+		list.add(rlzyCooperation);
+		rlzyCooperationService.deleteAllByLogic(list);
+		return "1";
+	}
+	
+	
+	//合作人员
+	
+		/**
+		 * 合作人员页面
+		 * @return
+		 */
+		@RequestMapping(value="workerPage")
+		public String workerPage(String firmId,Model model) {
+				model.addAttribute("companyId", firmId);
+			return "/modules/home/company/personlist";
+		}
+		
+		/**
+		 * 合作人员页面
+		 * @return
+		 */
+		@ResponseBody
+		@RequestMapping(value="workerData")
+		public String workerData(String id,String page,String limit) {
+			RlzyWorker rlzyWorker =new RlzyWorker();
+			rlzyWorker.setCompanyid(id);
+			Page<RlzyWorker> rlzyWorkers = new Page<RlzyWorker>();
+			rlzyWorkers.setPageNo(Integer.parseInt(page));
+			rlzyWorkers.setPageSize(Integer.parseInt(limit));
+			Page<RlzyWorker> rlzyWorkeLists = rlzyWorkerService.findPage(rlzyWorkers, rlzyWorker);
+			List<RlzyWorker> rlzyWorkerList = rlzyWorkeLists.getList();
+			StringBuffer jsonStr = new StringBuffer();
+			jsonStr.append("{\"code\":\"0\",");
+			jsonStr.append("\"msg\":\"0\",");
+			jsonStr.append("\"count\":\""+rlzyWorkeLists.getCount()+"\",");
+			jsonStr.append("\"data\":[");
+			if(rlzyWorkerList.size() > 0) {
+				for(int i=0;i<rlzyWorkerList.size();i++) {
+					if(rlzyWorkerList.size()-i==1) {
+						jsonStr.append("{\"id\":\""+i+"\",");
+						jsonStr.append("\"workerId\":\""+rlzyWorkerList.get(i).getId()+"\",");
+						jsonStr.append("\"name\":\""+rlzyWorkerList.get(i).getName()+"\",");
+						jsonStr.append("\"age\":\""+rlzyWorkerList.get(i).getAge()+"\",");
+						jsonStr.append("\"sex\":\""+DictUtils.getDictLabel(rlzyWorkerList.get(i).getSex(), "sex","")+"\",");
+						jsonStr.append("\"liveplace\":\""+rlzyWorkerList.get(i).getLiveplace()+"\",");
+						jsonStr.append("\"phone\":\""+rlzyWorkerList.get(i).getPhone()+"\"");
+						jsonStr.append("}");
+					}else {
+						jsonStr.append("{\"id\":\""+i+"\",");
+						jsonStr.append("\"workerId\":\""+rlzyWorkerList.get(i).getId()+"\",");
+						jsonStr.append("\"name\":\""+rlzyWorkerList.get(i).getName()+"\",");
+						jsonStr.append("\"age\":\""+rlzyWorkerList.get(i).getAge()+"\",");
+						jsonStr.append("\"sex\":\""+DictUtils.getDictLabel(rlzyWorkerList.get(i).getSex(), "sex","")+"\",");
+						jsonStr.append("\"liveplace\":\""+rlzyWorkerList.get(i).getLiveplace()+"\",");
+						jsonStr.append("\"phone\":\""+rlzyWorkerList.get(i).getPhone()+"\"");
+						jsonStr.append("},");
+					}
+				}
+			}
+			jsonStr.append("]}");
+			return jsonStr.toString();
+		}
+		
+		/**
+		 * 查看-合作企业信息
+		 * @return
+		 */
+		@RequestMapping(value="workerDetail")
+		public String workerDetail(String id,Model model) {
+			RlzyWorker rlzyWorker =rlzyWorkerService.get(id);
+			model.addAttribute("rlzyWorker",rlzyWorker);
+			return "/modules/home/company/editperson";
+		}
+		
+		/**
+		 * 合作企业页面-新增
+		 * @return
+		 */
+		@RequestMapping(value="publishWorker")
+		public String publishWorker(String id,Model model) {
+			RlzyWorker rlzyWorker = new RlzyWorker();
+				model.addAttribute("id",id);
+				model.addAttribute("rlzyWorker",rlzyWorker);
+			return "/modules/home/company/addperson";
+		}
+		
+		/**
+		 * 发布合作企业-保存
+		 * @return
+		 */
+		@ResponseBody
+		@RequestMapping(value="saveWorker")
+		public String saveWorker(RlzyWorker rlzyWorker) {
+			rlzyWorkerService.save(rlzyWorker);
+			return "1";
+		}
+		
+		/**
+		 * 合作企业页面-修改-保存
+		 * @return
+		 * @throws Exception 
+		 */
+		@ResponseBody
+		@RequestMapping(value="editWorkerSave")
+		public String editWorkerSave(String id,RlzyWorker rlzyWorker) throws Exception {
+			if (!rlzyWorker.getIsNewRecord()) {
+				RlzyWorker t =rlzyWorkerService.get(id);
+				MyBeanUtils.copyBeanNotNull2Bean(rlzyWorker, t);
+				rlzyWorkerService.save(t);
+			}
+			return "1";
+		}
+		
+		/**
+		 * 合作企业页面-修改-删除
+		 * @return
+		 * @throws Exception 
+		 */
+		@ResponseBody
+		@RequestMapping(value="editWorkerDel")
+		public String editWorkerDel(String id){
+			RlzyWorker rlzyWorker =rlzyWorkerService.get(id);
+			List<RlzyWorker> list = new ArrayList<>();
+			list.add(rlzyWorker);
+			rlzyWorkerService.deleteAllByLogic(list);
+			return "1";
+		}
 }

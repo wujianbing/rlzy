@@ -27,19 +27,31 @@
 			</div>
 			 <div class="col-xs-12 col-sm-6 col-md-4">
 				<label class="label-item single-overflow pull-left" title="工作年限：">工作年限：</label>
-				<form:input path="workingage" htmlEscape="false" maxlength="2"  class=" form-control"/>
+				<form:select class="form-control" path="workingage">
+					<form:option value="" label="请选择" />
+					<form:options items="${fns:getDictList('working_age')}" itemLabel="label" itemValue="value" htmlEscape="false" />
+				</form:select>
 			</div>
 			 <div class="col-xs-12 col-sm-6 col-md-4">
 				<label class="label-item single-overflow pull-left" title="工作状态：">工作状态：</label>
-				<form:input path="currentstate" htmlEscape="false" maxlength="2"  class=" form-control"/>
+				<form:select class="form-control" path="currentstate">
+					<form:option value="" label="请选择" />
+					<form:options items="${fns:getDictList('current_state')}" itemLabel="label" itemValue="value" htmlEscape="false" />
+				</form:select>
 			</div>
 			 <div class="col-xs-12 col-sm-6 col-md-4">
 				<label class="label-item single-overflow pull-left" title="工作性质：">工作性质：</label>
-				<form:input path="worknature" htmlEscape="false" maxlength="2"  class=" form-control"/>
+				<form:select class="form-control" path="worknature">
+					<form:option value="" label="请选择" />
+					<form:options items="${fns:getDictList('work_nature')}" itemLabel="label" itemValue="value" htmlEscape="false" />
+				</form:select>
 			</div>
 			 <div class="col-xs-12 col-sm-6 col-md-4">
 				<label class="label-item single-overflow pull-left" title="是否公开：">是否公开：</label>
-				<form:input path="ispublic" htmlEscape="false" maxlength="2"  class=" form-control"/>
+				<form:select class="form-control" path="ispublic">
+					<form:option value="" label="请选择" />
+					<form:options items="${fns:getDictList('is_public')}" itemLabel="label" itemValue="value" htmlEscape="false" />
+				</form:select>
 			</div>
 		 <div class="col-xs-12 col-sm-6 col-md-4">
 			<div style="margin-top:26px">

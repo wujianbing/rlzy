@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.portal.mapper.RlzyCooperationMapper">
+    
+	<sql id="rlzyCooperationColumns">
+		a.id AS "id",
+		a.companyid AS "companyid",
+		a.companyname AS "companyname",
+		a.logo AS "logo",
+		a.companyscale AS "companyscale",
+		a.companynature AS "companynature",
+		a.companywebsite AS "companywebsite",
+		a.industry AS "industry",
+		a.businesslicense AS "businesslicense",
+		a.email AS "email",
+		a.registeredcapital AS "registeredcapital",
+		a.localplace AS "localplace",
+		a.companyprofile AS "companyprofile",
+		a.contacts AS "contacts",
+		a.telephone AS "telephone",
+		a.qq AS "qq",
+		a.creditcode AS "creditcode",
+		a.webchat AS "webchat",
+		a.address AS "address",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate"
+	</sql>
+	
+	<sql id="rlzyCooperationJoins">
+		
+	</sql>
+	
+    
+	<select id="get" resultType="RlzyCooperation" >
+		SELECT 
+			<include refid="rlzyCooperationColumns"/>
+		FROM rlzy_cooperation a
+		<include refid="rlzyCooperationJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RlzyCooperation" >
+		SELECT 
+			<include refid="rlzyCooperationColumns"/>
+		FROM rlzy_cooperation a
+		<include refid="rlzyCooperationJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RlzyCooperation" >
+		SELECT 
+			<include refid="rlzyCooperationColumns"/>
+		FROM rlzy_cooperation a
+		<include refid="rlzyCooperationJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rlzy_cooperation(
+			id,
+			companyid,
+			companyname,
+			logo,
+			registeredcapital,
+			localplace,
+			industry,
+			companyprofile,
+			companyscale,
+			companynature,
+			companywebsite,
+			businesslicense,
+			creditcode,
+			email,
+			contacts,
+			telephone,
+			qq,
+			webchat,
+			address,
+			remarks,
+			del_flag,
+			create_date,
+			update_date
+		) VALUES (
+			#{id},
+			#{companyid},
+			#{companyname},
+			#{logo},
+			#{registeredcapital},
+			#{localplace},
+			#{industry},
+			#{companyprofile},
+			#{companyscale},
+			#{companynature},
+			#{companywebsite},
+			#{businesslicense},
+			#{creditcode},
+			#{email},
+			#{contacts},
+			#{telephone},
+			#{qq},
+			#{webchat},
+			#{address},
+			#{remarks},
+			#{delFlag},
+			#{createDate},
+			#{updateDate}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rlzy_cooperation SET 	
+			companyid = #{companyid},
+			companyname = #{companyname},
+			logo = #{logo},
+			registeredcapital = #{registeredcapital},
+			localplace = #{localplace},
+			industry = #{industry},
+			companyprofile = #{companyprofile},
+			companyscale =#{companyscale},
+			companynature=#{companynature},
+			companywebsite=#{companywebsite},
+			businesslicense=#{businesslicense},
+			creditcode=#{creditcode},
+			email=#{email},
+			contacts = #{contacts},
+			telephone = #{telephone},
+			qq = #{qq},
+			webchat = #{webchat},
+			address = #{address},
+			remarks = #{remarks},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM rlzy_cooperation
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE rlzy_cooperation SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="RlzyCooperation" statementType="STATEMENT">
+		select * FROM rlzy_cooperation  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

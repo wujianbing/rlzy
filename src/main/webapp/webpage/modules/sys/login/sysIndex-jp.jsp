@@ -63,7 +63,7 @@
 					</ul>
 				</li>
 
-				<li class="dropdown">
+				<%-- <li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<i class="fa fa-envelope-o"></i>
 						<span class="label label-info">${noReadCount }</span>
@@ -96,8 +96,8 @@
 							</a>
 						</li>
 					</ul>
-				</li>
-				<li class="dropdown">
+				</li> --%>
+				<%-- <li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<i class="fa fa-bell-o"></i>
 						<span class="label label-info">${count }</span>
@@ -117,7 +117,7 @@
 							</li>
 						</c:forEach>
 					</ul>
-				</li>
+				</li> --%>
 
 				<li class="dropdown color-picker">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -227,11 +227,11 @@
 						</li>
 						<li><a class="J_menuItem" href="${ctx }/sys/user/info">个人资料</a>
 						</li>
-						<li><a class="J_menuItem" href="${ctx }/iim/contact/index">我的通讯录</a>
-						</li>
-						<li><a class="J_menuItem" href="${ctx }/iim/mailBox/list">信箱</a>
-						</li>
-						<li><a href="javaScript:changeStyle()">切换成左侧菜单</a>
+						<%-- <li><a class="J_menuItem" href="${ctx }/iim/contact/index">我的通讯录</a>
+						</li> --%>
+						<%-- <li><a class="J_menuItem" href="${ctx }/iim/mailBox/list">信箱</a>
+						</li> --%>
+						<!-- <li><a href="javaScript:changeStyle()">切换成左侧菜单</a> -->
 						<li><a href="${ctx}/logout">安全退出</a>
 						</li>
 					</ul>
@@ -250,7 +250,7 @@
 			<ul class="dropdown-menu animated fadeIn"  role="menu">
 				<t:jpMenu  menu="${fns:getTopMenu()}" position="top"></t:jpMenu>
 				<hr/>
-				<li><a href="javaScript:changeStyle()">切换成左侧菜单</a>
+				<!-- <li><a href="javaScript:changeStyle()">切换成左侧菜单</a> -->
 				<li><a href="${ctx}/logout">安全退出</a>
 				</li>
 			</ul>
@@ -287,12 +287,12 @@
 													</li>
 													<li><a class="J_menuItem" href="${ctx }/sys/user/info">个人资料</a>
 													</li>
-													<li><a class="J_menuItem" href="${ctx }/iim/contact/index">我的通讯录</a>
+													<%-- <li><a class="J_menuItem" href="${ctx }/iim/contact/index">我的通讯录</a>
 													</li>
 													<li><a class="J_menuItem" href="${ctx }/iim/mailBox/list">信箱</a>
 													</li>
 													<li><a href="javaScript:changeStyle()">切换成左侧菜单</a>
-													</li>
+													</li> --%>
 													<li><a href="${ctx}/logout">安全退出</a>
 													</li>
 												</ul>
